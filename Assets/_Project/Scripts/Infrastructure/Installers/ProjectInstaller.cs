@@ -12,6 +12,12 @@ namespace _Project.Scripts.Infrastructure.Installers
                 .FromComponentInNewPrefabResource(AssetPath.UIRootPath)
                 .AsSingle()
                 .NonLazy();
+
+            Container
+                .Bind<Curtain>()
+                .FromComponentInNewPrefabResource(AssetPath.CurtainPath)
+                .AsSingle()
+                .NonLazy();
         }
     }
 }
