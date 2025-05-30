@@ -54,7 +54,7 @@ MonoBehaviour:
   _buildsReflectionBakingCoverageMode: 0
   _settings:
     _ensureDeterministicDestructionOrderOnApplicationQuit: 0
-    _displayWarningWhenResolvingDuringInstall: 1
+    _displayWarningWhenResolvingDuringInstall: 0
     _validationRootResolveMethod: 0
     _validationErrorResponse: 0
     _signalSettings:
@@ -74,4 +74,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 036ff8fc378af0b419b72fba381b869f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 5136957325367538346, guid: 3dca7d2498aab6e4cb652c9cbfa33a37, type: 3}

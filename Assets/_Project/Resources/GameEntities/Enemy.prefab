@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3b2fc26cc8449485bb1b0a2daf8899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 2.5
+  _moveSpeed: 1.25
   _maxHealth: 100
   _damage: 10
   _towerObserver: {fileID: 2183219436600191496}

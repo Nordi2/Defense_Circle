@@ -8,16 +8,22 @@ namespace _Project.Scripts.Gameplay.TowerLogic
         IGetTargetPosition
     {
         [SerializeField] private int _maxHealth = 100;
+        
         private HealthComponent _healthComponent;
+        private AnimationTower _animationTower;
         
         [Inject]
-        private void Construct(HealthComponent healthComponent)
+        private void Construct(
+            HealthComponent healthComponent,
+            AnimationTower animationTower)
         {
             _healthComponent = healthComponent;
+            _animationTower = animationTower;
         }
 
         public void TakeDamage(int damage)
         {
+            _animationTower.PlayAnimationTakeDamage();
             _healthComponent.TakeDamage(damage);
         }
 

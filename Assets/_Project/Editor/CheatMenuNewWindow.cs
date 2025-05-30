@@ -7,40 +7,34 @@ namespace _Project.Editor
 {
     public class CheatMenuNewWindow : EditorWindow
     {
-        [MenuItem("Tools/Cheat-Menu")]
-        public static void ShowWindow()
-        {
-            GetWindow<CheatMenuNewWindow>("Cheat Menu");
-        }
-
         private CheatManager _cheatManager;
         private int _addMoney;
         private int _spendMoney;
         private int _addHealth;
         private int _spendHealth;
 
+        [MenuItem("Tools/Cheat-Menu")]
+        public static void ShowWindow()
+        {
+            GetWindow<CheatMenuNewWindow>("Cheat Menu");
+        }
+
         private void OnEnable()
         {
             EditorApplication.playModeStateChanged += OnPlayMode;
+
+            if (_cheatManager != null)
+            {
+                Repaint();
+                return;
+            }
+
+            ResettingFieldValueAndFindCheatManager();
         }
 
         private void OnDisable()
         {
             EditorApplication.playModeStateChanged -= OnPlayMode;
-        }
-
-        private void OnPlayMode(PlayModeStateChange state)
-        {
-            if (state == PlayModeStateChange.EnteredPlayMode)
-            {
-                _cheatManager = FindObjectOfType<CheatManager>();
-                Repaint();
-                
-                _addMoney = 0;
-                _spendMoney = 0;
-                _addHealth = 0;
-                _spendHealth = 0;
-            }
         }
 
         private void OnGUI()
@@ -101,12 +95,43 @@ namespace _Project.Editor
                 if (GUILayout.Button("Create Slow Enemy", GUILayout.MaxWidth(150)))
                     CreateEnemy(EnemyType.Slow);
 
+                if (GUILayout.Button("Delete Random Enemy", GUILayout.MaxWidth(150)))
+                    DeleteRandomEnemy();
+
+                if (GUILayout.Button("Delete All Enemy", GUILayout.MaxWidth(150)))
+                    DeleteAllEnemy();
+
                 EditorGUILayout.EndVertical();
             }
             else
             {
                 EditorGUILayout.HelpBox("Start the game for the menu to appear", MessageType.Warning);
             }
+        }
+
+        private void OnPlayMode(PlayModeStateChange state)
+        {
+            if (state == PlayModeStateChange.EnteredPlayMode)
+                ResettingFieldValueAndFindCheatManager();
+        }
+
+        private void ResettingFieldValueAndFindCheatManager()
+        {
+            _cheatManager = FindObjectOfType<CheatManager>();
+            Repaint();
+
+            _addMoney = 0;
+            _spendMoney = 0;
+            _addHealth = 0;
+            _spendHealth = 0;
+        }
+
+        private void DeleteAllEnemy()
+        {
+        }
+
+        private void DeleteRandomEnemy()
+        {
         }
 
         private void CreateEnemy(EnemyType type) =>

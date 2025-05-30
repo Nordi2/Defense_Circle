@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 634196738317891224}
-  - component: {fileID: 1014499052798856082}
   - component: {fileID: 3308019207138197000}
   - component: {fileID: 1788986089515114125}
   - component: {fileID: 7447734464313752220}
@@ -40,21 +39,6 @@ Transform:
   - {fileID: 5829460369037139200}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1014499052798856082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120365737338634439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31d0a4ad6d58e9d44985ded2631721f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _timeReload: 2
-  _bulletPrefab: {fileID: 7870968132612592626, guid: 0e55d48ee1e19f64292c859010782833, type: 3}
-  _shootPoint: {fileID: 6403810584856581455}
 --- !u!58 &3308019207138197000
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -162,6 +146,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: 39fc9cfbfc5fb9e4e8494c998f4c1c2c, type: 2}
   _tower: {fileID: 7447734464313752220}
+  _enemyObserver: {fileID: 425366101399624716}
+  _sprites:
+  - {fileID: 3034228721098696131}
+  - {fileID: 6180104053842164559}
+  _bulletPrefab: {fileID: 1787706452414193955, guid: 0e55d48ee1e19f64292c859010782833, type: 3}
+  _shootPoint: {fileID: 6403810584856581455}
 --- !u!1 &4671823279940826837
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,7 +509,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 50
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.42745098, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.42, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -623,6 +613,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5829460369037139200}
   - component: {fileID: 6244206323251801367}
+  - component: {fileID: 425366101399624716}
   m_Layer: 7
   m_Name: DetectedZone
   m_TagString: Untagged
@@ -680,3 +671,15 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 6
+--- !u!114 &425366101399624716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8923173838542965159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 409ef83802314285899e7b26e0d23cea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -12,7 +12,7 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
             Container
                 .BindInterfacesTo<EnemyMovement>()
                 .AsSingle()
-                .WithArguments(_enemy.transform,5f);
+                .WithArguments(_enemy.transform,1.25f);
         }
     }
 }

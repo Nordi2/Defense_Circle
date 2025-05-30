@@ -18,11 +18,15 @@ namespace _Project.Scripts.Gameplay
         public Enemy EnemySlowPrefab;
 
         private Tower _tower;
-
+        private IInstantiator _instantiator;
+        
         [Inject]
-        private void Construct(Tower tower)
+        private void Construct(
+            Tower tower,
+            IInstantiator instantiator)
         {
             _tower = tower;
+            _instantiator = instantiator;
         }
 
         public void SpawnEnemy(EnemyType type)
@@ -32,19 +36,25 @@ namespace _Project.Scripts.Gameplay
             switch (type)
             {
                 case EnemyType.Default:
-                    Instantiate(EnemyDefaultPrefab, randomPosition, Quaternion.identity);
+                    CreateEnemyAndGetLog(randomPosition,"Create: Default-Enemy",EnemyDefaultPrefab);
                     break;
                 case EnemyType.Fast:
-                    Instantiate(EnemyFastPrefab, randomPosition, Quaternion.identity);
+                    CreateEnemyAndGetLog(randomPosition, "Create: Fast-Enemy",EnemyFastPrefab);
                     break;
                 case EnemyType.Slow:
-                    Instantiate(EnemySlowPrefab,randomPosition, Quaternion.identity);
+                    CreateEnemyAndGetLog(randomPosition,"Create: Slow-Enemy",EnemySlowPrefab);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
-        
+
+        private void CreateEnemyAndGetLog(Vector3 randomPosition,string log,Enemy prefab)
+        {
+            D.Log(GetType().Name.ToUpper(),log ,DColor.AQUAMARINE,true);
+            _instantiator.InstantiatePrefab(prefab, randomPosition, Quaternion.identity, null);
+        }
+
         public void AddMoney(int amount)
         {
             Debug.Log($"Добавлено {amount} денег");
@@ -52,8 +62,8 @@ namespace _Project.Scripts.Gameplay
 
         public void TakeDamage(int amount)
         {
-            _tower.TakeDamage(amount);
             D.Log(GetType().Name.ToUpper(),$"Take Damage: {amount}",DColor.AQUAMARINE,true);
+            _tower.TakeDamage(amount);
         }
 
         public void HealPlayer(int amount)

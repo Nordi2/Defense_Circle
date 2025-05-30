@@ -22,9 +22,9 @@ namespace _Project.Scripts.Gameplay.Component
         public void TakeDamage(int damage)
         {
             D.Log(GetType().Name,
-                $"TakeDamage : {damage}, HadHealth: {_maxHealth.Value} , WillHealth: {_currentHealth.Value - damage}",
-                DColor.YELLOW,
-                true);
+                message: $"TakeDamage : {damage}, HadHealth: {_maxHealth.Value} , WillHealth: {_currentHealth.Value - damage}",
+                color: DColor.YELLOW,
+                colorMessage: true);
             
             _currentHealth.Value -= damage;
         }
