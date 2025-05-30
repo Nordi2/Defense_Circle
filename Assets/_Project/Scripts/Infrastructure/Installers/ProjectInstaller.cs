@@ -8,16 +8,23 @@ namespace _Project.Scripts.Infrastructure.Installers
         public override void InstallBindings()
         {
             Container
-                .Bind<UIRoot>()
-                .FromComponentInNewPrefabResource(AssetPath.UIRootPath)
+                .BindInterfacesTo<Bootstrap>()
                 .AsSingle()
                 .NonLazy();
 
             Container
+                .Bind<SceneLoader>()
+                .AsSingle();
+
+            Container
+                .Bind<UIRoot>()
+                .FromComponentInNewPrefabResource(AssetPath.UIRootPath)
+                .AsSingle();
+
+            Container
                 .Bind<Curtain>()
                 .FromComponentInNewPrefabResource(AssetPath.CurtainPath)
-                .AsSingle()
-                .NonLazy();
+                .AsSingle();
         }
     }
 }

@@ -1,9 +1,31 @@
+using _Project.Scripts.UI;
+using JetBrains.Annotations;
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts.Infrastructure
 {
-    public class Bootstrap : MonoBehaviour
+    [UsedImplicitly]
+    public class Bootstrap :
+        IInitializable
     {
-        
+        private readonly SceneLoader _sceneLoader;
+        private readonly Curtain _curtain;
+
+        public Bootstrap(
+            SceneLoader sceneLoader,
+            Curtain curtain)
+        {
+            _sceneLoader = sceneLoader;
+            _curtain = curtain;
+        }
+
+        void IInitializable.Initialize()
+        {
+            Debug.unityLogger.logEnabled = Debug.isDebugBuild;
+            Application.targetFrameRate = 60;
+            
+            _ = _sceneLoader.LoadScene(Scenes.Gameplay, _curtain.Hide);
+        }
     }
 }
