@@ -7,26 +7,29 @@ namespace _Project.Scripts.Gameplay.Component
     [UsedImplicitly]
     public class HealthComponent
     {
-        private readonly ReactiveProperty<int> _maxHealth;
-        private readonly ReactiveProperty<int> _currentHealth;
-        
-        public ReadOnlyReactiveProperty<int> MaxHealth => _maxHealth;
-        public ReadOnlyReactiveProperty<int> CurrentHealth => _currentHealth;
+        private int _currentHealth;
+        private int _maxHealth;
 
+        public readonly Subject<(int, int)> OnHealthChanged = new();
+        public int CurrentHealth => _currentHealth;
+        
         public HealthComponent(int maxHeath)
         {
-            _maxHealth = new ReactiveProperty<int>(maxHeath);
-            _currentHealth = new ReactiveProperty<int>(maxHeath);
+            _currentHealth = maxHeath;
+            _maxHealth = maxHeath;
         }
 
         public void TakeDamage(int damage)
         {
+            int oldValue = _currentHealth;
+
+            _currentHealth -= damage;
+            OnHealthChanged.OnNext((oldValue, _currentHealth));
+
             D.Log(GetType().Name,
-                message: $"TakeDamage : {damage}, HadHealth: {_maxHealth.Value} , WillHealth: {_currentHealth.Value - damage}",
+                message: $"TakeDamage : {damage}, MaxHealth: {_maxHealth} , OldHealth: {oldValue}, CurrentHealth: {_currentHealth}",
                 color: DColor.YELLOW,
                 colorMessage: true);
-            
-            _currentHealth.Value -= damage;
         }
     }
 }

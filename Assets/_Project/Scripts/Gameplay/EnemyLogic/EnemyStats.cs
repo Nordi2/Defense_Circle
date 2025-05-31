@@ -1,6 +1,4 @@
-﻿using _Project.Scripts.Data;
-
-namespace _Project.Scripts.Gameplay.EnemyLogic
+﻿namespace _Project.Scripts.Gameplay.EnemyLogic
 {
     public struct EnemyStats
     {
@@ -16,6 +14,14 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
             Health = health;
             MovementSpeed = movementSpeed;
             CollisionDamage = collisionDamage;
+        }
+
+        public override string ToString()
+        {
+            return "Generation Stats. " +
+                   $"Health: {Health}," +
+                   $"Collision Damage: {CollisionDamage}," +
+                   $"Movement Speed: {MovementSpeed:F2}";
         }
     }
 }

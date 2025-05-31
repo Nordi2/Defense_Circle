@@ -1,8 +1,8 @@
-﻿using System;
-using _Project.Scripts.Gameplay.EnemyLogic;
+﻿using _Project.Scripts.Gameplay.EnemyLogic;
 using _Project.Scripts.Gameplay.Observers;
 using R3;
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts.Gameplay.BulletLogic
 {
@@ -10,15 +10,22 @@ namespace _Project.Scripts.Gameplay.BulletLogic
     {
         [SerializeField] private EnemyObserver _enemyObserver;
         [SerializeField] private int _damage;
-        public Vector3 targetPosition;
-        public float _moveSpeed;
-        public Rigidbody2D _Rigidbody2D;
-
+        private BulletMovement _movement;
+        
         private readonly CompositeDisposable _disposable = new();
+        
+        [Inject]
+        private void Construct(BulletMovement movement)
+        {
+            _movement   = movement;
+        }
 
         private void OnEnable()
         {
-            _enemyObserver.TriggerEnter.Subscribe(DeactivateBullet).AddTo(_disposable);
+            _enemyObserver
+                .TriggerEnter
+                .Subscribe(DeactivateBullet)
+                .AddTo(_disposable);
         }
 
         private void OnDisable()
@@ -26,14 +33,18 @@ namespace _Project.Scripts.Gameplay.BulletLogic
             _disposable.Dispose();
         }
 
-        private void DeactivateBullet(Enemy enemy)
+        public void Initialize(
+            Transform spawnPoint,
+            Vector3 targetPosition)
         {
-            Debug.Log("Damage");
+            transform.position = spawnPoint.position;
+            _movement.Initialize(targetPosition);
         }
 
-        private void Update()
+        private void DeactivateBullet(Enemy enemy)
         {
-            transform.position += targetPosition * (_moveSpeed * Time.deltaTime);
+            gameObject.SetActive(false);
+            Debug.Log("Damage");
         }
     }
 }

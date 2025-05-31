@@ -3,7 +3,9 @@ using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.Data
 {
-    [CreateAssetMenu(fileName = "EnemyConfig", menuName = "Configs/EnemyConfig")]
+    [CreateAssetMenu(
+        fileName = "EnemyConfig",
+        menuName = "Configs/EnemyConfig")]
     public class EnemyConfig : ScriptableObject
     {
         [SerializeField, Min(10)] private Vector2Int _minMaxHealth;

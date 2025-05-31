@@ -53,12 +53,7 @@ namespace _Project.Scripts.Gameplay
             Enemy enemy = _instantiator.InstantiatePrefab(prefab, randomPosition, Quaternion.identity, null)
                 .GetComponent<Enemy>();
             
-            D.Log(GetType().Name.ToUpper(), log +
-                                            D.FormatText(
-                                                $"Stats: " +
-                                                $"Health: {enemy.Stats.Health} " +
-                                                $"MoveSpeed: {enemy.Stats.MovementSpeed:F2} " +
-                                                $"CollisionDamage: {enemy.Stats.CollisionDamage}",DColor.RED),DColor.AQUAMARINE, true);
+            D.Log(GetType().Name.ToUpper(), log + D.FormatText(enemy.Stats.ToString(),DColor.RED),DColor.AQUAMARINE, true);
         }
         
         public void AddMoney(int amount)

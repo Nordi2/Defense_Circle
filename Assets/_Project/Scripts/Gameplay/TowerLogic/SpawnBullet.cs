@@ -3,7 +3,6 @@ using _Project.Scripts.Gameplay.BulletLogic;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
-using Object = UnityEngine.Object;
 
 namespace _Project.Scripts.Gameplay.TowerLogic
 {
@@ -14,10 +13,12 @@ namespace _Project.Scripts.Gameplay.TowerLogic
     {
         private readonly TowerShoot _towerShoot;
         private readonly Bullet _bulletPrefab;
-
-        public SpawnBullet(TowerShoot towerShoot, TowerView view)
+        private readonly IInstantiator _instantiator;
+        
+        public SpawnBullet(TowerShoot towerShoot, TowerView view, IInstantiator instantiator)
         {
             _towerShoot = towerShoot;
+            _instantiator = instantiator;
             _bulletPrefab = view.BulletPrefab;
         }
 
@@ -33,8 +34,8 @@ namespace _Project.Scripts.Gameplay.TowerLogic
 
         private void Spawn(Vector3 direction,Transform shootPoint)
         {
-           Bullet bullet = Object.Instantiate(_bulletPrefab, shootPoint.position, Quaternion.identity);
-           bullet.targetPosition = direction;
+           Bullet bullet = _instantiator.InstantiatePrefab(_bulletPrefab, shootPoint.position, Quaternion.identity,null).GetComponent<Bullet>();
+           bullet.Initialize(shootPoint,direction);
         }
     }
 }

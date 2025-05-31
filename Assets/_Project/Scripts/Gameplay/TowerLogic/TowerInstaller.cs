@@ -14,6 +14,7 @@ namespace _Project.Scripts.Gameplay.TowerLogic
         [SerializeField] private EnemyObserver _enemyObserver;
         [SerializeField] private SpriteRenderer[] _sprites;
         [SerializeField] private TowerView _view;
+        [SerializeField] private HealthView _healthView;
         
         public override void InstallBindings()
         {
@@ -25,11 +26,6 @@ namespace _Project.Scripts.Gameplay.TowerLogic
                 .BindInstance(_enemyObserver)
                 .AsSingle();
             
-            Container
-                .Bind<HealthComponent>()
-                .AsSingle()
-                .WithArguments(_config.MaxHealth);
-
             Container
                 .BindInterfacesAndSelfTo<EnemysVault>()
                 .AsSingle()
@@ -46,6 +42,21 @@ namespace _Project.Scripts.Gameplay.TowerLogic
             
             Container
                 .BindInterfacesTo<SpawnBullet>()
+                .AsSingle()
+                .NonLazy();
+
+            Container
+                .Bind<HealthView>()
+                .FromInstance(_healthView)
+                .AsSingle();
+            
+            Container
+                .Bind<HealthComponent>()
+                .AsSingle()
+                .WithArguments(_config.MaxHealth);
+            
+            Container
+                .BindInterfacesTo<HealthPresenter>()
                 .AsSingle()
                 .NonLazy();
         }

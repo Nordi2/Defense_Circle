@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.Data;
+using _Project.Scripts.Gameplay.Component;
 using UnityEngine;
 using Zenject;
 
@@ -24,6 +25,10 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
                 .BindInterfacesTo<EnemyMovement>()
                 .AsSingle()
                 .WithArguments(_enemy.transform);
+
+            Container
+                .Bind<HealthComponent>()
+                .AsSingle();
         }
 
         private EnemyStats CreateEnemyStats()
