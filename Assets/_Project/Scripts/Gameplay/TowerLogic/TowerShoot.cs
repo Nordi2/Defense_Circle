@@ -13,19 +13,17 @@ namespace _Project.Scripts.Gameplay.TowerLogic
         private readonly EnemysVault _enemysVault;
         private readonly Transform _shootPoint;
 
-        private readonly float _reload = 2f;
-        private float _timeToReload;
         private readonly int _initialCountTarget = 2;
 
-        private float _shootRate = 0.5f;
-        private float _nextShootTime = 0f;
+        private readonly float _shootRate = 0.5f;
+        private float _nextShootTime;
 
         public TowerShoot(
             EnemysVault enemysVault,
-            Transform shootPoint)
+            TowerView view)
         {
             _enemysVault = enemysVault;
-            _shootPoint = shootPoint;
+            _shootPoint = view.ShootPoint;
         }
 
         void ITickable.Tick()

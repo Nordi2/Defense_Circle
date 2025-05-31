@@ -16,11 +16,11 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
         public EnemyMovement(
             IGetTargetPosition getTarget,
             Transform objectTransform,
-            float moveSpeed)
+            EnemyStats stats)
         {
             _targetPosition = getTarget.GetPosition();
             _objectTransform = objectTransform;
-            _moveSpeed = moveSpeed;
+            _moveSpeed = stats.MovementSpeed;
         }
 
         void ITickable.Tick()

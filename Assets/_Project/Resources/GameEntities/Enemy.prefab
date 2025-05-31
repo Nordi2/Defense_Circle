@@ -211,9 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3b2fc26cc8449485bb1b0a2daf8899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 1.25
-  _maxHealth: 100
-  _damage: 10
   _towerObserver: {fileID: 2183219436600191496}
 --- !u!114 &2183219436600191496
 MonoBehaviour:
@@ -258,6 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 5136957325367538346}
+  _config: {fileID: 11400000, guid: 08b11ec594a65ea45be52cacc8521f82, type: 2}
 --- !u!1 &8853742381318423907
 GameObject:
   m_ObjectHideFlags: 0

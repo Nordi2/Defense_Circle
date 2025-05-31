@@ -2,17 +2,23 @@
 using _Project.Scripts.Gameplay.TowerLogic;
 using R3;
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts.Gameplay.EnemyLogic
 {
     public class Enemy : MonoBehaviour
     {
-        [SerializeField] private float _moveSpeed = 2.5f;
-        [SerializeField] private float _maxHealth = 100f;
-        [SerializeField] private float _damage = 10f;
         [SerializeField] private TowerObserver _towerObserver;
 
         private readonly CompositeDisposable _disposable = new();
+
+        [Inject]
+        private void Construct(EnemyStats stats)
+        {
+            Stats = stats;
+        }
+
+        public EnemyStats Stats {get; private set;}
 
         private void OnEnable()
         {
@@ -27,7 +33,7 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
 
         private void TriggerEnter(Tower tower)
         {
-            tower.TakeDamage((int)_damage);
+            tower.TakeDamage(Stats.CollisionDamage);
         }
     }
 }

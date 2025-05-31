@@ -13,12 +13,14 @@ namespace _Project.Scripts.Gameplay.TowerLogic
         [SerializeField] private Tower _tower;
         [SerializeField] private EnemyObserver _enemyObserver;
         [SerializeField] private SpriteRenderer[] _sprites;
-        [SerializeField] private Bullet _bulletPrefab;
-        [SerializeField] private Transform _shootPoint;
         [SerializeField] private TowerView _view;
         
         public override void InstallBindings()
         {
+            Container
+                .BindInstance(_view)
+                .AsSingle();
+            
             Container
                 .BindInstance(_enemyObserver)
                 .AsSingle();
@@ -40,13 +42,11 @@ namespace _Project.Scripts.Gameplay.TowerLogic
 
             Container
                 .BindInterfacesAndSelfTo<TowerShoot>()
-                .AsSingle()
-                .WithArguments(_shootPoint);
-
+                .AsSingle();
+            
             Container
                 .BindInterfacesTo<SpawnBullet>()
                 .AsSingle()
-                .WithArguments(_bulletPrefab)
                 .NonLazy();
         }
     }

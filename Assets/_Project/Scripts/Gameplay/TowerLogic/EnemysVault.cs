@@ -34,7 +34,7 @@ namespace _Project.Scripts.Gameplay.TowerLogic
                 .AddTo(_disposable);
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             _disposable.Dispose();
         }

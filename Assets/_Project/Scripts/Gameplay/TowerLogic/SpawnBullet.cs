@@ -1,11 +1,13 @@
 ﻿using System;
 using _Project.Scripts.Gameplay.BulletLogic;
+using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
 
 namespace _Project.Scripts.Gameplay.TowerLogic
 {
+    [UsedImplicitly]
     public class SpawnBullet : 
         IInitializable ,
         IDisposable
@@ -13,10 +15,10 @@ namespace _Project.Scripts.Gameplay.TowerLogic
         private readonly TowerShoot _towerShoot;
         private readonly Bullet _bulletPrefab;
 
-        public SpawnBullet(TowerShoot towerShoot, Bullet bulletPrefab)
+        public SpawnBullet(TowerShoot towerShoot, TowerView view)
         {
             _towerShoot = towerShoot;
-            _bulletPrefab = bulletPrefab;
+            _bulletPrefab = view.BulletPrefab;
         }
 
         void IInitializable.Initialize()
