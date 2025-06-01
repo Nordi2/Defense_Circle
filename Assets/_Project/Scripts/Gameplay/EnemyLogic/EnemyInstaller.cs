@@ -11,9 +11,15 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
     {
         [SerializeField] private Enemy _enemy;
         [SerializeField] private EnemyConfig _config;
+        [SerializeField] private EnemyView _view;
 
         public override void InstallBindings()
         {
+            Container
+                .Bind<EnemyView>()
+                .FromInstance(_view)
+                .AsSingle();
+            
             Container
                 .BindInstance(_config)
                 .AsSingle();
@@ -21,7 +27,12 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
             Container
                 .Bind<ShowStats>()
                 .AsSingle();
-            
+
+            Container
+                .BindInterfacesTo<RotationComponent>()
+                .AsSingle()
+                .WithArguments(_config.GetRandomRotationSpeed());
+
             Container
                 .BindInterfacesTo<EnemyMovement>()
                 .AsSingle()
@@ -30,11 +41,11 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
             Container
                 .Bind<GiveDamageComponent>()
                 .AsSingle();
-            
+
             Container
                 .Bind<TakeDamageComponent>()
                 .AsSingle();
-            
+
             Container
                 .BindInterfacesAndSelfTo<HealthStat>()
                 .AsSingle()

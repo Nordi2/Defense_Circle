@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.Data
@@ -10,7 +11,8 @@ namespace _Project.Scripts.Data
     {
         [SerializeField, Min(10)] private Vector2Int _minMaxHealth;
         [SerializeField, Min(1)] private Vector2Int _minMaxCollisionDamage;
-        [SerializeField, Min(0.5f)] private Vector2 _minMaxSpeed;
+        [SerializeField, Min(0.5f)] private Vector2 _minMaxMoveSpeed;
+        [SerializeField] private Vector2 _minMaxRotatitonSpeed;
 
         private void OnValidate()
         {
@@ -24,11 +26,14 @@ namespace _Project.Scripts.Data
                 _minMaxCollisionDamage.y = _minMaxCollisionDamage.x + 1;
             }
 
-            if (_minMaxSpeed.x > _minMaxSpeed.y)
+            if (_minMaxMoveSpeed.x > _minMaxMoveSpeed.y)
             {
-                _minMaxSpeed.y = _minMaxSpeed.x + 1;
+                _minMaxMoveSpeed.y = _minMaxMoveSpeed.x + 1;
             }
         }
+
+        public float GetRandomRotationSpeed() => 
+            Random.Range(_minMaxRotatitonSpeed.x, _minMaxRotatitonSpeed.y);
 
         public int GetRandomValueHealth() =>
             Random.Range(_minMaxHealth.x, _minMaxHealth.y);
@@ -37,6 +42,6 @@ namespace _Project.Scripts.Data
             Random.Range(_minMaxCollisionDamage.x, _minMaxCollisionDamage.y);
 
         public float GetRandomValueMoveSpeed() =>
-            Random.Range(_minMaxSpeed.x, _minMaxSpeed.y);
+            Random.Range(_minMaxMoveSpeed.x, _minMaxMoveSpeed.y);
     }
 }

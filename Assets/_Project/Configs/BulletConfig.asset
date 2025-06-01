@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329ab6009b11470d8359a9f28e704fcf, type: 3}
   m_Name: BulletConfig
   m_EditorClassIdentifier: 
-  <MoveSpeed>k__BackingField: 0
-  _minMaxDamage: {x: 0, y: 0}
+  <MoveSpeed>k__BackingField: 5
+  _minMaxDamage: {x: 15, y: 35}
