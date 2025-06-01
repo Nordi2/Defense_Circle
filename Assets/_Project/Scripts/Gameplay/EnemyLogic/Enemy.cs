@@ -8,23 +8,29 @@ using Zenject;
 
 namespace _Project.Scripts.Gameplay.EnemyLogic
 {
-    public class Enemy : MonoBehaviour ,
+    public class Enemy : MonoBehaviour,
         ITakeDamagble
     {
         [SerializeField] private TakeDamageObserver _takeDamageObserver;
 
-        private readonly CompositeDisposable _disposable = new();
-        private CollisionDamageStat _collisionDamage;
         private TakeDamageComponent _takeDamageComponent;
+        private GiveDamageComponent _giveDamageComponent;
+
+        private readonly CompositeDisposable _disposable = new();
 
         [Inject]
         private void Construct(
-            CollisionDamageStat collisionDamageStat,
-            TakeDamageComponent takeDamageComponent)
+            TakeDamageComponent takeDamageComponent,
+            GiveDamageComponent giveDamageComponent,
+            ShowStats showStats)
         {
-            _collisionDamage = collisionDamageStat;
+            ShowStats = showStats;
+
+            _giveDamageComponent = giveDamageComponent;
             _takeDamageComponent = takeDamageComponent;
         }
+
+        public ShowStats ShowStats { get; private set; }
 
         private void OnEnable()
         {
@@ -39,7 +45,7 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
 
         private void CollisionTakeDamageObject(ITakeDamagble takeDamageObject)
         {
-            takeDamageObject.TakeDamage(_collisionDamage.Damage);
+            _giveDamageComponent.GiveDamage(takeDamageObject, GiveDamageCallback);
         }
 
         public void TakeDamage(int damage)
@@ -53,6 +59,11 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
 
             if (isDie)
                 DieCallback();
+        }
+
+        private void GiveDamageCallback()
+        {
+            Debug.Log("Callback");
         }
 
         private void DieCallback()

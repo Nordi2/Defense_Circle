@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using _Project.Scripts.Gameplay.Stats.EnemyStats;
+using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
@@ -15,10 +16,10 @@ namespace _Project.Scripts.Gameplay.BulletLogic
 
         public BulletMovement(
             Transform bulletTransform,
-            float moveSpeed)
+            MoveSpeedStat moveSpeedStat)
         {
             _bulletTransform = bulletTransform;
-            _moveSpeed = moveSpeed;
+            _moveSpeed = moveSpeedStat.Speed;
         }
 
         public void Initialize(Vector3 direction)

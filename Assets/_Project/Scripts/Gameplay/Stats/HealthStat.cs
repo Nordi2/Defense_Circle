@@ -4,7 +4,8 @@ using R3;
 namespace _Project.Scripts.Gameplay.Stats
 {
     [UsedImplicitly]
-    public class HealthStat
+    public class HealthStat : 
+        IStat
     {
         private readonly ReactiveProperty<int> _maxHealth;
         private readonly ReactiveProperty<int> _currentHealth;
@@ -20,5 +21,8 @@ namespace _Project.Scripts.Gameplay.Stats
 
         public void SetCurrentHealthValue(int newValue) => 
             _currentHealth.Value = newValue;
+
+        public string ShowInfo() => 
+            $"MaxHealth: {_maxHealth.Value}. ";
     }
 }

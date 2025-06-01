@@ -19,10 +19,18 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
                 .AsSingle();
 
             Container
+                .Bind<ShowStats>()
+                .AsSingle();
+            
+            Container
                 .BindInterfacesTo<EnemyMovement>()
                 .AsSingle()
                 .WithArguments(_enemy.transform);
 
+            Container
+                .Bind<GiveDamageComponent>()
+                .AsSingle();
+            
             Container
                 .Bind<TakeDamageComponent>()
                 .AsSingle();
@@ -33,12 +41,12 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
                 .WithArguments(_config.GetRandomValueHealth());
 
             Container
-                .Bind<MoveSpeedStat>()
+                .BindInterfacesAndSelfTo<MoveSpeedStat>()
                 .AsSingle()
                 .WithArguments(_config.GetRandomValueMoveSpeed());
 
             Container
-                .Bind<CollisionDamageStat>()
+                .BindInterfacesAndSelfTo<CollisionDamageStat>()
                 .AsSingle()
                 .WithArguments(_config.GetRandomValueCollisionDamage());
         }

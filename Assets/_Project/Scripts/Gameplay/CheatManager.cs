@@ -53,7 +53,7 @@ namespace _Project.Scripts.Gameplay
             Enemy enemy = _instantiator.InstantiatePrefab(prefab, randomPosition, Quaternion.identity, null)
                 .GetComponent<Enemy>();
             
-           // D.Log(GetType().Name.ToUpper(), log + D.FormatText(,DColor.RED),DColor.AQUAMARINE, true);
+            D.Log(GetType().Name.ToUpper(), log + D.FormatText(enemy.ShowStats.ToString(),DColor.RED),enemy.gameObject,DColor.AQUAMARINE, true);
         }
         
         public void AddMoney(int amount)

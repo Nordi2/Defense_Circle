@@ -408,6 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletTransform: {fileID: 1599519556186384967}
   _moveSpeed: 5
+  _config: {fileID: 11400000, guid: d7ecece17e5df124ba0653c81505d8ce, type: 2}
 --- !u!114 &7749585964860712597
 MonoBehaviour:
   m_ObjectHideFlags: 0
