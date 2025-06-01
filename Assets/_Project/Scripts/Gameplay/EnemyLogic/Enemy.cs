@@ -15,17 +15,19 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
 
         private TakeDamageComponent _takeDamageComponent;
         private GiveDamageComponent _giveDamageComponent;
-
+        private EnemyView _view;
         private readonly CompositeDisposable _disposable = new();
 
         [Inject]
         private void Construct(
             TakeDamageComponent takeDamageComponent,
             GiveDamageComponent giveDamageComponent,
-            ShowStats showStats)
+            ShowStats showStats,
+            EnemyView view)
         {
             ShowStats = showStats;
 
+            _view = view;
             _giveDamageComponent = giveDamageComponent;
             _takeDamageComponent = takeDamageComponent;
         }
@@ -71,8 +73,10 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
             gameObject.SetActive(false);
         }
 
-        private void TakeDamageCallback()
+        private void TakeDamageCallback(int damageValue)
         {
+            DamageText damageText = Instantiate(_view.DamageTextPrefab, _view.transform.position, _view.transform.rotation);
+            damageText.StartAnimation(damageValue);
         }
     }
 }

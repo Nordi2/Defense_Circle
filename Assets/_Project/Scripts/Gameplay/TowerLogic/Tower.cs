@@ -39,7 +39,9 @@ namespace _Project.Scripts.Gameplay.TowerLogic
         private void DieCallback() => 
             gameObject.SetActive(false);
 
-        private void TakeDamageCallback() => 
+        private void TakeDamageCallback(int damage)
+        {
             _animationTower.PlayAnimationTakeDamage();
+        }
     }
 }

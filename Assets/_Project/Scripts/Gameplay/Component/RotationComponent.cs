@@ -1,9 +1,11 @@
 ﻿using _Project.Scripts.Gameplay.EnemyLogic;
+using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
 namespace _Project.Scripts.Gameplay.Component
 {
+    [UsedImplicitly]
     public class RotationComponent :
         ITickable
     {

@@ -19,7 +19,7 @@ namespace _Project.Scripts.Gameplay.Component
         public void TakeDamage(
             int damage,
             out bool isDie,
-            Action takeDamageCallback = null,
+            Action<int> takeDamageCallback = null,
             Type type = null,
             GameObject contextInfo = null)
         {
@@ -29,18 +29,18 @@ namespace _Project.Scripts.Gameplay.Component
                 _healthStat.MaxHealth.CurrentValue);
 
             _healthStat.SetCurrentHealthValue(newValue);
-            
+
             isDie = newValue <= 0;
-            
+
             if (!isDie)
-                takeDamageCallback?.Invoke();
-            
+                takeDamageCallback?.Invoke(damage);
+
             D.Log(GetType().Name,
                 message: $"{type?.Name}\n" +
                          $"TakeDamage : {damage}," +
-                         $" MaxHealth: {_healthStat.MaxHealth.CurrentValue}," +
-                         $" OldHealth: {_healthStat.CurrentHealth.CurrentValue+ damage}," +
-                         $" CurrentHealth: {newValue}",
+                         $"MaxHealth: {_healthStat.MaxHealth.CurrentValue}," +
+                         $"OldHealth: {_healthStat.CurrentHealth.CurrentValue + damage}," +
+                         $"CurrentHealth: {newValue}",
                 context: contextInfo,
                 color: DColor.YELLOW,
                 colorMessage: true);
