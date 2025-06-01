@@ -2,6 +2,7 @@
 using _Project.Scripts.Gameplay.BulletLogic;
 using _Project.Scripts.Gameplay.Component;
 using _Project.Scripts.Gameplay.Observers;
+using _Project.Scripts.Gameplay.Stats;
 using UnityEngine;
 using Zenject;
 
@@ -20,6 +21,10 @@ namespace _Project.Scripts.Gameplay.TowerLogic
         {
             Container
                 .BindInstance(_view)
+                .AsSingle();
+
+            Container
+                .Bind<TakeDamageComponent>()
                 .AsSingle();
             
             Container
@@ -46,14 +51,14 @@ namespace _Project.Scripts.Gameplay.TowerLogic
                 .NonLazy();
 
             Container
+                .Bind<HealthStat>()
+                .AsSingle()
+                .WithArguments(_config.MaxHealth);
+            
+            Container
                 .Bind<HealthView>()
                 .FromInstance(_healthView)
                 .AsSingle();
-            
-            Container
-                .Bind<HealthComponent>()
-                .AsSingle()
-                .WithArguments(_config.MaxHealth);
             
             Container
                 .BindInterfacesTo<HealthPresenter>()

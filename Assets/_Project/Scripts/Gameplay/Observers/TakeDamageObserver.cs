@@ -2,6 +2,8 @@
 
 namespace _Project.Scripts.Gameplay.Observers
 {
-    public class TowerObserver : TriggerObserver<Tower>
-    { }
+    public class TakeDamageObserver : TriggerObserver<ITakeDamagble>
+    {
+        
+    }
 }

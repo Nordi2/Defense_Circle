@@ -1,5 +1,6 @@
 ﻿using _Project.Scripts.Gameplay.EnemyLogic;
 using _Project.Scripts.Gameplay.Observers;
+using _Project.Scripts.Gameplay.TowerLogic;
 using R3;
 using UnityEngine;
 using Zenject;
@@ -8,7 +9,7 @@ namespace _Project.Scripts.Gameplay.BulletLogic
 {
     public class Bullet : MonoBehaviour
     {
-        [SerializeField] private EnemyObserver _enemyObserver;
+        [SerializeField] private TakeDamageObserver _takeDamageObserver;
         [SerializeField] private int _damage;
         private BulletMovement _movement;
         
@@ -22,9 +23,9 @@ namespace _Project.Scripts.Gameplay.BulletLogic
 
         private void OnEnable()
         {
-            _enemyObserver
+            _takeDamageObserver
                 .TriggerEnter
-                .Subscribe(DeactivateBullet)
+                .Subscribe(CollisionTakeDamageObject)
                 .AddTo(_disposable);
         }
 
@@ -41,10 +42,10 @@ namespace _Project.Scripts.Gameplay.BulletLogic
             _movement.Initialize(targetPosition);
         }
 
-        private void DeactivateBullet(Enemy enemy)
+        private void CollisionTakeDamageObject(ITakeDamagble takeDamagble)
         {
             gameObject.SetActive(false);
-            Debug.Log("Damage");
+            takeDamagble.TakeDamage(_damage);
         }
     }
 }

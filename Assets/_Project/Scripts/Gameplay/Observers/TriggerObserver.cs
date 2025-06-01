@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Observers
 {
-    public class TriggerObserver<T> : MonoBehaviour where T : MonoBehaviour
+    public class TriggerObserver<T> : MonoBehaviour
     {
         private readonly Subject<T> _triggerEnter = new();
 

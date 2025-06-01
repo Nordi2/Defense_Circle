@@ -1,4 +1,5 @@
 ﻿using System;
+using _Project.Scripts.Gameplay.Stats;
 using JetBrains.Annotations;
 using R3;
 using Zenject;
@@ -10,35 +11,35 @@ namespace _Project.Scripts.Gameplay.Component
         IInitializable,
         IDisposable
     {
-        private readonly HealthComponent _healthComponent;
         private readonly HealthView _view;
-
+        private readonly HealthStat _healthStat;
+        
         private readonly CompositeDisposable _disposable = new();
 
         public HealthPresenter(
-            HealthComponent healthComponent,
-            HealthView view)
+            HealthView view,
+            HealthStat healthStat)
         {
-            _healthComponent = healthComponent;
             _view = view;
+            _healthStat = healthStat;
         }
 
         void IInitializable.Initialize()
         {
-            _healthComponent
-                .OnHealthChanged
-                .Prepend((_healthComponent.CurrentHealth,_healthComponent.CurrentHealth))
-                .Subscribe(UpdateCurrentHealthText)
+            _healthStat
+                .CurrentHealth
+                .Prepend(_healthStat.MaxHealth.CurrentValue)
+                .Pairwise()
+                .Subscribe(pair => UpdateCurrentHealthText(pair.Previous,pair.Current))
                 .AddTo(_disposable);
         }
-
-
+        
         private void UpdateMaxHealthText(int newMaxValue) =>
             _view.UpdateMaxHealthText(newMaxValue);
 
-        private void UpdateCurrentHealthText((int oldValue, int currentValue) newValue)
+        private void UpdateCurrentHealthText(int oldValue, int newValue)
         {
-            _view.UpdateCurrentHealthText(newValue.oldValue, newValue.currentValue);
+            _view.UpdateCurrentHealthText(oldValue, newValue);      
         }
 
         void IDisposable.Dispose()

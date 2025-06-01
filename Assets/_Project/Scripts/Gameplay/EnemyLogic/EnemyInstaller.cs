@@ -1,5 +1,7 @@
 ﻿using _Project.Scripts.Data;
 using _Project.Scripts.Gameplay.Component;
+using _Project.Scripts.Gameplay.Stats;
+using _Project.Scripts.Gameplay.Stats.EnemyStats;
 using UnityEngine;
 using Zenject;
 
@@ -13,11 +15,6 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
         public override void InstallBindings()
         {
             Container
-                .Bind<EnemyStats>()
-                .FromMethod(CreateEnemyStats)
-                .AsSingle();
-
-            Container
                 .BindInstance(_config)
                 .AsSingle();
 
@@ -27,18 +24,23 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
                 .WithArguments(_enemy.transform);
 
             Container
-                .Bind<HealthComponent>()
+                .Bind<TakeDamageComponent>()
                 .AsSingle();
-        }
-
-        private EnemyStats CreateEnemyStats()
-        {
-            EnemyStats enemyStats = new EnemyStats(
-                _config.GetRandomValueHealth(),
-                _config.GetRandomValueMoveSpeed(),
-                _config.GetRandomValueCollisionDamage());
             
-            return enemyStats;
+            Container
+                .BindInterfacesAndSelfTo<HealthStat>()
+                .AsSingle()
+                .WithArguments(_config.GetRandomValueHealth());
+
+            Container
+                .Bind<MoveSpeedStat>()
+                .AsSingle()
+                .WithArguments(_config.GetRandomValueMoveSpeed());
+
+            Container
+                .Bind<CollisionDamageStat>()
+                .AsSingle()
+                .WithArguments(_config.GetRandomValueCollisionDamage());
         }
     }
 }

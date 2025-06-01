@@ -6,7 +6,8 @@ using Zenject;
 namespace _Project.Scripts.Gameplay.TowerLogic
 {
     [UsedImplicitly]
-    public class AnimationTower : IInitializable
+    public class AnimationTower : 
+        IInitializable
     {
         private Camera _camera;
         private Sequence _sequence;

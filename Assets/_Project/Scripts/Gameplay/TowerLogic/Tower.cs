@@ -4,30 +4,42 @@ using Zenject;
 
 namespace _Project.Scripts.Gameplay.TowerLogic
 {
-    public class Tower : MonoBehaviour ,
+    public class Tower : MonoBehaviour,
+        ITakeDamagble,
         IGetTargetPosition
     {
-        [SerializeField] private int _maxHealth = 100;
-        
-        private HealthComponent _healthComponent;
         private AnimationTower _animationTower;
-        
+        private TakeDamageComponent _takeDamageComponent;
+
         [Inject]
         private void Construct(
-            HealthComponent healthComponent,
-            AnimationTower animationTower)
+            AnimationTower animationTower,
+            TakeDamageComponent takeDamageComponent)
         {
-            _healthComponent = healthComponent;
+            _takeDamageComponent = takeDamageComponent;
             _animationTower = animationTower;
         }
 
+        public Vector2 GetPosition() =>
+            transform.position;
+
         public void TakeDamage(int damage)
         {
-            _animationTower.PlayAnimationTakeDamage();
-            _healthComponent.TakeDamage(damage);
+            _takeDamageComponent.TakeDamage(
+                damage,
+                out bool isDie,
+                TakeDamageCallback,
+                GetType(),
+                gameObject);
+
+            if (isDie)
+                DieCallback();
         }
 
-        public Vector2 GetPosition() => 
-            transform.position;
+        private void DieCallback() => 
+            gameObject.SetActive(false);
+
+        private void TakeDamageCallback() => 
+            _animationTower.PlayAnimationTakeDamage();
     }
 }

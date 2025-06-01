@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: TowerConfig
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 100
+  <AmountTarget>k__BackingField: 1
+  <ShootRate>k__BackingField: 0.25

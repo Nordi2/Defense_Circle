@@ -1,35 +1,18 @@
-﻿using DebugToolsPlus;
-using JetBrains.Annotations;
-using R3;
+﻿using System;
+using _Project.Scripts.Gameplay.Stats;
+using _Project.Scripts.Gameplay.TowerLogic;
 
 namespace _Project.Scripts.Gameplay.Component
 {
-    [UsedImplicitly]
     public class HealthComponent
     {
-        private int _currentHealth;
-        private int _maxHealth;
+        private Action _takeDamageCallback;
+        private HealthStat _healthStat;
 
-        public readonly Subject<(int, int)> OnHealthChanged = new();
-        public int CurrentHealth => _currentHealth;
-        
-        public HealthComponent(int maxHeath)
+        public HealthComponent(HealthStat healthStat,ITakeDamagbleCallback takeDamageCallback)
         {
-            _currentHealth = maxHeath;
-            _maxHealth = maxHeath;
-        }
-
-        public void TakeDamage(int damage)
-        {
-            int oldValue = _currentHealth;
-
-            _currentHealth -= damage;
-            OnHealthChanged.OnNext((oldValue, _currentHealth));
-
-            D.Log(GetType().Name,
-                message: $"TakeDamage : {damage}, MaxHealth: {_maxHealth} , OldHealth: {oldValue}, CurrentHealth: {_currentHealth}",
-                color: DColor.YELLOW,
-                colorMessage: true);
+            _healthStat = healthStat;
+            _takeDamageCallback = takeDamageCallback.TakeDamage;
         }
     }
 }

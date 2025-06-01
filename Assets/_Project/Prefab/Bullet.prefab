@@ -274,9 +274,9 @@ GameObject:
   - component: {fileID: 5772193188125350985}
   - component: {fileID: 9132639710170552213}
   - component: {fileID: 1787706452414193955}
-  - component: {fileID: 8730556788030520043}
   - component: {fileID: 4114758940399333232}
   - component: {fileID: 3983061574138220179}
+  - component: {fileID: 7749585964860712597}
   m_Layer: 10
   m_Name: Bullet
   m_TagString: Untagged
@@ -374,20 +374,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 194e9e234eee42a8827d2cbc7cc5851e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyObserver: {fileID: 8730556788030520043}
+  _takeDamageObserver: {fileID: 7749585964860712597}
   _damage: 25
---- !u!114 &8730556788030520043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7279583466612228024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 409ef83802314285899e7b26e0d23cea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4114758940399333232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,3 +408,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletTransform: {fileID: 1599519556186384967}
   _moveSpeed: 5
+--- !u!114 &7749585964860712597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7279583466612228024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd54e22a35d4ceb8599c2d052a0f144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

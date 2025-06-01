@@ -1,3 +1,5 @@
+using _Project.Scripts.Gameplay.Stats;
+using _Project.Scripts.Gameplay.Stats.EnemyStats;
 using _Project.Scripts.Gameplay.TowerLogic;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -16,11 +18,11 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
         public EnemyMovement(
             IGetTargetPosition getTarget,
             Transform objectTransform,
-            EnemyStats stats)
+            MoveSpeedStat moveSpeedStat)
         {
             _targetPosition = getTarget.GetPosition();
             _objectTransform = objectTransform;
-            _moveSpeed = stats.MovementSpeed;
+            _moveSpeed = moveSpeedStat.Speed;
         }
 
         void ITickable.Tick()
