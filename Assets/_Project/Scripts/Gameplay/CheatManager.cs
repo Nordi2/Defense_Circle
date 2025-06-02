@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using _Project.Scripts.Gameplay.EnemyLogic;
 using _Project.Scripts.Gameplay.TowerLogic;
 using DebugToolsPlus;
@@ -18,6 +19,8 @@ namespace _Project.Scripts.Gameplay
 
         private Tower _tower;
         private IInstantiator _instantiator;
+
+        private List<Enemy> _enemiesInSpawned = new();
 
         [Inject]
         private void Construct(
@@ -52,10 +55,50 @@ namespace _Project.Scripts.Gameplay
         {
             Enemy enemy = _instantiator.InstantiatePrefab(prefab, randomPosition, Quaternion.identity, null)
                 .GetComponent<Enemy>();
+
+            enemy.OnDeath += DeleteFromList;
+            _enemiesInSpawned.Add(enemy);
             
-            D.Log(GetType().Name.ToUpper(), log + D.FormatText(enemy.ShowStats.ToString(),DColor.RED),enemy.gameObject,DColor.AQUAMARINE, true);
+            D.Log(GetType().Name.ToUpper(), log + D.FormatText(enemy.ShowStats.ToString(), DColor.RED),
+                enemy.gameObject, DColor.AQUAMARINE, true);
         }
-        
+
+        private void DeleteFromList(Enemy concreteEnemy)
+        {
+            concreteEnemy.OnDeath -= DeleteFromList;
+            _enemiesInSpawned.Remove(concreteEnemy);
+        }
+
+        public void KillRandomSpawnedEnemies()
+        {
+            if (_enemiesInSpawned.Count == 0)
+            {
+                D.LogWarning(GetType().Name.ToUpper(), "List is empty.",DColor.AQUAMARINE,true);
+                return;
+            }
+
+            int randomIndex = Random.Range(0, _enemiesInSpawned.Count);
+
+            _enemiesInSpawned[randomIndex].TakeDamage(int.MaxValue);
+        }
+
+        public void KillAllSpawnedEnemies()
+        {
+            if (_enemiesInSpawned.Count == 0)
+            {
+                D.LogWarning(GetType().Name.ToUpper(),"List is empty.",DColor.AQUAMARINE,true);
+                return;
+            }
+
+            List<Enemy> enemiesToKill = new List<Enemy>(_enemiesInSpawned);
+
+            foreach (Enemy enemy in enemiesToKill)
+            {
+                if (enemy != null)
+                    enemy.TakeDamage(int.MaxValue);
+            }
+        }
+
         public void AddMoney(int amount)
         {
             Debug.Log($"Добавлено {amount} денег");

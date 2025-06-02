@@ -19,6 +19,10 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
                 .Bind<EnemyView>()
                 .FromInstance(_view)
                 .AsSingle();
+
+            Container
+                .Bind<AnimationEnemy>()
+                .AsSingle();
             
             Container
                 .BindInstance(_config)

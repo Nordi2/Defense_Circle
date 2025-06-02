@@ -39,7 +39,7 @@ namespace _Project.Scripts.Gameplay.Component
                 message: $"{type?.Name}\n" +
                          $"TakeDamage : {damage}," +
                          $"MaxHealth: {_healthStat.MaxHealth.CurrentValue}," +
-                         $"OldHealth: {_healthStat.CurrentHealth.CurrentValue + damage}," +
+                         $"OldHealth: {Math.Clamp(_healthStat.CurrentHealth.CurrentValue + damage, 0, _healthStat.MaxHealth.CurrentValue)}," +
                          $"CurrentHealth: {newValue}",
                 context: contextInfo,
                 color: DColor.YELLOW,

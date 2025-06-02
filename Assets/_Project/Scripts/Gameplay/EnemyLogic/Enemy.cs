@@ -1,6 +1,6 @@
-﻿using _Project.Scripts.Gameplay.Component;
+﻿using System;
+using _Project.Scripts.Gameplay.Component;
 using _Project.Scripts.Gameplay.Observers;
-using _Project.Scripts.Gameplay.Stats.EnemyStats;
 using _Project.Scripts.Gameplay.TowerLogic;
 using R3;
 using UnityEngine;
@@ -11,11 +11,14 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
     public class Enemy : MonoBehaviour,
         ITakeDamagble
     {
+        public event Action<Enemy> OnDeath;
+
         [SerializeField] private TakeDamageObserver _takeDamageObserver;
 
         private TakeDamageComponent _takeDamageComponent;
         private GiveDamageComponent _giveDamageComponent;
         private EnemyView _view;
+        private AnimationEnemy _animation;
         private readonly CompositeDisposable _disposable = new();
 
         [Inject]
@@ -23,10 +26,12 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
             TakeDamageComponent takeDamageComponent,
             GiveDamageComponent giveDamageComponent,
             ShowStats showStats,
-            EnemyView view)
+            EnemyView view,
+            AnimationEnemy animation)
         {
             ShowStats = showStats;
 
+            _animation = animation;
             _view = view;
             _giveDamageComponent = giveDamageComponent;
             _takeDamageComponent = takeDamageComponent;
@@ -65,17 +70,25 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
 
         private void GiveDamageCallback()
         {
-            Debug.Log("Callback");
+            Instantiate(_view.DieEffect, transform.position, Quaternion.identity);
+            OnDeath?.Invoke(this);
+            gameObject.SetActive(false);
         }
 
         private void DieCallback()
         {
+            Instantiate(_view.MoneyPrefab,transform.position, Quaternion.identity);
+            Instantiate(_view.DieEffect, transform.position, Quaternion.identity);
+            OnDeath?.Invoke(this);
             gameObject.SetActive(false);
         }
 
         private void TakeDamageCallback(int damageValue)
         {
-            DamageText damageText = Instantiate(_view.DamageTextPrefab, _view.transform.position, _view.transform.rotation);
+            _animation.PlayTakeDamageAnimation();
+
+            DamageText damageText =
+                Instantiate(_view.DamageTextPrefab, _view.transform.position, _view.transform.rotation);
             damageText.StartAnimation(damageValue);
         }
     }

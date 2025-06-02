@@ -6,11 +6,13 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
     public class EnemyView : MonoBehaviour
     {
         [SerializeField] private Transform _rotationTransform;
-        [SerializeField] private TextMeshPro _damageText;
         [SerializeField] private DamageText _damageTextPrefab;
+        [SerializeField] private ParticleSystem _dieEffect;
+        [SerializeField] private GameObject _moneyPrefab;
 
+        public GameObject MoneyPrefab => _moneyPrefab;
+        public ParticleSystem DieEffect => _dieEffect;
         public DamageText DamageTextPrefab => _damageTextPrefab;
-        public TextMeshPro DamageText => _damageText;
         public Transform RotationTransform => _rotationTransform;
     }
 }

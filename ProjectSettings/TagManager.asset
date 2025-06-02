@@ -47,6 +47,9 @@ TagManager:
   - name: Bullet
     uniqueID: 2243831019
     locked: 0
+  - name: Money
+    uniqueID: 3870534421
+    locked: 0
   - name: Enemy
     uniqueID: 648401763
     locked: 0

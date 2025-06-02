@@ -13,8 +13,8 @@ namespace _Project.Scripts.Gameplay.BulletLogic
     {
         [SerializeField] private TakeDamageObserver _takeDamageObserver;
         [SerializeField] private int _damage;
+        [SerializeField] private ParticleSystem _particle;
         private BulletMovement _movement;
-
         private GiveDamageComponent _giveDamageComponent;
         private ShowStats _showStats;
         private readonly CompositeDisposable _disposable = new();
@@ -47,8 +47,7 @@ namespace _Project.Scripts.Gameplay.BulletLogic
             Transform spawnPoint,
             Vector3 targetPosition)
         {
-            D.Log(GetType().Name, D.FormatText($"\n{_showStats}", DColor.RED), gameObject,DColor.YELLOW);
-
+            D.Log(GetType().Name, D.FormatText($"\n{_showStats}", DColor.RED), gameObject, DColor.YELLOW);
             transform.position = spawnPoint.position;
             _movement.Initialize(targetPosition);
         }

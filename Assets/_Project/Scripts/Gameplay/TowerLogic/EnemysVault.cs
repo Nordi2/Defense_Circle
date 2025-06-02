@@ -18,14 +18,14 @@ namespace _Project.Scripts.Gameplay.TowerLogic
 
         private readonly List<Enemy> _enemies = new();
         private readonly CompositeDisposable _disposable = new();
-        
+
         public EnemysVault(EnemyObserver enemyObserver)
         {
             _enemyObserver = enemyObserver;
         }
-        
+
         public IReadOnlyList<Enemy> Enemies => _enemies;
-        
+
         void IInitializable.Initialize()
         {
             _enemyObserver
@@ -41,8 +41,19 @@ namespace _Project.Scripts.Gameplay.TowerLogic
 
         private void AddEnemy(Enemy enemy)
         {
-            D.Log(GetType().Name,"Add Enemy",DColor.YELLOW,true);
-             _enemies.Add(enemy);
+            D.Log(GetType().Name, "Add Enemy", DColor.YELLOW, true);
+
+            enemy.OnDeath += DeleteEnemyFromList;
+            _enemies.Add(enemy);
+        }
+
+        private void DeleteEnemyFromList(Enemy concreteEnemy)
+        {
+            if (_enemies.Contains(concreteEnemy))
+            {
+                _enemies.Remove(concreteEnemy);
+                concreteEnemy.OnDeath -= DeleteEnemyFromList;
+            }
         }
     }
 }

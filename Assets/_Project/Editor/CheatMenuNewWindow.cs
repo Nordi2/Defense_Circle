@@ -1,4 +1,6 @@
-﻿using _Project.Scripts.Gameplay;
+﻿using System;
+using System.Collections.Generic;
+using _Project.Scripts.Gameplay;
 using _Project.Scripts.Gameplay.EnemyLogic;
 using UnityEditor;
 using UnityEngine;
@@ -13,6 +15,8 @@ namespace _Project.Editor
         private int _addHealth;
         private int _spendHealth;
 
+        private List<Enemy> _enemiesInSpawned = new();
+        
         [MenuItem("Tools/Cheat-Menu")]
         public static void ShowWindow()
         {
@@ -85,8 +89,8 @@ namespace _Project.Editor
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.LabelField("Another:");
-
-                if (GUILayout.Button("Create Fast Enemy", GUILayout.MaxWidth(150)))
+                
+                if (GUILayout.Button("Create Fast Enemy", GUILayout.MaxWidth(150))) 
                     CreateEnemy(EnemyType.Fast);
 
                 if (GUILayout.Button("Create Default Enemy", GUILayout.MaxWidth(150)))
@@ -95,12 +99,12 @@ namespace _Project.Editor
                 if (GUILayout.Button("Create Slow Enemy", GUILayout.MaxWidth(150)))
                     CreateEnemy(EnemyType.Slow);
 
-                if (GUILayout.Button("Delete Random Enemy", GUILayout.MaxWidth(150)))
-                    DeleteRandomEnemy();
+                if (GUILayout.Button("Kill Random Enemy", GUILayout.MaxWidth(150)))
+                    KillRandomEnemy();
 
-                if (GUILayout.Button("Delete All Enemy", GUILayout.MaxWidth(150)))
-                    DeleteAllEnemy();
-
+                if (GUILayout.Button("Kill All Enemy", GUILayout.MaxWidth(150)))
+                    KillAllEnemy();
+                
                 EditorGUILayout.EndVertical();
             }
             else
@@ -126,12 +130,14 @@ namespace _Project.Editor
             _spendHealth = 0;
         }
 
-        private void DeleteAllEnemy()
+        private void KillAllEnemy()
         {
+            _cheatManager.KillAllSpawnedEnemies();
         }
 
-        private void DeleteRandomEnemy()
+        private void KillRandomEnemy()
         {
+            _cheatManager.KillRandomSpawnedEnemies();
         }
 
         private void CreateEnemy(EnemyType type) =>
