@@ -4,6 +4,8 @@ namespace _Project.Scripts
     {
         public const string UIRootPath = "UI/UI-Root";
         public const string CurtainPath = "UI/Curtain";
+
+        public const string InitialTextLoad = "UI/TextAfterLoading";
         
         public const string TowerPath = "GameEntities/Tower";
 

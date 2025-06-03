@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
@@ -9,33 +10,71 @@ namespace _Project.Scripts.Gameplay.TowerLogic
     public class AnimationTower : 
         IInitializable
     {
-        private Camera _camera;
-        private Sequence _sequence;
-        private Tween _tween;
-        private readonly SpriteRenderer[] _sprites;
-        private Color _normalColor = new Color(1f,0.42f,0f);
+        private const float DurationShakeCamera = 1f;
+        private const float DurationSwitchColor = 0.25f;
+        private const float StrengthShake = 0.5f;
+        private const float DurationDoScale = 1f;
         
-        public AnimationTower(SpriteRenderer[] sprites)
+        private const int CountLoops = 4;
+
+        private Sequence _sequence;
+        private Tween _tweenInitialSpawn;
+
+        private Transform _transformParent;
+        private readonly Color _normalColor;
+        private readonly Color _takeDamageColor;
+        private readonly Camera _camera;
+        private readonly SpriteRenderer _spriteSwitchColor;
+
+        public AnimationTower(
+            TowerView view,
+            Camera camera)
         {
-            _sprites = sprites;
+            _spriteSwitchColor = view.SpriteSwitchColor;
+            _normalColor = view.NormalColor;
+            _takeDamageColor = view.TakeDamageColor;
+            _transformParent = view.transform;
+            _camera = camera;
         }
+
+        public Tween InitialSpawnAnimation { get; private set; }
+        public Tween DeathAnimation;
         
         void IInitializable.Initialize()
         {
-            _camera = Camera.main;
+            InitialSpawnAnimation = PlayInitialSpawn();
         }
 
-        public void PlayAnimationTakeDamage()
+        private Tween PlayInitialSpawn()
         {
-            if (_sequence.IsActive()) 
+            return _transformParent
+                .DOScale(Vector3.one, DurationDoScale)
+                .From(Vector3.zero)
+                .SetEase(Ease.OutBounce)
+                .SetAutoKill(false)
+                .Pause();
+        }
+
+        public void PlayTakeDamage()
+        {
+            if (_sequence.IsActive())
                 _sequence.Kill();
 
             _sequence = DOTween.Sequence();
-            
+
             _sequence
-                .Append(_camera.DOShakePosition(1f,0.5f))
-                .Join(_sprites[0].DOColor(Color.red, 0.25f).SetLoops(4,LoopType.Yoyo))
-                .OnKill(() => _sprites[0].color = _normalColor);
+                .Append(_camera
+                    .DOShakePosition(DurationShakeCamera, StrengthShake))
+                .Join(_spriteSwitchColor
+                    .DOColor(_takeDamageColor, DurationSwitchColor)
+                    .SetLoops(CountLoops, LoopType.Yoyo))
+                .OnKill(() => _spriteSwitchColor.color = _normalColor);
+        }
+
+        public void PlayDeath()
+        {
+            _tweenInitialSpawn.PlayBackwards();
+            //_transformParent.DOScale(Vector3.zero, 1f).From(Vector3.one).SetEase(Ease.OutBounce);
         }
     }
 }

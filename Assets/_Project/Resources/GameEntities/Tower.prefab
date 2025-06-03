@@ -498,7 +498,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9107022558295096848}
   - {fileID: 6403810584856581455}
@@ -613,9 +613,6 @@ MonoBehaviour:
   _config: {fileID: 11400000, guid: 39fc9cfbfc5fb9e4e8494c998f4c1c2c, type: 2}
   _tower: {fileID: 7447734464313752220}
   _enemyObserver: {fileID: 425366101399624716}
-  _sprites:
-  - {fileID: 3034228721098696131}
-  - {fileID: 6180104053842164559}
   _view: {fileID: 8496516773948229889}
   _healthView: {fileID: 2988036011989207867}
 --- !u!114 &8496516773948229889
@@ -632,6 +629,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shootPoint: {fileID: 6403810584856581455}
   _bulletPrefab: {fileID: 1787706452414193955, guid: 0e55d48ee1e19f64292c859010782833, type: 3}
+  _spriteSwitchColor: {fileID: 3034228721098696131}
+  _takeDamageColor: {r: 1, g: 0, b: 0, a: 1}
+  _normalColor: {r: 1, g: 0.41960785, b: 0, a: 1}
 --- !u!1 &1200317321189261032
 GameObject:
   m_ObjectHideFlags: 0

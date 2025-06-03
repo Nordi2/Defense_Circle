@@ -3,6 +3,7 @@ using _Project.Scripts.Gameplay.BulletLogic;
 using _Project.Scripts.Gameplay.Component;
 using _Project.Scripts.Gameplay.Observers;
 using _Project.Scripts.Gameplay.Stats;
+using R3;
 using UnityEngine;
 using Zenject;
 
@@ -13,7 +14,6 @@ namespace _Project.Scripts.Gameplay.TowerLogic
         [SerializeField] private TowerConfig _config;
         [SerializeField] private Tower _tower;
         [SerializeField] private EnemyObserver _enemyObserver;
-        [SerializeField] private SpriteRenderer[] _sprites;
         [SerializeField] private TowerView _view;
         [SerializeField] private HealthView _healthView;
         
@@ -38,8 +38,7 @@ namespace _Project.Scripts.Gameplay.TowerLogic
 
             Container
                 .BindInterfacesAndSelfTo<AnimationTower>()
-                .AsSingle()
-                .WithArguments(_sprites);
+                .AsSingle();
 
             Container
                 .BindInterfacesAndSelfTo<TowerShoot>()

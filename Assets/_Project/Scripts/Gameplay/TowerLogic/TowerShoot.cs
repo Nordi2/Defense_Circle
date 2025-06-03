@@ -6,7 +6,8 @@ using Zenject;
 namespace _Project.Scripts.Gameplay.TowerLogic
 {
     [UsedImplicitly]
-    public class TowerShoot : ITickable
+    public class TowerShoot : 
+        ITickable
     {
         public Action<Vector3, Transform> OnShoot;
 

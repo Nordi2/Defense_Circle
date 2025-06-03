@@ -1,7 +1,6 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,8 +19,8 @@ namespace _Project.Scripts.Infrastructure
 
             AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
 
-            await asyncOperation.ToUniTask();
-
+            await asyncOperation;
+            
             loadedCallback?.Invoke();
         }
     }

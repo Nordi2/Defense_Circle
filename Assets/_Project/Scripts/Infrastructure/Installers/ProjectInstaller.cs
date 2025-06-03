@@ -1,4 +1,5 @@
 using _Project.Scripts.UI;
+using R3;
 using Zenject;
 
 namespace _Project.Scripts.Infrastructure.Installers
@@ -20,7 +21,11 @@ namespace _Project.Scripts.Infrastructure.Installers
                 .Bind<UIRoot>()
                 .FromComponentInNewPrefabResource(AssetPath.UIRootPath)
                 .AsSingle();
-
+            
+            Container
+                .Bind<CompositeDisposable>()
+                .AsSingle();
+            
             Container
                 .Bind<Curtain>()
                 .FromComponentInNewPrefabResource(AssetPath.CurtainPath)

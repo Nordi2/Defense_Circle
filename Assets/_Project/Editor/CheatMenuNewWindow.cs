@@ -14,8 +14,6 @@ namespace _Project.Editor
         private int _spendMoney;
         private int _addHealth;
         private int _spendHealth;
-
-        private List<Enemy> _enemiesInSpawned = new();
         
         [MenuItem("Tools/Cheat-Menu")]
         public static void ShowWindow()
@@ -130,15 +128,11 @@ namespace _Project.Editor
             _spendHealth = 0;
         }
 
-        private void KillAllEnemy()
-        {
+        private void KillAllEnemy() => 
             _cheatManager.KillAllSpawnedEnemies();
-        }
 
-        private void KillRandomEnemy()
-        {
+        private void KillRandomEnemy() => 
             _cheatManager.KillRandomSpawnedEnemies();
-        }
 
         private void CreateEnemy(EnemyType type) =>
             _cheatManager.SpawnEnemy(type);

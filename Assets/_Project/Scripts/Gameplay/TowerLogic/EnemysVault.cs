@@ -5,23 +5,27 @@ using _Project.Scripts.Gameplay.Observers;
 using DebugToolsPlus;
 using JetBrains.Annotations;
 using R3;
+using UnityEngine;
 using Zenject;
 
 namespace _Project.Scripts.Gameplay.TowerLogic
 {
     [UsedImplicitly]
     public class EnemysVault :
-        IInitializable,
-        IDisposable
+        IDisposable,
+        IInitializable
     {
         private readonly EnemyObserver _enemyObserver;
 
         private readonly List<Enemy> _enemies = new();
-        private readonly CompositeDisposable _disposable = new();
+        private readonly CompositeDisposable _disposable;
 
-        public EnemysVault(EnemyObserver enemyObserver)
+        public EnemysVault(
+            EnemyObserver enemyObserver,
+            CompositeDisposable disposable)
         {
             _enemyObserver = enemyObserver;
+            _disposable = disposable;
         }
 
         public IReadOnlyList<Enemy> Enemies => _enemies;
@@ -34,15 +38,11 @@ namespace _Project.Scripts.Gameplay.TowerLogic
                 .AddTo(_disposable);
         }
 
-        void IDisposable.Dispose()
-        {
+        void IDisposable.Dispose() => 
             _disposable.Dispose();
-        }
 
         private void AddEnemy(Enemy enemy)
         {
-            D.Log(GetType().Name, "Add Enemy", DColor.YELLOW, true);
-
             enemy.OnDeath += DeleteEnemyFromList;
             _enemies.Add(enemy);
         }
