@@ -1,58 +1,60 @@
 ﻿using System;
+using _Project.Scripts.Gameplay.Component;
 using DG.Tweening;
 using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
 namespace _Project.Scripts.Gameplay.TowerLogic
 {
     [UsedImplicitly]
-    public class AnimationTower : 
-        IInitializable
+    public class AnimationTower
     {
         private const float DurationShakeCamera = 1f;
         private const float DurationSwitchColor = 0.25f;
         private const float StrengthShake = 0.5f;
         private const float DurationDoScale = 1f;
-        
+        private const float DurationAnimationDoFadeHealthText = 0.5f;
+
         private const int CountLoops = 4;
 
         private Sequence _sequence;
-        private Tween _tweenInitialSpawn;
 
-        private Transform _transformParent;
+        private readonly Transform _transformParent;
         private readonly Color _normalColor;
         private readonly Color _takeDamageColor;
         private readonly Camera _camera;
         private readonly SpriteRenderer _spriteSwitchColor;
+        private readonly HealthView _healthView;
 
         public AnimationTower(
             TowerView view,
-            Camera camera)
+            Camera camera,
+            HealthView healthView)
         {
             _spriteSwitchColor = view.SpriteSwitchColor;
             _normalColor = view.NormalColor;
             _takeDamageColor = view.TakeDamageColor;
             _transformParent = view.transform;
             _camera = camera;
+            _healthView = healthView;
         }
 
-        public Tween InitialSpawnAnimation { get; private set; }
-        public Tween DeathAnimation;
-        
-        void IInitializable.Initialize()
+        public void PlayInitialSpawn(Action initialSpawnAction)
         {
-            InitialSpawnAnimation = PlayInitialSpawn();
-        }
+            _sequence = DOTween.Sequence();
 
-        private Tween PlayInitialSpawn()
-        {
-            return _transformParent
-                .DOScale(Vector3.one, DurationDoScale)
-                .From(Vector3.zero)
-                .SetEase(Ease.OutBounce)
-                .SetAutoKill(false)
-                .Pause();
+            _sequence
+                .AppendCallback(() => initialSpawnAction?.Invoke())
+                .Append(_transformParent
+                    .DOScale(Vector3.one, DurationDoScale)
+                    .From(Vector3.zero)
+                    .SetEase(Ease.OutBounce))
+                .Append(TextDoFadeAnimation(_healthView.LabelText, DurationAnimationDoFadeHealthText))
+                .Join(TextDoFadeAnimation(_healthView.CurrentHealthText, DurationAnimationDoFadeHealthText))
+                .Join(TextDoFadeAnimation(_healthView.SeparatorText, DurationAnimationDoFadeHealthText))
+                .Join(TextDoFadeAnimation(_healthView.MaxHealthText, DurationAnimationDoFadeHealthText));
         }
 
         public void PlayTakeDamage()
@@ -73,8 +75,17 @@ namespace _Project.Scripts.Gameplay.TowerLogic
 
         public void PlayDeath()
         {
-            _tweenInitialSpawn.PlayBackwards();
-            //_transformParent.DOScale(Vector3.zero, 1f).From(Vector3.one).SetEase(Ease.OutBounce);
+            _transformParent
+                .DOScale(Vector3.zero, DurationDoScale)
+                .From(Vector3.one)
+                .SetEase(Ease.OutBounce);
+        }
+        
+        private Tween TextDoFadeAnimation(TextMeshProUGUI text, float duration)
+        {
+            return text
+                .DOFade(1, duration)
+                .From(0);
         }
     }
 }

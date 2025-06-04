@@ -1,6 +1,5 @@
 ﻿using _Project.Scripts.Gameplay.Component;
 using _Project.Scripts.Infrastructure.Services.GameLoop;
-using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -13,8 +12,7 @@ namespace _Project.Scripts.Gameplay.TowerLogic
     {
         private AnimationTower _animationTower;
         private TakeDamageComponent _takeDamageComponent;
-        private EnemysVault _enemysVault;
-        
+
         [Inject]
         private void Construct(
             AnimationTower animationTower,
@@ -27,11 +25,9 @@ namespace _Project.Scripts.Gameplay.TowerLogic
         public Vector2 GetPosition() =>
             transform.position;
 
-        public void OnGameStart()
-        {
-            _animationTower.InitialSpawnAnimation.Play();
-        }
-        
+        public void OnGameStart() => 
+            _animationTower.PlayInitialSpawn(() => gameObject.SetActive(true));
+
         public void TakeDamage(int damage)
         {
             _takeDamageComponent.TakeDamage(
@@ -45,14 +41,10 @@ namespace _Project.Scripts.Gameplay.TowerLogic
                 DieCallback();
         }
 
-        private void DieCallback()
-        {
-            //_animationTower.PlayDeath(() => gameObject.SetActive(false));
-        }
+        private void DieCallback() => 
+            _animationTower.PlayDeath();
 
-        private void TakeDamageCallback(int damage)
-        {
+        private void TakeDamageCallback(int damage) => 
             _animationTower.PlayTakeDamage();
-        }
     }
 }

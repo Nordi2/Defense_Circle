@@ -1,5 +1,6 @@
 ﻿using System;
 using _Project.Scripts.Gameplay.Component;
+using _Project.Scripts.Gameplay.Money;
 using _Project.Scripts.Gameplay.Observers;
 using _Project.Scripts.Gameplay.TowerLogic;
 using R3;
@@ -27,7 +28,8 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
             GiveDamageComponent giveDamageComponent,
             ShowStats showStats,
             EnemyView view,
-            AnimationEnemy animation)
+            AnimationEnemy animation,
+            Wallet wallet)
         {
             ShowStats = showStats;
 
@@ -77,7 +79,6 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
 
         private void DieCallback()
         {
-            Instantiate(_view.MoneyPrefab,transform.position, Quaternion.identity);
             Instantiate(_view.DieEffect, transform.position, Quaternion.identity);
             OnDeath?.Invoke(this);
             gameObject.SetActive(false);

@@ -1,9 +1,7 @@
 ﻿using _Project.Scripts.Data;
-using _Project.Scripts.Gameplay.BulletLogic;
 using _Project.Scripts.Gameplay.Component;
 using _Project.Scripts.Gameplay.Observers;
 using _Project.Scripts.Gameplay.Stats;
-using R3;
 using UnityEngine;
 using Zenject;
 

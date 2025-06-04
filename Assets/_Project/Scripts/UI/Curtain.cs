@@ -7,7 +7,7 @@ namespace _Project.Scripts.UI
     {
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private float _animationDuration;
-        
+
         public void Show()
         {
             gameObject.SetActive(true);

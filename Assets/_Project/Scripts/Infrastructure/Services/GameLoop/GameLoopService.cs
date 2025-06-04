@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
+using JetBrains.Annotations;
 using Zenject;
 
 namespace _Project.Scripts.Infrastructure.Services.GameLoop
 {
+    [UsedImplicitly]
     public class GameLoopService :
         IInitializable
     {

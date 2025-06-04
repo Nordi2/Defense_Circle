@@ -1625,6 +1625,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealthText: {fileID: 2662295252252815056}
   _currentHealthText: {fileID: 5746474146598092128}
+  labelText: {fileID: 1610385265819110277}
+  _separatorText: {fileID: 1206331869706894710}
   _animationDuration: 0.5
   _ease: 1
 --- !u!1 &6962861101860761462
@@ -2189,7 +2191,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2807391449227890924}
   - {fileID: 7994083039206422372}

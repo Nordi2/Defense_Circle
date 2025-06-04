@@ -1,9 +1,9 @@
 ﻿using System;
 using _Project.Scripts.Gameplay;
-using _Project.Scripts.Gameplay.TowerLogic;
 using _Project.Scripts.Infrastructure.Services.GameLoop;
 using _Project.Scripts.Infrastructure.Services.Input;
 using _Project.Scripts.UI;
+using DG.Tweening;
 using JetBrains.Annotations;
 using R3;
 using Zenject;
@@ -15,8 +15,7 @@ namespace _Project.Scripts.Infrastructure
         IInitializable,
         IDisposable
     {
-        private IDisposable _disposable;
-
+        private readonly CompositeDisposable _disposable;
         private readonly GameLoopService _gameLoopService;
         private readonly IInputService _inputService;
         private readonly InitialTextLoadAfterLoading _initialText;
@@ -26,9 +25,11 @@ namespace _Project.Scripts.Infrastructure
             InitialTextLoadAfterLoading initialText,
             UIRoot uiRoot,
             IInputService inputService,
-            GameLoopService gameLoopService)
+            GameLoopService gameLoopService,
+            CompositeDisposable disposable)
         {
             _gameLoopService = gameLoopService;
+            _disposable = disposable;
             _initialText = initialText;
             _uiRoot = uiRoot;
             _inputService = inputService;
@@ -36,10 +37,11 @@ namespace _Project.Scripts.Infrastructure
 
         void IInitializable.Initialize()
         {
-            _disposable = _inputService
+            _inputService
                 .OnClickSpaceButton
-                .Subscribe(RunGame);
-
+                .Subscribe(RunGame)
+                .AddTo(_disposable);
+            
             _uiRoot.AddToContainer(_initialText.RectTransform);
             _initialText.StartAnimation();
         }
@@ -47,7 +49,6 @@ namespace _Project.Scripts.Infrastructure
         private void RunGame(Unit unit)
         {
             _gameLoopService.StartGame();
-            
             _initialText.StopAnimation();
         }
 

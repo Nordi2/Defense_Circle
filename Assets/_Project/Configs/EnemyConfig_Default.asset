@@ -16,3 +16,4 @@ MonoBehaviour:
   _minMaxCollisionDamage: {x: 10, y: 25}
   _minMaxMoveSpeed: {x: 0.5, y: 1.5}
   _minMaxRotatitonSpeed: {x: 25, y: 75}
+  _minMaxMoneyReward: {x: 25, y: 75}

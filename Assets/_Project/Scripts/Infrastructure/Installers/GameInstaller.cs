@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.Gameplay;
+using _Project.Scripts.Gameplay.Money;
 using _Project.Scripts.Gameplay.TowerLogic;
 using _Project.Scripts.Infrastructure.Services.GameLoop;
 using _Project.Scripts.Infrastructure.Services.Input;
@@ -19,13 +20,18 @@ namespace _Project.Scripts.Infrastructure.Installers
             Container
                 .BindInterfacesAndSelfTo<Tower>()
                 .FromComponentInNewPrefabResource(AssetPath.TowerPath)
-                .AsSingle();
+                .AsSingle()
+                .OnInstantiated<Tower>((_, arg2) => arg2.gameObject.SetActive(false));
 
             Container
                 .Bind<InitialTextLoadAfterLoading>()
                 .FromComponentInNewPrefabResource(AssetPath.InitialTextLoad)
                 .AsSingle();
 
+            Container
+                .Bind<Wallet>()
+                .AsSingle();
+            
             Container
                 .BindInterfacesTo<InputService>()
                 .AsSingle();
@@ -34,7 +40,7 @@ namespace _Project.Scripts.Infrastructure.Installers
                 .BindInterfacesAndSelfTo<GameLoopService>()
                 .AsSingle()
                 .NonLazy();
-            
+
             Container
                 .Bind<Camera>()
                 .FromComponentInHierarchy()
