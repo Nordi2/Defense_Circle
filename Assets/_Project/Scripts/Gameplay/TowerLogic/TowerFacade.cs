@@ -5,7 +5,7 @@ using Zenject;
 
 namespace _Project.Scripts.Gameplay.TowerLogic
 {
-    public class Tower : MonoBehaviour,
+    public class TowerFacade : MonoBehaviour,
         IGameStartListener,
         ITakeDamagble,
         IGetTargetPosition
@@ -22,11 +22,12 @@ namespace _Project.Scripts.Gameplay.TowerLogic
             _animationTower = animationTower;
         }
 
+        public void OnGameStart() => 
+            _animationTower.PlayInitialSpawn(() =>
+                gameObject.SetActive(true));
+
         public Vector2 GetPosition() =>
             transform.position;
-
-        public void OnGameStart() => 
-            _animationTower.PlayInitialSpawn(() => gameObject.SetActive(true));
 
         public void TakeDamage(int damage)
         {

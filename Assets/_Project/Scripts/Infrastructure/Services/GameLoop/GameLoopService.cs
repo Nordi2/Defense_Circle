@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using _Project.Scripts.Infrastructure.Signals;
 using JetBrains.Annotations;
 using Zenject;
 
@@ -6,8 +8,10 @@ namespace _Project.Scripts.Infrastructure.Services.GameLoop
 {
     [UsedImplicitly]
     public class GameLoopService :
-        IInitializable
+        IInitializable,
+        IDisposable
     {
+        private readonly SignalBus _signalBus;
         private readonly IGameListener[] _gameListeners;
 
         private readonly List<IGameStartListener> _gameStartListeners;
@@ -15,9 +19,10 @@ namespace _Project.Scripts.Infrastructure.Services.GameLoop
         private readonly List<IGamePauseListener> _gamePauseListeners;
         private readonly List<IGameResumeListener> _gameResumeListeners;
 
-        public GameLoopService(IGameListener[] gameListeners)
+        public GameLoopService(IGameListener[] gameListeners, SignalBus signalBus)
         {
             _gameListeners = gameListeners;
+            _signalBus = signalBus;
 
             _gameStartListeners = new List<IGameStartListener>();
             _gameFinishListeners = new List<IGameFinishListener>();
@@ -27,6 +32,11 @@ namespace _Project.Scripts.Infrastructure.Services.GameLoop
 
         void IInitializable.Initialize()
         {
+            _signalBus.Subscribe<StartGameSignal>(StartGame);
+            _signalBus.Subscribe<FinishGameSignal>(FinishGame);
+            _signalBus.Subscribe<PauseGameSignal>(PauseGame);
+            _signalBus.Subscribe<ResumeGameSignal>(ResumeGame);
+            
             foreach (IGameListener listener in _gameListeners)
             {
                 switch (listener)
@@ -47,25 +57,33 @@ namespace _Project.Scripts.Infrastructure.Services.GameLoop
             }
         }
 
-        public void StartGame()
+        void IDisposable.Dispose()
+        {
+            _signalBus.Unsubscribe<StartGameSignal>(StartGame);
+            _signalBus.Unsubscribe<FinishGameSignal>(FinishGame);
+            _signalBus.Unsubscribe<PauseGameSignal>(PauseGame);
+            _signalBus.Unsubscribe<ResumeGameSignal>(ResumeGame);
+        }
+
+        private void StartGame()
         {
             foreach (IGameStartListener startListener in _gameStartListeners)
                 startListener.OnGameStart();
         }
 
-        public void PauseGame()
+        private void PauseGame()
         {
             foreach (IGamePauseListener pauseListener in _gamePauseListeners)
                 pauseListener.OnGamePause();
         }
 
-        public void ResumeGame()
+        private void ResumeGame()
         {
             foreach (IGameResumeListener resumeListener in _gameResumeListeners)
                 resumeListener.OnGameResume();
         }
 
-        public void FinishGame()
+        private void FinishGame()
         {
             foreach (IGameFinishListener finishListener in _gameFinishListeners)
                 finishListener.OnGameFinish();

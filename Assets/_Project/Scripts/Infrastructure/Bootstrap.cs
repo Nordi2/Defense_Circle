@@ -11,7 +11,7 @@ namespace _Project.Scripts.Infrastructure
     {
         private readonly SceneLoader _sceneLoader;
         private readonly Curtain _curtain;
-
+        
         public Bootstrap(
             SceneLoader sceneLoader,
             Curtain curtain)

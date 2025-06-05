@@ -17,17 +17,17 @@ namespace _Project.Scripts.Gameplay
         public Enemy EnemyDefaultPrefab;
         public Enemy EnemySlowPrefab;
 
-        private Tower _tower;
+        private TowerFacade _towerFacade;
         private IInstantiator _instantiator;
 
         private List<Enemy> _enemiesInSpawned = new();
 
         [Inject]
         private void Construct(
-            Tower tower,
+            TowerFacade towerFacade,
             IInstantiator instantiator)
         {
-            _tower = tower;
+            _towerFacade = towerFacade;
             _instantiator = instantiator;
         }
 
@@ -107,7 +107,7 @@ namespace _Project.Scripts.Gameplay
         public void TakeDamage(int amount)
         {
             D.Log(GetType().Name.ToUpper(), $"Take Damage: {amount}", DColor.AQUAMARINE, true);
-            _tower.TakeDamage(amount);
+            _towerFacade.TakeDamage(amount);
         }
 
         public void HealPlayer(int amount)

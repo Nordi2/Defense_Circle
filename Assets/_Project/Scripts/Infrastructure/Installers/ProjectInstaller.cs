@@ -12,20 +12,20 @@ namespace _Project.Scripts.Infrastructure.Installers
                 .BindInterfacesTo<Bootstrap>()
                 .AsSingle()
                 .NonLazy();
-
+            
             Container
                 .Bind<SceneLoader>()
-                .AsSingle();
-
-            Container
-                .Bind<UIRoot>()
-                .FromComponentInNewPrefabResource(AssetPath.UIRootPath)
                 .AsSingle();
             
             Container
                 .Bind<CompositeDisposable>()
                 .AsSingle();
             
+            Container
+                .Bind<UIRoot>()
+                .FromComponentInNewPrefabResource(AssetPath.UIRootPath)
+                .AsSingle();
+
             Container
                 .Bind<Curtain>()
                 .FromComponentInNewPrefabResource(AssetPath.CurtainPath)

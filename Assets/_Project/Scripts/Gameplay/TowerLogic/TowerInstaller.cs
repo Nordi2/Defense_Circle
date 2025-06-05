@@ -3,6 +3,7 @@ using _Project.Scripts.Gameplay.Component;
 using _Project.Scripts.Gameplay.Observers;
 using _Project.Scripts.Gameplay.Stats;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace _Project.Scripts.Gameplay.TowerLogic
@@ -10,7 +11,7 @@ namespace _Project.Scripts.Gameplay.TowerLogic
     public class TowerInstaller : MonoInstaller
     {
         [SerializeField] private TowerConfig _config;
-        [SerializeField] private Tower _tower;
+        [FormerlySerializedAs("_tower")] [SerializeField] private TowerFacade towerFacade;
         [SerializeField] private EnemyObserver _enemyObserver;
         [SerializeField] private TowerView _view;
         [SerializeField] private HealthView _healthView;

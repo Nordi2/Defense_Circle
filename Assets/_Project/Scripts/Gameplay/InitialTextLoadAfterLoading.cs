@@ -1,13 +1,16 @@
-﻿using DG.Tweening;
+﻿using _Project.Scripts.Infrastructure.Services.GameLoop;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay
 {
-    public class InitialTextLoadAfterLoading : MonoBehaviour
+    public class InitialTextLoadAfterLoading : MonoBehaviour ,
+        IGameStartListener
     {
         [SerializeField] private RectTransform _rectTransform;
         [SerializeField] private TextMeshProUGUI _textPressSpace;
+        
         [SerializeField] private float _animationDuration;
         [SerializeField] private float _endScaleValue;
 
@@ -24,8 +27,8 @@ namespace _Project.Scripts.Gameplay
                 .Join(_textPressSpace.DOScale(_endScaleValue, _animationDuration).SetLoops(-1, LoopType.Yoyo))
                 .Play();
         }
-
-        public void StopAnimation()
+        
+        public void OnGameStart()
         {
             _sequence.Kill();
             gameObject.SetActive(false);

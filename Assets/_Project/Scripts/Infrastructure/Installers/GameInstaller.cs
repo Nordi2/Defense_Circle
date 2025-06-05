@@ -3,6 +3,7 @@ using _Project.Scripts.Gameplay.Money;
 using _Project.Scripts.Gameplay.TowerLogic;
 using _Project.Scripts.Infrastructure.Services.GameLoop;
 using _Project.Scripts.Infrastructure.Services.Input;
+using _Project.Scripts.Infrastructure.Signals;
 using UnityEngine;
 using Zenject;
 
@@ -12,35 +13,43 @@ namespace _Project.Scripts.Infrastructure.Installers
     {
         public override void InstallBindings()
         {
+            SignalBusInstaller.Install(Container);
+
+            Container.DeclareSignal<StartGameSignal>();
+            Container.DeclareSignal<FinishGameSignal>();
+            Container.DeclareSignal<PauseGameSignal>();
+            Container.DeclareSignal<ResumeGameSignal>();
+            
             Container
                 .BindInterfacesTo<GameplayBootstrapper>()
                 .AsSingle()
                 .NonLazy();
+            
+            Container
+                .BindInterfacesAndSelfTo<GameLoopService>()
+                .AsSingle()
+                .NonLazy();
 
             Container
-                .BindInterfacesAndSelfTo<Tower>()
-                .FromComponentInNewPrefabResource(AssetPath.TowerPath)
-                .AsSingle()
-                .OnInstantiated<Tower>((_, arg2) => arg2.gameObject.SetActive(false));
+                .Bind<Wallet>()
+                .AsSingle();
 
+            Container
+                .BindInterfacesTo<InputService>()
+                .AsSingle();
+            
             Container
                 .Bind<InitialTextLoadAfterLoading>()
                 .FromComponentInNewPrefabResource(AssetPath.InitialTextLoad)
                 .AsSingle();
 
             Container
-                .Bind<Wallet>()
-                .AsSingle();
-            
-            Container
-                .BindInterfacesTo<InputService>()
-                .AsSingle();
-
-            Container
-                .BindInterfacesAndSelfTo<GameLoopService>()
+                .BindInterfacesAndSelfTo<TowerFacade>()
+                .FromComponentInNewPrefabResource(AssetPath.TowerPath)
                 .AsSingle()
-                .NonLazy();
-
+                .OnInstantiated<TowerFacade>((_, arg2) 
+                    => arg2.gameObject.SetActive(false));
+            
             Container
                 .Bind<Camera>()
                 .FromComponentInHierarchy()
