@@ -611,7 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: 39fc9cfbfc5fb9e4e8494c998f4c1c2c, type: 2}
-  towerFacade: {fileID: 7447734464313752220}
+  _towerFacade: {fileID: 7447734464313752220}
   _enemyObserver: {fileID: 425366101399624716}
   _view: {fileID: 8496516773948229889}
   _healthView: {fileID: 2988036011989207867}
@@ -629,9 +629,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shootPoint: {fileID: 6403810584856581455}
   _bulletPrefab: {fileID: 1787706452414193955, guid: 0e55d48ee1e19f64292c859010782833, type: 3}
-  _spriteSwitchColor: {fileID: 3034228721098696131}
-  _takeDamageColor: {r: 1, g: 0, b: 0, a: 1}
-  _normalColor: {r: 1, g: 0.41960785, b: 0, a: 1}
   _animationSpawnSettings:
     <DurationDoFade>k__BackingField: 0.5
     <DurationDoScale>k__BackingField: 1

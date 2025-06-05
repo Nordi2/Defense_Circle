@@ -12,17 +12,16 @@ namespace _Project.Scripts.Gameplay.Tower
     public class TowerInstaller : MonoInstaller
     {
         [SerializeField] private TowerConfig _config;
-        [SerializeField] private TowerFacade towerFacade;
         [SerializeField] private EnemyObserver _enemyObserver;
         [SerializeField] private TowerView _view;
         [SerializeField] private HealthView _healthView;
-        
+
         public override void InstallBindings()
         {
             Container
                 .BindInstance(_view)
                 .AsSingle();
-            
+
             Container
                 .BindInstance(_enemyObserver)
                 .AsSingle();
@@ -30,7 +29,7 @@ namespace _Project.Scripts.Gameplay.Tower
             Container
                 .Bind<TowerCallbacks>()
                 .AsSingle();
-            
+
             Container
                 .Bind<TakeDamageComponent>()
                 .AsSingle();
@@ -39,7 +38,7 @@ namespace _Project.Scripts.Gameplay.Tower
                 .BindInterfacesAndSelfTo<EnemysVault>()
                 .AsSingle()
                 .NonLazy();
-            
+
             Container
                 .BindInterfacesAndSelfTo<AnimationTower>()
                 .AsSingle();
@@ -47,7 +46,7 @@ namespace _Project.Scripts.Gameplay.Tower
             Container
                 .BindInterfacesAndSelfTo<TowerShoot>()
                 .AsSingle();
-            
+
             Container
                 .BindInterfacesTo<SpawnBullet>()
                 .AsSingle()
@@ -57,12 +56,12 @@ namespace _Project.Scripts.Gameplay.Tower
                 .Bind<HealthStat>()
                 .AsSingle()
                 .WithArguments(_config.MaxHealth);
-            
+
             Container
                 .Bind<HealthView>()
                 .FromInstance(_healthView)
                 .AsSingle();
-            
+
             Container
                 .BindInterfacesTo<HealthPresenter>()
                 .AsSingle()
