@@ -611,7 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: 39fc9cfbfc5fb9e4e8494c998f4c1c2c, type: 2}
-  _tower: {fileID: 7447734464313752220}
+  towerFacade: {fileID: 7447734464313752220}
   _enemyObserver: {fileID: 425366101399624716}
   _view: {fileID: 8496516773948229889}
   _healthView: {fileID: 2988036011989207867}
@@ -632,6 +632,23 @@ MonoBehaviour:
   _spriteSwitchColor: {fileID: 3034228721098696131}
   _takeDamageColor: {r: 1, g: 0, b: 0, a: 1}
   _normalColor: {r: 1, g: 0.41960785, b: 0, a: 1}
+  _animationSpawnSettings:
+    <DurationDoFade>k__BackingField: 0.5
+    <DurationDoScale>k__BackingField: 1
+    <Ease>k__BackingField: 30
+  _animationTakeDamageSettings:
+    <AnimationSpriteRenderers>k__BackingField:
+    - {fileID: 3034228721098696131}
+    - {fileID: 6180104053842164559}
+    <DurationShakeCamera>k__BackingField: 1
+    <StrengthShakeCamera>k__BackingField: 0.5
+    <DurationSwitchColor>k__BackingField: 0.25
+    <CountLoops>k__BackingField: 4
+    <TakeDamageColor>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
+    <NormalColor>k__BackingField: {r: 1, g: 0.41960785, b: 0, a: 1}
+  _animationDeathSettings:
+    <DurationDoScale>k__BackingField: 1
+    <EaseType>k__BackingField: 30
 --- !u!1 &1200317321189261032
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,7 +1642,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealthText: {fileID: 2662295252252815056}
   _currentHealthText: {fileID: 5746474146598092128}
-  labelText: {fileID: 1610385265819110277}
+  _labelText: {fileID: 1610385265819110277}
   _separatorText: {fileID: 1206331869706894710}
   _animationDuration: 0.5
   _ease: 1

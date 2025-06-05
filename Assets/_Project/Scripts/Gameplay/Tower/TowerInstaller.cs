@@ -2,16 +2,17 @@
 using _Project.Scripts.Gameplay.Component;
 using _Project.Scripts.Gameplay.Observers;
 using _Project.Scripts.Gameplay.Stats;
+using _Project.Scripts.Gameplay.Tower.Animation;
+using _Project.Scripts.Gameplay.Tower.Callbacks;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
-namespace _Project.Scripts.Gameplay.TowerLogic
+namespace _Project.Scripts.Gameplay.Tower
 {
     public class TowerInstaller : MonoInstaller
     {
         [SerializeField] private TowerConfig _config;
-        [FormerlySerializedAs("_tower")] [SerializeField] private TowerFacade towerFacade;
+        [SerializeField] private TowerFacade towerFacade;
         [SerializeField] private EnemyObserver _enemyObserver;
         [SerializeField] private TowerView _view;
         [SerializeField] private HealthView _healthView;
@@ -21,20 +22,24 @@ namespace _Project.Scripts.Gameplay.TowerLogic
             Container
                 .BindInstance(_view)
                 .AsSingle();
-
-            Container
-                .Bind<TakeDamageComponent>()
-                .AsSingle();
             
             Container
                 .BindInstance(_enemyObserver)
                 .AsSingle();
+
+            Container
+                .Bind<TowerCallbacks>()
+                .AsSingle();
             
+            Container
+                .Bind<TakeDamageComponent>()
+                .AsSingle();
+
             Container
                 .BindInterfacesAndSelfTo<EnemysVault>()
                 .AsSingle()
                 .NonLazy();
-
+            
             Container
                 .BindInterfacesAndSelfTo<AnimationTower>()
                 .AsSingle();

@@ -2,17 +2,17 @@
 using _Project.Scripts.Gameplay.Component;
 using _Project.Scripts.Gameplay.Money;
 using _Project.Scripts.Gameplay.Observers;
-using _Project.Scripts.Gameplay.TowerLogic;
+using _Project.Scripts.Gameplay.Tower;
 using R3;
 using UnityEngine;
 using Zenject;
 
 namespace _Project.Scripts.Gameplay.EnemyLogic
 {
-    public class Enemy : MonoBehaviour,
+    public class EnemyFacade : MonoBehaviour,
         ITakeDamagble
     {
-        public event Action<Enemy> OnDeath;
+        public event Action<EnemyFacade> OnDeath;
 
         [SerializeField] private TakeDamageObserver _takeDamageObserver;
 

@@ -1,4 +1,4 @@
-﻿using _Project.Scripts.Gameplay.TowerLogic;
+﻿using _Project.Scripts.Gameplay.Tower;
 
 namespace _Project.Scripts.Gameplay.Observers
 {

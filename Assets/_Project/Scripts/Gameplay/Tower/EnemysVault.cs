@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using _Project.Scripts.Gameplay.EnemyLogic;
 using _Project.Scripts.Gameplay.Observers;
-using DebugToolsPlus;
 using JetBrains.Annotations;
 using R3;
-using UnityEngine;
 using Zenject;
 
-namespace _Project.Scripts.Gameplay.TowerLogic
+namespace _Project.Scripts.Gameplay.Tower
 {
     [UsedImplicitly]
     public class EnemysVault :
@@ -17,7 +15,7 @@ namespace _Project.Scripts.Gameplay.TowerLogic
     {
         private readonly EnemyObserver _enemyObserver;
 
-        private readonly List<Enemy> _enemies = new();
+        private readonly List<EnemyFacade> _enemies = new();
         private readonly CompositeDisposable _disposable;
 
         public EnemysVault(
@@ -28,7 +26,7 @@ namespace _Project.Scripts.Gameplay.TowerLogic
             _disposable = disposable;
         }
 
-        public IReadOnlyList<Enemy> Enemies => _enemies;
+        public IReadOnlyList<EnemyFacade> Enemies => _enemies;
 
         void IInitializable.Initialize()
         {
@@ -41,18 +39,18 @@ namespace _Project.Scripts.Gameplay.TowerLogic
         void IDisposable.Dispose() => 
             _disposable.Dispose();
 
-        private void AddEnemy(Enemy enemy)
+        private void AddEnemy(EnemyFacade enemyFacade)
         {
-            enemy.OnDeath += DeleteEnemyFromList;
-            _enemies.Add(enemy);
+            enemyFacade.OnDeath += DeleteEnemyFromList;
+            _enemies.Add(enemyFacade);
         }
 
-        private void DeleteEnemyFromList(Enemy concreteEnemy)
+        private void DeleteEnemyFromList(EnemyFacade concreteEnemyFacade)
         {
-            if (_enemies.Contains(concreteEnemy))
+            if (_enemies.Contains(concreteEnemyFacade))
             {
-                _enemies.Remove(concreteEnemy);
-                concreteEnemy.OnDeath -= DeleteEnemyFromList;
+                _enemies.Remove(concreteEnemyFacade);
+                concreteEnemyFacade.OnDeath -= DeleteEnemyFromList;
             }
         }
     }

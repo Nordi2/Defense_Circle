@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Scripts.Gameplay.TowerLogic
+namespace _Project.Scripts.Gameplay.Tower
 {
     [UsedImplicitly]
     public class TowerShoot : 

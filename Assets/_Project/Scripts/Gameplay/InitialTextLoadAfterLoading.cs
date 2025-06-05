@@ -24,11 +24,10 @@ namespace _Project.Scripts.Gameplay
 
             _sequence
                 .Append(_textPressSpace.DOFade(0, _animationDuration).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo))
-                .Join(_textPressSpace.DOScale(_endScaleValue, _animationDuration).SetLoops(-1, LoopType.Yoyo))
-                .Play();
+                .Join(_textPressSpace.DOScale(_endScaleValue, _animationDuration).SetLoops(-1, LoopType.Yoyo));
         }
-        
-        public void OnGameStart()
+
+        void IGameStartListener.OnGameStart()
         {
             _sequence.Kill();
             gameObject.SetActive(false);

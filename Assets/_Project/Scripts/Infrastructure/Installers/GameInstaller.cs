@@ -1,6 +1,6 @@
 ﻿using _Project.Scripts.Gameplay;
 using _Project.Scripts.Gameplay.Money;
-using _Project.Scripts.Gameplay.TowerLogic;
+using _Project.Scripts.Gameplay.Tower;
 using _Project.Scripts.Infrastructure.Services.GameLoop;
 using _Project.Scripts.Infrastructure.Services.Input;
 using _Project.Scripts.Infrastructure.Signals;
@@ -39,7 +39,7 @@ namespace _Project.Scripts.Infrastructure.Installers
                 .AsSingle();
             
             Container
-                .Bind<InitialTextLoadAfterLoading>()
+                .BindInterfacesAndSelfTo<InitialTextLoadAfterLoading>()
                 .FromComponentInNewPrefabResource(AssetPath.InitialTextLoad)
                 .AsSingle();
 

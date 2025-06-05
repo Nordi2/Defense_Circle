@@ -1,4 +1,4 @@
-﻿namespace _Project.Scripts.Gameplay.TowerLogic
+﻿namespace _Project.Scripts.Gameplay.Tower
 {
     public interface ITakeDamagble
     {

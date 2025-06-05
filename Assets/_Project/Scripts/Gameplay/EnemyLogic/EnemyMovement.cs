@@ -1,6 +1,6 @@
 using _Project.Scripts.Gameplay.Stats;
 using _Project.Scripts.Gameplay.Stats.EnemyStats;
-using _Project.Scripts.Gameplay.TowerLogic;
+using _Project.Scripts.Gameplay.Tower;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;

@@ -1,4 +1,5 @@
 using _Project.Scripts.UI;
+using DG.Tweening;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
@@ -24,6 +25,7 @@ namespace _Project.Scripts.Infrastructure
         {
             Debug.unityLogger.logEnabled = Debug.isDebugBuild;
             Application.targetFrameRate = 60;
+            DOTween.Init();
             
             _ = _sceneLoader.LoadScene(Scenes.Gameplay, _curtain.Hide);
         }

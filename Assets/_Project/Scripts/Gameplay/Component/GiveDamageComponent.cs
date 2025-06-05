@@ -1,6 +1,6 @@
 ﻿using System;
 using _Project.Scripts.Gameplay.Stats.EnemyStats;
-using _Project.Scripts.Gameplay.TowerLogic;
+using _Project.Scripts.Gameplay.Tower;
 using JetBrains.Annotations;
 
 namespace _Project.Scripts.Gameplay.Component

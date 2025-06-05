@@ -2,6 +2,6 @@
 
 namespace _Project.Scripts.Gameplay.Observers
 {
-    public class EnemyObserver : TriggerObserver<Enemy>
+    public class EnemyObserver : TriggerObserver<EnemyFacade>
     { }
 }

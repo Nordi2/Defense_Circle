@@ -3,13 +3,14 @@ using _Project.Scripts.Gameplay.Component;
 using _Project.Scripts.Gameplay.Stats;
 using _Project.Scripts.Gameplay.Stats.EnemyStats;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace _Project.Scripts.Gameplay.EnemyLogic
 {
     public class EnemyInstaller : MonoInstaller
     {
-        [SerializeField] private Enemy _enemy;
+        [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyFacade enemyFacade;
         [SerializeField] private EnemyConfig _config;
         [SerializeField] private EnemyView _view;
 
@@ -40,7 +41,7 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
             Container
                 .BindInterfacesTo<EnemyMovement>()
                 .AsSingle()
-                .WithArguments(_enemy.transform);
+                .WithArguments(enemyFacade.transform);
 
             Container
                 .Bind<GiveDamageComponent>()

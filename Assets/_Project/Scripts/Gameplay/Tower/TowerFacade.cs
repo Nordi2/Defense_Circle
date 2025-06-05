@@ -1,31 +1,31 @@
 ﻿using _Project.Scripts.Gameplay.Component;
+using _Project.Scripts.Gameplay.Tower.Callbacks;
 using _Project.Scripts.Infrastructure.Services.GameLoop;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Scripts.Gameplay.TowerLogic
+namespace _Project.Scripts.Gameplay.Tower
 {
     public class TowerFacade : MonoBehaviour,
         IGameStartListener,
         ITakeDamagble,
         IGetTargetPosition
     {
-        private AnimationTower _animationTower;
+        private TowerCallbacks _towerCallbacks;
         private TakeDamageComponent _takeDamageComponent;
 
         [Inject]
         private void Construct(
-            AnimationTower animationTower,
-            TakeDamageComponent takeDamageComponent)
+            TakeDamageComponent takeDamageComponent,
+            TowerCallbacks towerCallbacks)
         {
+            _towerCallbacks = towerCallbacks;
             _takeDamageComponent = takeDamageComponent;
-            _animationTower = animationTower;
         }
 
-        public void OnGameStart() => 
-            _animationTower.PlayInitialSpawn(() =>
-                gameObject.SetActive(true));
-
+        public void OnGameStart() =>
+            _towerCallbacks.GameStart(gameObject);
+        
         public Vector2 GetPosition() =>
             transform.position;
 
@@ -34,18 +34,12 @@ namespace _Project.Scripts.Gameplay.TowerLogic
             _takeDamageComponent.TakeDamage(
                 damage,
                 out bool isDie,
-                TakeDamageCallback,
+                _towerCallbacks.TakeDamageCallback,
                 GetType(),
                 gameObject);
 
             if (isDie)
-                DieCallback();
+                _towerCallbacks.DeathCallback();
         }
-
-        private void DieCallback() => 
-            _animationTower.PlayDeath();
-
-        private void TakeDamageCallback(int damage) => 
-            _animationTower.PlayTakeDamage();
     }
 }

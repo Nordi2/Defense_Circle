@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Project.Scripts.Gameplay.EnemyLogic;
-using _Project.Scripts.Gameplay.TowerLogic;
+using _Project.Scripts.Gameplay.Tower;
 using DebugToolsPlus;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 using Random = UnityEngine.Random;
 
@@ -13,14 +14,14 @@ namespace _Project.Scripts.Gameplay
     [UsedImplicitly]
     public class CheatManager : MonoBehaviour
     {
-        [Header("Spawn Settings")] public Enemy EnemyFastPrefab;
-        public Enemy EnemyDefaultPrefab;
-        public Enemy EnemySlowPrefab;
+        [FormerlySerializedAs("EnemyFastPrefab")] [Header("Spawn Settings")] public EnemyFacade enemyFacadeFastPrefab;
+        [FormerlySerializedAs("EnemyDefaultPrefab")] public EnemyFacade enemyFacadeDefaultPrefab;
+        [FormerlySerializedAs("EnemySlowPrefab")] public EnemyFacade enemyFacadeSlowPrefab;
 
         private TowerFacade _towerFacade;
         private IInstantiator _instantiator;
 
-        private List<Enemy> _enemiesInSpawned = new();
+        private List<EnemyFacade> _enemiesInSpawned = new();
 
         [Inject]
         private void Construct(
@@ -38,35 +39,35 @@ namespace _Project.Scripts.Gameplay
             switch (type)
             {
                 case EnemyType.Default:
-                    CreateEnemyAndGetLog(randomPosition, "Create: Default-Enemy\n", EnemyDefaultPrefab);
+                    CreateEnemyAndGetLog(randomPosition, "Create: Default-Enemy\n", enemyFacadeDefaultPrefab);
                     break;
                 case EnemyType.Fast:
-                    CreateEnemyAndGetLog(randomPosition, "Create: Fast-Enemy\n", EnemyFastPrefab);
+                    CreateEnemyAndGetLog(randomPosition, "Create: Fast-Enemy\n", enemyFacadeFastPrefab);
                     break;
                 case EnemyType.Slow:
-                    CreateEnemyAndGetLog(randomPosition, "Create: Slow-Enemy\n", EnemySlowPrefab);
+                    CreateEnemyAndGetLog(randomPosition, "Create: Slow-Enemy\n", enemyFacadeSlowPrefab);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
 
-        private void CreateEnemyAndGetLog(Vector3 randomPosition, string log, Enemy prefab)
+        private void CreateEnemyAndGetLog(Vector3 randomPosition, string log, EnemyFacade prefab)
         {
-            Enemy enemy = _instantiator.InstantiatePrefab(prefab, randomPosition, Quaternion.identity, null)
-                .GetComponent<Enemy>();
+            EnemyFacade enemyFacade = _instantiator.InstantiatePrefab(prefab, randomPosition, Quaternion.identity, null)
+                .GetComponent<EnemyFacade>();
 
-            enemy.OnDeath += DeleteFromList;
-            _enemiesInSpawned.Add(enemy);
+            enemyFacade.OnDeath += DeleteFromList;
+            _enemiesInSpawned.Add(enemyFacade);
             
-            D.Log(GetType().Name.ToUpper(), log + D.FormatText(enemy.ShowStats.ToString(), DColor.RED),
-                enemy.gameObject, DColor.AQUAMARINE, true);
+            D.Log(GetType().Name.ToUpper(), log + D.FormatText(enemyFacade.ShowStats.ToString(), DColor.RED),
+                enemyFacade.gameObject, DColor.AQUAMARINE, true);
         }
 
-        private void DeleteFromList(Enemy concreteEnemy)
+        private void DeleteFromList(EnemyFacade concreteEnemyFacade)
         {
-            concreteEnemy.OnDeath -= DeleteFromList;
-            _enemiesInSpawned.Remove(concreteEnemy);
+            concreteEnemyFacade.OnDeath -= DeleteFromList;
+            _enemiesInSpawned.Remove(concreteEnemyFacade);
         }
 
         public void KillRandomSpawnedEnemies()
@@ -90,9 +91,9 @@ namespace _Project.Scripts.Gameplay
                 return;
             }
 
-            List<Enemy> enemiesToKill = new List<Enemy>(_enemiesInSpawned);
+            List<EnemyFacade> enemiesToKill = new List<EnemyFacade>(_enemiesInSpawned);
 
-            foreach (Enemy enemy in enemiesToKill)
+            foreach (EnemyFacade enemy in enemiesToKill)
             {
                 if (enemy != null)
                     enemy.TakeDamage(int.MaxValue);
