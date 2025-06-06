@@ -1,3 +1,4 @@
+using _Project.Scripts.Infrastructure.Services.Data;
 using _Project.Scripts.UI;
 using R3;
 using Zenject;
@@ -20,6 +21,11 @@ namespace _Project.Scripts.Infrastructure.Installers
             Container
                 .Bind<CompositeDisposable>()
                 .AsSingle();
+
+            Container
+                .BindInterfacesTo<DataService>()
+                .AsSingle()
+                .NonLazy();
             
             Container
                 .Bind<UIRoot>()

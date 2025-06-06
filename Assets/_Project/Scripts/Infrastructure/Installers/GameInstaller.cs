@@ -35,9 +35,10 @@ namespace _Project.Scripts.Infrastructure.Installers
                 .BindInterfacesTo<InputService>()
                 .AsSingle();
 
-            Container
-                .BindInterfacesTo<DataService>()
-                .AsSingle();
+            // Container
+            //     .BindInterfacesTo<DataService>()
+            //     .AsSingle()
+            //     .NonLazy();
             
             Container
                 .Bind<Wallet>()

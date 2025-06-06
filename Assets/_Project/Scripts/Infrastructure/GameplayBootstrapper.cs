@@ -50,9 +50,7 @@ namespace _Project.Scripts.Infrastructure
         void IDisposable.Dispose() =>
             _disposable.Dispose();
 
-        private void RunGame(Unit unit)
-        {
+        private void RunGame(Unit unit) => 
             _signalBus.Fire(new StartGameSignal());
-        }
     }
 }

@@ -11,7 +11,7 @@ namespace _Project.Scripts.Infrastructure.Services.Data
         IInitializable
     {
         private TowerConfig _towerConfig;
-
+        
         void IInitializable.Initialize() => 
             _towerConfig = Resources.Load<TowerConfig>("Data/TowerConfig");
 

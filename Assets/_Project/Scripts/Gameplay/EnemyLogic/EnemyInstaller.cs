@@ -10,7 +10,7 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
 {
     public class EnemyInstaller : MonoInstaller
     {
-        [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyFacade enemyFacade;
+        [SerializeField] private EnemyFacade enemyFacade;
         [SerializeField] private EnemyConfig _config;
         [SerializeField] private EnemyView _view;
 
