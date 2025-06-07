@@ -1,3 +1,4 @@
+using System;
 using _Project.Scripts.Infrastructure.Services.Data;
 using _Project.Scripts.UI;
 using R3;
@@ -25,7 +26,7 @@ namespace _Project.Scripts.Infrastructure.Installers
             Container
                 .BindInterfacesTo<DataService>()
                 .AsSingle()
-                .NonLazy();
+                .OnInstantiated<DataService>(LoadingConfig);
             
             Container
                 .Bind<UIRoot>()
@@ -37,5 +38,8 @@ namespace _Project.Scripts.Infrastructure.Installers
                 .FromComponentInNewPrefabResource(AssetPath.CurtainPath)
                 .AsSingle();
         }
+
+        private void LoadingConfig(InjectContext arg1, DataService dataService) => 
+            dataService.LoadData();
     }
 }

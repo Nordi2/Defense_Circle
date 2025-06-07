@@ -22,4 +22,9 @@
     {
         void OnGameFinish();
     }
+
+    public interface IUpdatable : IGameListener
+    {
+        void OnUpdate();
+    }
 }

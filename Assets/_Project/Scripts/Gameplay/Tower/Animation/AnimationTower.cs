@@ -23,11 +23,10 @@ namespace _Project.Scripts.Gameplay.Tower.Animation
         
         public AnimationTower(
             TowerView view,
-            Camera camera,
-            HealthView healthView)
+            Camera camera)
         {
             _camera = camera;
-            _healthView = healthView;
+            _healthView = view.HealthView;
             _mainTransform = view.transform;
 
             _initialSpawnSettings = view.AnimationSpawnSettings;

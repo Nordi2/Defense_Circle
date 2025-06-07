@@ -6,16 +6,24 @@ using Zenject;
 namespace _Project.Scripts.Infrastructure.Services.Data
 {
     [UsedImplicitly]
-    public class DataService : 
-        IDataService, 
-        IInitializable
+    public class DataService :
+        IDataService
     {
-        private TowerConfig _towerConfig;
-        
-        void IInitializable.Initialize() => 
-            _towerConfig = Resources.Load<TowerConfig>("Data/TowerConfig");
+        private const string EnemyConfigPath = "Data/EnemyConfig";
 
-        public TowerConfig GetTowerConfig() => 
+        private TowerConfig _towerConfig;
+        private EnemyConfig _enemyConfig;
+
+        public void LoadData()
+        {
+            _towerConfig = Resources.Load<TowerConfig>("Data/TowerConfig");
+            _enemyConfig = Resources.Load<EnemyConfig>(EnemyConfigPath);
+        }
+
+        public EnemyConfig GetEnemyConfig() => 
+            _enemyConfig;
+
+        public TowerConfig GetTowerConfig() =>
             _towerConfig;
     }
 }

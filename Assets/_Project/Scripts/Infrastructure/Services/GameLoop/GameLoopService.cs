@@ -18,6 +18,8 @@ namespace _Project.Scripts.Infrastructure.Services.GameLoop
         private readonly List<IGameFinishListener> _gameFinishListeners;
         private readonly List<IGamePauseListener> _gamePauseListeners;
         private readonly List<IGameResumeListener> _gameResumeListeners;
+        private readonly List<IDisposable> _gameDisposables;
+        private readonly List<IUpdatable> _gameUpdatables;
 
         public GameLoopService(IGameListener[] gameListeners, SignalBus signalBus)
         {
@@ -28,7 +30,21 @@ namespace _Project.Scripts.Infrastructure.Services.GameLoop
             _gameFinishListeners = new List<IGameFinishListener>();
             _gamePauseListeners = new List<IGamePauseListener>();
             _gameResumeListeners = new List<IGameResumeListener>();
+            _gameUpdatables = new List<IUpdatable>();
+            _gameDisposables = new List<IDisposable>();
         }
+
+        public void AddGameListener(IGameListener listener)
+        {
+            if (listener is IGameStartListener gameStartListener)
+                _gameStartListeners.Add(gameStartListener);
+        }
+
+        public void AddDisposable(IDisposable disposable) =>
+            _gameDisposables.Add(disposable);
+
+        public void AddUpdatable(IUpdatable listener) =>
+            _gameUpdatables.Add(listener);
 
         void IInitializable.Initialize()
         {
@@ -36,7 +52,7 @@ namespace _Project.Scripts.Infrastructure.Services.GameLoop
             _signalBus.Subscribe<FinishGameSignal>(FinishGame);
             _signalBus.Subscribe<PauseGameSignal>(PauseGame);
             _signalBus.Subscribe<ResumeGameSignal>(ResumeGame);
-            
+
             foreach (IGameListener listener in _gameListeners)
             {
                 switch (listener)
@@ -63,6 +79,9 @@ namespace _Project.Scripts.Infrastructure.Services.GameLoop
             _signalBus.Unsubscribe<FinishGameSignal>(FinishGame);
             _signalBus.Unsubscribe<PauseGameSignal>(PauseGame);
             _signalBus.Unsubscribe<ResumeGameSignal>(ResumeGame);
+
+            foreach (IDisposable disposable in _gameDisposables)
+                disposable.Dispose();
         }
 
         private void StartGame()

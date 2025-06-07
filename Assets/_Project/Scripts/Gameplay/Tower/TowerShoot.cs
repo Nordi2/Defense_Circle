@@ -1,4 +1,5 @@
 ﻿using System;
+using _Project.Scripts.Infrastructure.Services.GameLoop;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
@@ -26,7 +27,7 @@ namespace _Project.Scripts.Gameplay.Tower
             _enemysVault = enemysVault;
             _shootPoint = view.ShootPoint;
         }
-
+        
         void ITickable.Tick()
         {
             if (_enemysVault.Enemies.Count <= 0)
@@ -36,7 +37,7 @@ namespace _Project.Scripts.Gameplay.Tower
             {
                 Shoot();
                 _nextShootTime = Time.time + 1f / _shootRate;
-            }
+            }   
         }
 
         private void Shoot()

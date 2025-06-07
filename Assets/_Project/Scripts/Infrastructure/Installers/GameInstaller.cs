@@ -1,9 +1,10 @@
 ﻿using _Project.Scripts.Gameplay;
+using _Project.Scripts.Gameplay.EnemyLogic;
 using _Project.Scripts.Gameplay.Money;
-using _Project.Scripts.Gameplay.Tower;
-using _Project.Scripts.Infrastructure.Services.Data;
+using _Project.Scripts.Infrastructure.Services.Factory;
 using _Project.Scripts.Infrastructure.Services.GameLoop;
 using _Project.Scripts.Infrastructure.Services.Input;
+using _Project.Scripts.Infrastructure.Services.Pools;
 using _Project.Scripts.Infrastructure.Signals;
 using UnityEngine;
 using Zenject;
@@ -20,12 +21,12 @@ namespace _Project.Scripts.Infrastructure.Installers
             Container.DeclareSignal<FinishGameSignal>();
             Container.DeclareSignal<PauseGameSignal>();
             Container.DeclareSignal<ResumeGameSignal>();
-            
+
             Container
                 .BindInterfacesTo<GameplayBootstrapper>()
                 .AsSingle()
                 .NonLazy();
-            
+
             Container
                 .BindInterfacesAndSelfTo<GameLoopService>()
                 .AsSingle()
@@ -35,13 +36,17 @@ namespace _Project.Scripts.Infrastructure.Installers
                 .BindInterfacesTo<InputService>()
                 .AsSingle();
 
-            // Container
-            //     .BindInterfacesTo<DataService>()
-            //     .AsSingle()
-            //     .NonLazy();
+            Container
+                .BindInterfacesTo<GameFactory>()
+                .AsSingle();
             
             Container
                 .Bind<Wallet>()
+                .AsSingle();
+
+            Container
+                .BindInterfacesTo<TargetPoint>()
+                .FromComponentInNewPrefabResource(AssetPath.SpawnPointPath)
                 .AsSingle();
             
             Container
@@ -50,21 +55,15 @@ namespace _Project.Scripts.Infrastructure.Installers
                 .AsSingle();
 
             Container
-                .BindInterfacesAndSelfTo<TowerFacade>()
-                .FromComponentInNewPrefabResource(AssetPath.TowerPath)
-                .AsSingle()
-                .OnInstantiated<TowerFacade>((_, arg2) 
-                    => arg2.gameObject.SetActive(false));
-            
-            Container
                 .Bind<Camera>()
                 .FromComponentInHierarchy()
                 .AsSingle();
 
-#if UNITY_EDITOR
-            Container
-                .InstantiatePrefabResource(AssetPath.CheatManager);
-#endif
+            Container.BindMemoryPool<EnemyFacade, EnemyPool>()
+                .WithInitialSize(5)
+                .ExpandByOneAtATime()
+                .FromComponentInNewPrefabResource(AssetPath.EnemyDefaultPath)
+                .UnderTransformGroup("EnemyPool");
         }
     }
 }

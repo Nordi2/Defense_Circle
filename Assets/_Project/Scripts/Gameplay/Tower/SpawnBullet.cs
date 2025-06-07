@@ -7,7 +7,7 @@ using Zenject;
 namespace _Project.Scripts.Gameplay.Tower
 {
     [UsedImplicitly]
-    public class SpawnBullet :
+    public class SpawnBullet : 
         IInitializable,
         IDisposable
     {
@@ -15,22 +15,21 @@ namespace _Project.Scripts.Gameplay.Tower
         private readonly Bullet _bulletPrefab;
         private readonly IInstantiator _instantiator;
 
-        public SpawnBullet(TowerShoot towerShoot, TowerView view, IInstantiator instantiator)
+        public SpawnBullet(
+            TowerShoot towerShoot,
+            TowerView view,
+            IInstantiator instantiator)
         {
             _towerShoot = towerShoot;
             _instantiator = instantiator;
             _bulletPrefab = view.BulletPrefab;
         }
 
-        void IInitializable.Initialize()
-        {
+        void IInitializable.Initialize() => 
             _towerShoot.OnShoot += Spawn;
-        }
 
-        public void Dispose()
-        {
+        void IDisposable.Dispose() => 
             _towerShoot.OnShoot -= Spawn;
-        }
 
         private void Spawn(Vector3 direction, Transform shootPoint)
         {

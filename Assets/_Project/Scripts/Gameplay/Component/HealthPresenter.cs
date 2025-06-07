@@ -13,15 +13,17 @@ namespace _Project.Scripts.Gameplay.Component
     {
         private readonly HealthView _view;
         private readonly HealthStat _healthStat;
-        
-        private readonly CompositeDisposable _disposable = new();
+
+        private readonly CompositeDisposable _disposable;
 
         public HealthPresenter(
             HealthView view,
-            HealthStat healthStat)
+            HealthStat healthStat,
+            CompositeDisposable disposable)
         {
             _view = view;
             _healthStat = healthStat;
+            _disposable = disposable;
         }
 
         void IInitializable.Initialize()
@@ -30,21 +32,19 @@ namespace _Project.Scripts.Gameplay.Component
                 .CurrentHealth
                 .Prepend(_healthStat.MaxHealth.CurrentValue)
                 .Pairwise()
-                .Subscribe(pair => UpdateCurrentHealthText(pair.Previous,pair.Current))
+                .Subscribe(pair => UpdateCurrentHealthText(pair.Previous, pair.Current))
                 .AddTo(_disposable);
         }
-        
+
+        void IDisposable.Dispose() =>
+            _disposable.Dispose();
+
         private void UpdateMaxHealthText(int newMaxValue) =>
             _view.UpdateMaxHealthText(newMaxValue);
 
         private void UpdateCurrentHealthText(int oldValue, int newValue)
         {
-            _view.UpdateCurrentHealthText(oldValue, newValue);      
-        }
-
-        void IDisposable.Dispose()
-        {
-            _disposable.Dispose();
+            _view.UpdateCurrentHealthText(oldValue, newValue);
         }
     }
 }

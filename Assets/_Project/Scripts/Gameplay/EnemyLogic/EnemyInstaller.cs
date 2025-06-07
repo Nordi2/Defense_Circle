@@ -22,11 +22,11 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
                 .AsSingle();
 
             Container
-                .Bind<AnimationEnemy>()
-                .AsSingle();
-            
-            Container
                 .BindInstance(_config)
+                .AsSingle();
+
+            Container
+                .Bind<AnimationEnemy>()
                 .AsSingle();
 
             Container

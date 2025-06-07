@@ -8,9 +8,7 @@ namespace _Project.Scripts
         public const string InitialTextLoad = "UI/TextAfterLoading";
         
         public const string TowerPath = "GameEntities/Tower";
-
-#if UNITY_EDITOR
-        public const string CheatManager = "Infrastructure/CheatManager";
-#endif
+        public const string EnemyDefaultPath = "GameEntities/Enemy";
+        public const string SpawnPointPath = "GameEntities/SpawnPointTower";
     }
 }

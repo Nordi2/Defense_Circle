@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.Gameplay.EnemyLogic;
+using _Project.Scripts.Infrastructure.Services.GameLoop;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
@@ -6,8 +7,7 @@ using Zenject;
 namespace _Project.Scripts.Gameplay.Component
 {
     [UsedImplicitly]
-    public class RotationComponent :
-        ITickable
+    public class RotationComponent : ITickable
     {
         private readonly float _rotationSpeed;
         private readonly Transform _rotateTransform;
@@ -19,10 +19,8 @@ namespace _Project.Scripts.Gameplay.Component
             _rotateTransform = view.RotationTransform;
             _rotationSpeed = rotationSpeed;
         }
-
-        void ITickable.Tick()
-        {
+        
+        void ITickable.Tick() => 
             _rotateTransform.Rotate(_rotateTransform.forward, _rotationSpeed * Time.deltaTime);
-        }
     }
 }

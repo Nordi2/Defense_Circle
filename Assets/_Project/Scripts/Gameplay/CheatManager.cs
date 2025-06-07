@@ -1,80 +1,88 @@
-﻿using System;
+﻿#if UNITY_EDITOR
 using System.Collections.Generic;
 using _Project.Scripts.Gameplay.EnemyLogic;
 using _Project.Scripts.Gameplay.Tower;
+using _Project.Scripts.Infrastructure.Services.Pools;
 using DebugToolsPlus;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Zenject;
 using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.Gameplay
 {
     [UsedImplicitly]
-    public class CheatManager : MonoBehaviour
+    public static class CheatManager
     {
-        [FormerlySerializedAs("EnemyFastPrefab")] [Header("Spawn Settings")] public EnemyFacade enemyFacadeFastPrefab;
-        [FormerlySerializedAs("EnemyDefaultPrefab")] public EnemyFacade enemyFacadeDefaultPrefab;
-        [FormerlySerializedAs("EnemySlowPrefab")] public EnemyFacade enemyFacadeSlowPrefab;
+        private const string CheathManager = "CheathManager";
 
-        private TowerFacade _towerFacade;
-        private IInstantiator _instantiator;
+        public static EnemyPool EnemyPool;
+        public static TowerFacade TowerFacade;
 
-        private List<EnemyFacade> _enemiesInSpawned = new();
+        private static readonly List<EnemyFacade> _enemiesInSpawned = new();
 
-        [Inject]
-        private void Construct(
-            TowerFacade towerFacade,
-            IInstantiator instantiator)
-        {
-            _towerFacade = towerFacade;
-            _instantiator = instantiator;
-        }
-
-        public void SpawnEnemy(EnemyType type)
+        public static void SpawnEnemy(EnemyType type)
         {
             Vector3 randomPosition = GetRandomSpawnPosition();
 
-            switch (type)
+            SpawnEnemyAndGetLog(randomPosition,"Create Enemy\n");
+            /*switch (type)
             {
                 case EnemyType.Default:
-                    CreateEnemyAndGetLog(randomPosition, "Create: Default-Enemy\n", enemyFacadeDefaultPrefab);
+                    if (EnemyFacadeDefaultPrefab == null)
+                    {
+                        D.LogWarning(CheathManager.ToUpper(), "Reference to prefab is null. Start playing",
+                            DColor.AQUAMARINE, true);
+                        return;
+                    }
+
+                    CreateEnemyAndGetLog(randomPosition, "Create: Default-Enemy\n", EnemyFacadeDefaultPrefab);
                     break;
                 case EnemyType.Fast:
-                    CreateEnemyAndGetLog(randomPosition, "Create: Fast-Enemy\n", enemyFacadeFastPrefab);
+                    if (EnemyFacadeFastPrefab == null)
+                    {
+                        D.LogWarning(CheathManager.ToUpper(), "Reference to prefab is null. Start playing",
+                            DColor.AQUAMARINE, true);
+                        return;
+                    }
+
+                    CreateEnemyAndGetLog(randomPosition, "Create: Fast-Enemy\n", EnemyFacadeFastPrefab);
                     break;
                 case EnemyType.Slow:
-                    CreateEnemyAndGetLog(randomPosition, "Create: Slow-Enemy\n", enemyFacadeSlowPrefab);
+                    if (EnemyFacadeSlowPrefab == null)
+                    {
+                        D.LogWarning(CheathManager.ToUpper(), "Reference to prefab is null. Start playing",
+                            DColor.AQUAMARINE, true);
+                        return;
+                    }
+
+                    CreateEnemyAndGetLog(randomPosition, "Create: Slow-Enemy\n", EnemyFacadeSlowPrefab);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
+            }*/
         }
 
-        private void CreateEnemyAndGetLog(Vector3 randomPosition, string log, EnemyFacade prefab)
+        private static void SpawnEnemyAndGetLog(Vector3 randomPosition, string log)
         {
-            EnemyFacade enemyFacade = _instantiator.InstantiatePrefab(prefab, randomPosition, Quaternion.identity, null)
-                .GetComponent<EnemyFacade>();
-
+            EnemyFacade enemyFacade = EnemyPool.Spawn(randomPosition);
             enemyFacade.OnDeath += DeleteFromList;
             _enemiesInSpawned.Add(enemyFacade);
-            
-            D.Log(GetType().Name.ToUpper(), log + D.FormatText(enemyFacade.ShowStats.ToString(), DColor.RED),
+
+            D.Log(CheathManager.ToUpper(), log + D.FormatText(enemyFacade.ShowStats.ToString(), DColor.RED),
                 enemyFacade.gameObject, DColor.AQUAMARINE, true);
         }
 
-        private void DeleteFromList(EnemyFacade concreteEnemyFacade)
+        private static void DeleteFromList(EnemyFacade concreteEnemyFacade)
         {
             concreteEnemyFacade.OnDeath -= DeleteFromList;
             _enemiesInSpawned.Remove(concreteEnemyFacade);
         }
 
-        public void KillRandomSpawnedEnemies()
+        public static void KillRandomSpawnedEnemies()
         {
             if (_enemiesInSpawned.Count == 0)
             {
-                D.LogWarning(GetType().Name.ToUpper(), "List is empty.",DColor.AQUAMARINE,true);
+                D.LogWarning(CheathManager.ToUpper(), "List is empty.", DColor.AQUAMARINE, true);
                 return;
             }
 
@@ -83,11 +91,11 @@ namespace _Project.Scripts.Gameplay
             _enemiesInSpawned[randomIndex].TakeDamage(int.MaxValue);
         }
 
-        public void KillAllSpawnedEnemies()
+        public static void KillAllSpawnedEnemies()
         {
             if (_enemiesInSpawned.Count == 0)
             {
-                D.LogWarning(GetType().Name.ToUpper(),"List is empty.",DColor.AQUAMARINE,true);
+                D.LogWarning(CheathManager.ToUpper(), "List is empty.", DColor.AQUAMARINE, true);
                 return;
             }
 
@@ -100,23 +108,30 @@ namespace _Project.Scripts.Gameplay
             }
         }
 
-        public void AddMoney(int amount)
+        public static void AddMoney(int amount)
         {
             Debug.Log($"Добавлено {amount} денег");
         }
 
-        public void TakeDamage(int amount)
+        public static void TakeDamage(int amount)
         {
-            D.Log(GetType().Name.ToUpper(), $"Take Damage: {amount}", DColor.AQUAMARINE, true);
-            _towerFacade.TakeDamage(amount);
+            if (TowerFacade == null)
+            {
+                D.LogWarning(CheathManager.ToUpper(), "Reference to Tower is null. Start playing", DColor.AQUAMARINE,
+                    true);
+                return;
+            }
+
+            D.Log(CheathManager.ToUpper(), $"Take Damage: {amount}", DColor.AQUAMARINE, true);
+            TowerFacade.TakeDamage(amount);
         }
 
-        public void HealPlayer(int amount)
+        public static void HealPlayer(int amount)
         {
             Debug.Log($"Восстановлено {amount} здоровья");
         }
 
-        private Vector3 GetRandomSpawnPosition()
+        private static Vector3 GetRandomSpawnPosition()
         {
             Vector2 direction = Random.insideUnitCircle.normalized;
 
@@ -129,3 +144,4 @@ namespace _Project.Scripts.Gameplay
         }
     }
 }
+#endif

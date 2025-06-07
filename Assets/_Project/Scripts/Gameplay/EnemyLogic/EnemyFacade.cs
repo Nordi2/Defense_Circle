@@ -20,7 +20,7 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
         private GiveDamageComponent _giveDamageComponent;
         private EnemyView _view;
         private AnimationEnemy _animation;
-        private readonly CompositeDisposable _disposable = new();
+        private IDisposable _disposable;
 
         [Inject]
         private void Construct(
@@ -28,25 +28,22 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
             GiveDamageComponent giveDamageComponent,
             ShowStats showStats,
             EnemyView view,
-            AnimationEnemy animation,
-            Wallet wallet)
+            AnimationEnemy animation)
         {
-            ShowStats = showStats;
-
-            _animation = animation;
-            _view = view;
-            _giveDamageComponent = giveDamageComponent;
             _takeDamageComponent = takeDamageComponent;
+            _giveDamageComponent = giveDamageComponent;
+            _view = view;
+            _animation = animation;
+            ShowStats = showStats;
         }
 
         public ShowStats ShowStats { get; private set; }
 
         private void OnEnable()
         {
-            _takeDamageObserver
+            _disposable = _takeDamageObserver
                 .TriggerEnter
-                .Subscribe(CollisionTakeDamageObject)
-                .AddTo(_disposable);
+                .Subscribe(CollisionTakeDamageObject);
         }
 
         private void OnDisable() =>
@@ -74,14 +71,12 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
         {
             Instantiate(_view.DieEffect, transform.position, Quaternion.identity);
             OnDeath?.Invoke(this);
-            gameObject.SetActive(false);
         }
 
         private void DieCallback()
         {
             Instantiate(_view.DieEffect, transform.position, Quaternion.identity);
             OnDeath?.Invoke(this);
-            gameObject.SetActive(false);
         }
 
         private void TakeDamageCallback(int damageValue)

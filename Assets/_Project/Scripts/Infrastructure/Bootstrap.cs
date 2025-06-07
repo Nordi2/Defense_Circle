@@ -1,3 +1,4 @@
+using _Project.Scripts.Infrastructure.Services.Data;
 using _Project.Scripts.UI;
 using DG.Tweening;
 using JetBrains.Annotations;
@@ -12,7 +13,8 @@ namespace _Project.Scripts.Infrastructure
     {
         private readonly SceneLoader _sceneLoader;
         private readonly Curtain _curtain;
-        
+        private IDataService _dataService;
+
         public Bootstrap(
             SceneLoader sceneLoader,
             Curtain curtain)
@@ -26,7 +28,7 @@ namespace _Project.Scripts.Infrastructure
             Debug.unityLogger.logEnabled = Debug.isDebugBuild;
             Application.targetFrameRate = 60;
             DOTween.Init();
-            
+
             _ = _sceneLoader.LoadScene(Scenes.Gameplay, _curtain.Hide);
         }
     }

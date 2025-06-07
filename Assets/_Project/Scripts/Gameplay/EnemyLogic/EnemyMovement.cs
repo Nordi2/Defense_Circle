@@ -1,6 +1,7 @@
 using _Project.Scripts.Gameplay.Stats;
 using _Project.Scripts.Gameplay.Stats.EnemyStats;
 using _Project.Scripts.Gameplay.Tower;
+using _Project.Scripts.Infrastructure.Services.GameLoop;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
@@ -8,7 +9,7 @@ using Zenject;
 namespace _Project.Scripts.Gameplay.EnemyLogic
 {
     [UsedImplicitly]
-    public class EnemyMovement :
+    public class EnemyMovement : 
         ITickable
     {
         private readonly Vector2 _targetPosition;

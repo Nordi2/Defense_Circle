@@ -4,7 +4,6 @@ using _Project.Scripts.Gameplay.Observers;
 using _Project.Scripts.Gameplay.Stats;
 using _Project.Scripts.Gameplay.Tower.Animation;
 using _Project.Scripts.Gameplay.Tower.Callbacks;
-using _Project.Scripts.Infrastructure.Services.Data;
 using UnityEngine;
 using Zenject;
 
@@ -15,15 +14,8 @@ namespace _Project.Scripts.Gameplay.Tower
         [SerializeField] private EnemyObserver _enemyObserver;
         [SerializeField] private TowerView _view;
         [SerializeField] private HealthView _healthView;
-
-        private TowerConfig _config;
+        [SerializeField] private TowerConfig _config;
         
-        [Inject]
-        private void Construct(IDataService dataService)
-        {
-            _config = dataService.GetTowerConfig();
-        }
-
         public override void InstallBindings()
         {
             Container

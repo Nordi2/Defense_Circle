@@ -9,9 +9,9 @@ using Zenject;
 namespace _Project.Scripts.Gameplay.Tower
 {
     [UsedImplicitly]
-    public class EnemysVault :
-        IDisposable,
-        IInitializable
+    public class EnemysVault : 
+        IInitializable,
+        IDisposable
     {
         private readonly EnemyObserver _enemyObserver;
 
