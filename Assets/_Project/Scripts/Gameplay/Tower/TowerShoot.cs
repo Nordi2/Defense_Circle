@@ -1,5 +1,4 @@
 ﻿using System;
-using _Project.Scripts.Infrastructure.Services.GameLoop;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;

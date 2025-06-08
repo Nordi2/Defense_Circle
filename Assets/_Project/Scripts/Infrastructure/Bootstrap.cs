@@ -26,7 +26,7 @@ namespace _Project.Scripts.Infrastructure
         void IInitializable.Initialize()
         {
             Debug.unityLogger.logEnabled = Debug.isDebugBuild;
-            Application.targetFrameRate = 60;
+            Application.targetFrameRate = 120;
             DOTween.Init();
 
             _ = _sceneLoader.LoadScene(Scenes.Gameplay, _curtain.Hide);

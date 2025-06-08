@@ -114,16 +114,14 @@ namespace _Project.Editor
         private void LowerHealth() =>
             CheatManager.TakeDamage(_spendHealth);
 
-        private void SpendMoney()
-        {
-        }
+        private void SpendMoney() => 
+            CheatManager.SpendMoney(_spendMoney);
 
         private void AddHealthTower()
         {
         }
 
-        private void AddMoney()
-        {
-        }
+        private void AddMoney() => 
+            CheatManager.AddMoney(_addMoney);
     }
 }
