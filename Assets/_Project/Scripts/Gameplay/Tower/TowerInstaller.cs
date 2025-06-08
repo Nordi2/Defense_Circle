@@ -4,6 +4,8 @@ using _Project.Scripts.Gameplay.Observers;
 using _Project.Scripts.Gameplay.Stats;
 using _Project.Scripts.Gameplay.Tower.Animation;
 using _Project.Scripts.Gameplay.Tower.Callbacks;
+using _Project.Scripts.UI.Presenters;
+using _Project.Scripts.UI.View;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +16,7 @@ namespace _Project.Scripts.Gameplay.Tower
         [SerializeField] private EnemyObserver _enemyObserver;
         [SerializeField] private TowerView _view;
         [SerializeField] private HealthView _healthView;
+        [SerializeField] private WalletView _walletView;
         [SerializeField] private TowerConfig _config;
         
         public override void InstallBindings()
@@ -66,6 +69,16 @@ namespace _Project.Scripts.Gameplay.Tower
                 .BindInterfacesTo<HealthPresenter>()
                 .AsSingle()
                 .NonLazy();
+
+            Container
+                .BindInterfacesTo<WalletPresenter>()
+                .AsSingle()
+                .NonLazy();
+
+            Container
+                .Bind<WalletView>()
+                .FromInstance(_walletView)
+                .AsSingle();
         }
     }
 }

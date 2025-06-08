@@ -1,20 +1,41 @@
-﻿namespace _Project.Scripts.Gameplay.Money
+﻿using System;
+using DebugToolsPlus;
+using JetBrains.Annotations;
+using R3;
+
+namespace _Project.Scripts.Gameplay.Money
 {
+    [UsedImplicitly]
     public class Wallet
     {
-        private int _currentMoney;
+        private readonly ReactiveProperty<int> _currentMoney = new(0);
+
+        public ReadOnlyReactiveProperty<int> CurrentMoney => _currentMoney;
 
         public void AddMoney(int amountAddedMoney)
         {
-            _currentMoney += amountAddedMoney;
+            D.Log($"{GetType().Name}. Operation: AddMoney",
+                D.FormatText($"\nOldMoney: {_currentMoney}, NewMoney: {_currentMoney.CurrentValue + amountAddedMoney}",
+                    DColor.RED),
+                DColor.YELLOW);
+
+            _currentMoney.Value += amountAddedMoney;
         }
 
         public void SpendMoney(int amountSpentMoney)
         {
-            if (_currentMoney - amountSpentMoney <= 0)
-                return;
+            D.Log($"{GetType().Name}. Operation: SpendMoney",
+                D.FormatText(
+                    $"\nOldMoney: {_currentMoney}, NewMoney: {Math.Clamp(_currentMoney.CurrentValue - amountSpentMoney, 0, int.MaxValue)}",
+                    DColor.RED), DColor.YELLOW);
 
-            _currentMoney -= amountSpentMoney;
+            if (_currentMoney.CurrentValue - amountSpentMoney <= 0)
+            {
+                _currentMoney.Value = 0;
+                return;
+            }
+
+            _currentMoney.Value -= amountSpentMoney;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace _Project.Scripts.Data
         [SerializeField, Min(0.5f)] private Vector2 _minMaxMoveSpeed;
         [SerializeField] private Vector2 _minMaxRotatitonSpeed;
         [SerializeField] private Vector2Int _minMaxMoneyReward;
+        [SerializeField] private Vector2Int _minMaxMoneySpend;
 
         private void OnValidate()
         {
@@ -33,7 +34,10 @@ namespace _Project.Scripts.Data
             }
         }
 
-        public int GetRandomMoneyReward() => 
+        public int GetRandomMoneySpend() => 
+            Random.Range(_minMaxMoneySpend.x, _minMaxMoneySpend.y);
+
+        public int GetRandomMoneyReward() =>
             Random.Range(_minMaxMoneyReward.x, _minMaxMoneyReward.y);
 
         public float GetRandomRotationSpeed() =>

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BulletConfig
   m_EditorClassIdentifier: 
   <MoveSpeed>k__BackingField: 5
-  _minMaxDamage: {x: 15, y: 35}
+  _minMaxDamage: {x: 56, y: 100}

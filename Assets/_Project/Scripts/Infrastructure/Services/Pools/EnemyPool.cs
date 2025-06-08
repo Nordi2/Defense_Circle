@@ -12,13 +12,11 @@ namespace _Project.Scripts.Infrastructure.Services.Pools
     {
         protected override void OnCreated(EnemyFacade item)
         {
-            Debug.Log("OnCreated");
             base.OnCreated(item);
         }
 
         protected override void OnSpawned(EnemyFacade item)
         {
-            Debug.Log("OnSpawned");
             base.OnSpawned(item);
         }
 

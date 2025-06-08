@@ -1,5 +1,6 @@
 ﻿using System;
 using _Project.Scripts.Gameplay.Component;
+using _Project.Scripts.Gameplay.EnemyLogic.Callbacks;
 using _Project.Scripts.Gameplay.Money;
 using _Project.Scripts.Gameplay.Observers;
 using _Project.Scripts.Gameplay.Tower;
@@ -18,22 +19,19 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
 
         private TakeDamageComponent _takeDamageComponent;
         private GiveDamageComponent _giveDamageComponent;
-        private EnemyView _view;
-        private AnimationEnemy _animation;
+        private EnemyCallbacks _enemyCallbacks;
         private IDisposable _disposable;
-
+        
         [Inject]
         private void Construct(
             TakeDamageComponent takeDamageComponent,
             GiveDamageComponent giveDamageComponent,
             ShowStats showStats,
-            EnemyView view,
-            AnimationEnemy animation)
+            EnemyCallbacks enemyCallbacks)
         {
+            _enemyCallbacks = enemyCallbacks;
             _takeDamageComponent = takeDamageComponent;
             _giveDamageComponent = giveDamageComponent;
-            _view = view;
-            _animation = animation;
             ShowStats = showStats;
         }
 
@@ -59,33 +57,30 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
             _takeDamageComponent.TakeDamage(
                 damage: damage,
                 out bool isDie,
-                takeDamageCallback: TakeDamageCallback,
+                takeDamageCallback: _enemyCallbacks.TakeDamageCallback,
                 type: GetType(),
                 contextInfo: gameObject);
 
             if (isDie)
-                DieCallback();
+            {
+                _enemyCallbacks.DieCallback();
+                OnDeath?.Invoke(this);
+            }
         }
 
         private void GiveDamageCallback()
         {
-            Instantiate(_view.DieEffect, transform.position, Quaternion.identity);
             OnDeath?.Invoke(this);
         }
 
         private void DieCallback()
         {
-            Instantiate(_view.DieEffect, transform.position, Quaternion.identity);
             OnDeath?.Invoke(this);
         }
 
         private void TakeDamageCallback(int damageValue)
         {
-            _animation.PlayTakeDamageAnimation();
-
-            DamageText damageText =
-                Instantiate(_view.DamageTextPrefab, _view.transform.position, _view.transform.rotation);
-            damageText.StartAnimation(damageValue);
+           
         }
     }
 }

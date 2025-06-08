@@ -2,6 +2,7 @@
 using _Project.Scripts.Gameplay.Stats;
 using JetBrains.Annotations;
 using R3;
+using UnityEngine;
 using Zenject;
 
 namespace _Project.Scripts.Gameplay.Component

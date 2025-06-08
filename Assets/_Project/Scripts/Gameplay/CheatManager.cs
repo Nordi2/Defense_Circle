@@ -1,6 +1,7 @@
 ﻿#if UNITY_EDITOR
 using System.Collections.Generic;
 using _Project.Scripts.Gameplay.EnemyLogic;
+using _Project.Scripts.Gameplay.Money;
 using _Project.Scripts.Gameplay.Tower;
 using _Project.Scripts.Infrastructure.Services.Pools;
 using DebugToolsPlus;
@@ -17,6 +18,7 @@ namespace _Project.Scripts.Gameplay
 
         public static EnemyPool EnemyPool;
         public static TowerFacade TowerFacade;
+        public static Wallet Wallet;
 
         private static readonly List<EnemyFacade> _enemiesInSpawned = new();
 
@@ -24,7 +26,7 @@ namespace _Project.Scripts.Gameplay
         {
             Vector3 randomPosition = GetRandomSpawnPosition();
 
-            SpawnEnemyAndGetLog(randomPosition,"Create Enemy\n");
+            SpawnEnemyAndGetLog(randomPosition, "Create Enemy\n");
             /*switch (type)
             {
                 case EnemyType.Default:
@@ -110,7 +112,14 @@ namespace _Project.Scripts.Gameplay
 
         public static void AddMoney(int amount)
         {
-            Debug.Log($"Добавлено {amount} денег");
+            D.Log(CheathManager.ToUpper(), $"AddMoney: {amount}", DColor.AQUAMARINE, true);
+            Wallet.AddMoney(amount);
+        }
+
+        public static void SpendMoney(int amount)
+        {
+            D.Log(CheathManager.ToUpper(), $"SpendMoney: {amount}", DColor.AQUAMARINE, true);
+            Wallet.SpendMoney(amount);
         }
 
         public static void TakeDamage(int amount)

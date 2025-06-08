@@ -1,6 +1,7 @@
 ﻿using System;
 using _Project.Scripts.Gameplay;
 using _Project.Scripts.Gameplay.EnemyLogic;
+using _Project.Scripts.Gameplay.Money;
 using _Project.Scripts.Gameplay.Tower;
 using _Project.Scripts.Infrastructure.Services.Factory;
 using _Project.Scripts.Infrastructure.Services.Input;
@@ -68,6 +69,7 @@ namespace _Project.Scripts.Infrastructure
 #if UNITY_EDITOR
             CheatManager.TowerFacade = tower;
             CheatManager.EnemyPool = _container.Resolve<EnemyPool>();
+            CheatManager.Wallet = _container.Resolve<Wallet>();
 #endif
         }
     }

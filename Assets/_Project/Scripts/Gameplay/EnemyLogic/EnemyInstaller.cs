@@ -1,5 +1,6 @@
 ﻿using _Project.Scripts.Data;
 using _Project.Scripts.Gameplay.Component;
+using _Project.Scripts.Gameplay.EnemyLogic.Callbacks;
 using _Project.Scripts.Gameplay.Stats;
 using _Project.Scripts.Gameplay.Stats.EnemyStats;
 using UnityEngine;
@@ -52,6 +53,10 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
                 .AsSingle();
 
             Container
+                .Bind<EnemyCallbacks>()
+                .AsSingle();
+            
+            Container
                 .BindInterfacesAndSelfTo<HealthStat>()
                 .AsSingle()
                 .WithArguments(_config.GetRandomValueHealth());
@@ -61,6 +66,11 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
                 .AsSingle()
                 .WithArguments(_config.GetRandomValueMoveSpeed());
 
+            Container
+                .BindInterfacesAndSelfTo<MoneyStat>()
+                .AsSingle()
+                .WithArguments(_config.GetRandomMoneyReward(),_config.GetRandomMoneySpend());
+            
             Container
                 .BindInterfacesAndSelfTo<CollisionDamageStat>()
                 .AsSingle()

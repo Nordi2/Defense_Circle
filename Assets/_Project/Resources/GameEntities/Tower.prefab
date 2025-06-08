@@ -646,6 +646,7 @@ MonoBehaviour:
   _enemyObserver: {fileID: 425366101399624716}
   _view: {fileID: 8496516773948229889}
   _healthView: {fileID: 2988036011989207867}
+  _walletView: {fileID: 8890338634986145054}
   _config: {fileID: 11400000, guid: 39fc9cfbfc5fb9e4e8494c998f4c1c2c, type: 2}
 --- !u!1 &1200317321189261032
 GameObject:
@@ -814,7 +815,7 @@ GameObject:
   - component: {fileID: 1485338921595753886}
   - component: {fileID: 1077574324150722236}
   m_Layer: 9
-  m_Name: 'Money_Container '
+  m_Name: 'Wave_Container '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1553,6 +1554,7 @@ GameObject:
   - component: {fileID: 4486417753489725228}
   - component: {fileID: 2574615425117200817}
   - component: {fileID: 2988036011989207867}
+  - component: {fileID: 8890338634986145054}
   m_Layer: 9
   m_Name: GameInfo
   m_TagString: Untagged
@@ -1642,6 +1644,21 @@ MonoBehaviour:
   _currentHealthText: {fileID: 5746474146598092128}
   _labelText: {fileID: 1610385265819110277}
   _separatorText: {fileID: 1206331869706894710}
+  _animationDuration: 0.5
+  _ease: 1
+--- !u!114 &8890338634986145054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5515659778353513836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11e57c48a5c44592b31adfdad61217c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moneyText: {fileID: 6959397702119280823}
   _animationDuration: 0.5
   _ease: 1
 --- !u!1 &6962861101860761462
@@ -2190,7 +2207,7 @@ GameObject:
   - component: {fileID: 6039838104551480074}
   - component: {fileID: 3249094998757216822}
   m_Layer: 9
-  m_Name: Wave_Container
+  m_Name: Money_Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

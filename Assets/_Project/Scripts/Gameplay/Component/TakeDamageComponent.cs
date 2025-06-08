@@ -35,15 +35,14 @@ namespace _Project.Scripts.Gameplay.Component
             if (!isDie)
                 takeDamageCallback?.Invoke(damage);
 
-            D.Log(GetType().Name,
-                message: $"{type?.Name}\n" +
-                         $"TakeDamage : {damage}," +
-                         $"MaxHealth: {_healthStat.MaxHealth.CurrentValue}," +
-                         $"OldHealth: {Math.Clamp(_healthStat.CurrentHealth.CurrentValue + damage, 0, _healthStat.MaxHealth.CurrentValue)}," +
-                         $"CurrentHealth: {newValue}",
-                context: contextInfo,
-                color: DColor.YELLOW,
-                colorMessage: true);
+            D.Log($"{GetType().Name}({type?.Name})",
+                D.FormatText(
+                    $"\nTakeDamage: {damage}," +
+                    $"MaxHealth: {_healthStat.MaxHealth.CurrentValue}," +
+                    $"OldHealth: {Math.Clamp(_healthStat.CurrentHealth.CurrentValue + damage, 0, _healthStat.MaxHealth.CurrentValue)}," +
+                    $"CurrentHealth: {newValue}", DColor.RED),
+                contextInfo,
+                DColor.YELLOW);
         }
     }
 }
