@@ -12,11 +12,12 @@ namespace _Project.Scripts.Infrastructure.Services.Factory
     {
         private readonly IInstantiator _instantiator;
         private readonly IGetTargetPosition _getTargetPosition;
-        private GameLoopService _gameLoopService;
+        private readonly GameLoopService _gameLoopService;
 
         public GameFactory(
             IInstantiator instantiator,
-            IGetTargetPosition getTargetPosition, GameLoopService gameLoopService)
+            IGetTargetPosition getTargetPosition,
+            GameLoopService gameLoopService)
         {
             _instantiator = instantiator;
             _getTargetPosition = getTargetPosition;

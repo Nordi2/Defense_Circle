@@ -25,8 +25,8 @@ namespace _Project.Scripts.Infrastructure
         private readonly IInputService _inputService;
         private readonly InitialTextLoadAfterLoading _initialText;
         private readonly UIRoot _uiRoot;
-        private IGameFactory _gameFactory;
-        private DiContainer _container;
+        private readonly IGameFactory _gameFactory;
+        private readonly DiContainer _container;
 
         public GameplayBootstrapper(
             InitialTextLoadAfterLoading initialText,

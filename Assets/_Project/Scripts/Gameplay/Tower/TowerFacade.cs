@@ -8,8 +8,7 @@ namespace _Project.Scripts.Gameplay.Tower
 {
     public class TowerFacade : MonoBehaviour,
         IGameStartListener,
-        ITakeDamagble,
-        IGetTargetPosition
+        ITakeDamagble
     {
         private TowerCallbacks _towerCallbacks;
         private TakeDamageComponent _takeDamageComponent;
@@ -26,9 +25,6 @@ namespace _Project.Scripts.Gameplay.Tower
         public void OnGameStart() =>
             _towerCallbacks.GameStart(gameObject);
         
-        public Vector2 GetPosition() =>
-            transform.position;
-
         public void TakeDamage(int damage)
         {
             _takeDamageComponent.TakeDamage(

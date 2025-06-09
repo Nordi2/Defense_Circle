@@ -17,14 +17,10 @@ namespace _Project.Scripts.Gameplay.Tower.Callbacks
         public void GameStart(GameObject towerGameObject) => 
             _animationTower.PlayInitialSpawn(() => towerGameObject.SetActive(true));
 
-        public void TakeDamageCallback(int damage)
-        {
+        public void TakeDamageCallback(int damage) => 
             _animationTower.PlayTakeDamage();
-        }
 
-        public void DeathCallback()
-        {
+        public void DeathCallback() => 
             _animationTower.PlayDeath();
-        }
     }
 }
