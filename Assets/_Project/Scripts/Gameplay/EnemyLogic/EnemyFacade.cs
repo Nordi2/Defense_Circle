@@ -64,6 +64,7 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
             if (isDie)
             {
                 _enemyCallbacks.DieCallback();
+                gameObject.SetActive(false);
                 OnDeath?.Invoke(this);
             }
         }
