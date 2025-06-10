@@ -11,7 +11,6 @@ namespace _Project.Scripts.Gameplay.Tower
         [SerializeField] private Transform _shootPoint;
         [SerializeField] private Bullet _bulletPrefab;
         [SerializeField] private HealthView _healthView;
-        [SerializeField] private GameInfoView _gameInfoView;
 
         [SerializeField] private TowerInitialSpawnSettings _animationSpawnSettings;
         [SerializeField] private TowerTakeDamageSettings _animationTakeDamageSettings;
@@ -19,7 +18,6 @@ namespace _Project.Scripts.Gameplay.Tower
 
         [SerializeField] private EnemyObserver _enemyObserver;
 
-        public GameInfoView GameInfoView => _gameInfoView;
         public EnemyObserver EnemyObserver => _enemyObserver;
         public HealthView HealthView => _healthView;
         public TowerDeathSettings AnimationDeathSettings => _animationDeathSettings;
