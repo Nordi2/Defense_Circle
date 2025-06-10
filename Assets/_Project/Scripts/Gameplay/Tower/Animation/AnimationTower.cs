@@ -14,6 +14,7 @@ namespace _Project.Scripts.Gameplay.Tower.Animation
         private Sequence _sequence;
 
         private readonly HealthView _healthView;
+        private readonly GameInfoView _gameInfoView;
         private readonly Transform _mainTransform;
         private readonly Camera _camera;
         
@@ -28,7 +29,8 @@ namespace _Project.Scripts.Gameplay.Tower.Animation
             _camera = camera;
             _healthView = view.HealthView;
             _mainTransform = view.transform;
-
+            _gameInfoView = view.GameInfoView;
+            
             _initialSpawnSettings = view.AnimationSpawnSettings;
             _takeDamageSettings = view.AnimationTakeDamageSettings;
             _deathSettings = view.AnimationDeathSettings;
@@ -62,7 +64,8 @@ namespace _Project.Scripts.Gameplay.Tower.Animation
                     .DOScale(Vector3.one, _initialSpawnSettings.DurationDoScale)
                     .From(Vector3.zero)
                     .SetEase(_initialSpawnSettings.Ease))
-                .Append(GetTextFadeSequence());
+                .Append(GetTextFadeSequence())
+                .AppendCallback(_gameInfoView.StartAnimation);
         }
 
         public void PlayTakeDamage()
