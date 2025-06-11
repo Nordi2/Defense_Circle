@@ -39,7 +39,7 @@ namespace _Project.Scripts.Gameplay.Spawner
 
         private async void Start()
         {
-            await StartWave(1);
+           // await StartWave(1);
             Debug.Log("Конец волны");
         }
 

@@ -109,8 +109,7 @@ namespace _Project.Editor
                         {
                             GUILayout.BeginHorizontal(EditorStyles.toolbar);
                             {
-                                if (GUILayout.Button(
-                                        new GUIContent("", EditorGUIUtility.IconContent("d_Toolbar Plus").image),
+                                if (GUILayout.Button(EditorGUIUtility.IconContent("d_Toolbar Plus").image,
                                         EditorStyles.toolbarButton,
                                         GUILayout.Height(30)))
                                 {
@@ -125,7 +124,7 @@ namespace _Project.Editor
                             GUILayout.BeginHorizontal(EditorStyles.toolbar);
                             {
                                 if (GUILayout.Button(
-                                        new GUIContent("", EditorGUIUtility.IconContent("d_Toolbar Minus").image),
+                                        EditorGUIUtility.IconContent("d_Toolbar Minus").image,
                                         EditorStyles.toolbarButton,
                                         GUILayout.Height(30)))
                                 {
@@ -155,7 +154,7 @@ namespace _Project.Editor
                             GUILayout.BeginHorizontal(EditorStyles.toolbar);
                             {
                                 if (GUILayout.Button(
-                                        new GUIContent("", EditorGUIUtility.IconContent("d_Toolbar Plus").image),
+                                        EditorGUIUtility.IconContent("d_Toolbar Plus").image,
                                         EditorStyles.toolbarButton,
                                         GUILayout.Height(30)))
                                     AddHealthTower();
@@ -168,7 +167,7 @@ namespace _Project.Editor
                             GUILayout.BeginHorizontal(EditorStyles.toolbar);
                             {
                                 if (GUILayout.Button(
-                                        new GUIContent("", EditorGUIUtility.IconContent("d_Toolbar Minus").image),
+                                        EditorGUIUtility.IconContent("d_Toolbar Minus").image,
                                         EditorStyles.toolbarButton,
                                         GUILayout.Height(30)))
                                     LowerHealth();
