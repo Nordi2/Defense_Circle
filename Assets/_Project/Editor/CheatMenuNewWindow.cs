@@ -14,13 +14,15 @@ namespace _Project.Editor
         private GUIStyle _initialStyle;
         private GUIStyle _headerStyle;
         private GUIStyle _foldoutStyle;
-        private Texture2D _backgroundTexture;
-
+        private GUIStyle _buttonStyle;
+        
         private int _addMoney;
         private int _spendMoney;
         private int _addHealth;
         private int _spendHealth;
 
+        private readonly Color _orangeColor = new(0.9f, 0.5f, 0.2f);
+        
         private bool _gameStarted => EditorApplication.isPlaying;
 
         [MenuItem("Tools/Cheat-Menu")]
@@ -31,51 +33,12 @@ namespace _Project.Editor
 
         private void OnEnable()
         {
-            _backgroundTexture = MakeText(2, 2, new Color(1, 0.61f, 0));
-
-            _initialStyle = new GUIStyle()
-            {
-                normal = { textColor = new Color(1, 0.61f, 0) },
-                fontStyle = FontStyle.Bold,
-                alignment = TextAnchor.MiddleCenter,
-            };
-
-            _foldoutStyle = new GUIStyle(EditorStyles.foldout)
-            {
-                normal =
-                {
-                    textColor = new Color(1, 0.61f, 0)
-                },
-                fontSize = 14,
-                alignment = TextAnchor.MiddleLeft,
-            };
-
-            _headerStyle = new GUIStyle(EditorStyles.helpBox)
-            {
-                normal =
-                {
-                    background = _backgroundTexture,
-                    textColor = Color.black
-                },
-                padding = new RectOffset(10, 10, 5, 5),
-                fontSize = 18,
-                fontStyle = FontStyle.Bold,
-                alignment = TextAnchor.MiddleCenter,
-            };
-        }
-
-        private void OnDisable()
-        {
-            if (_backgroundTexture == null)
-                return;
-
-            DestroyImmediate(_backgroundTexture);
-            _backgroundTexture = null;
+            CreateStyles();
         }
 
         private void OnGUI()
         {
-            EditorGUI.DrawRect(new Rect(0, 0, position.width, position.height), Color.black);
+            EditorGUI.DrawRect(new Rect(0,0, position.width, position.height), Color.black);
 
             if (!_gameStarted)
             {
@@ -85,10 +48,26 @@ namespace _Project.Editor
                 ResettingFieldValueAndFindCheatManager();
                 return;
             }
+            
+            GUILayout.BeginHorizontal();
+            {
+                GUILayout.FlexibleSpace();
+                Color originalColor = GUI.color;
+                GUI.color = Color.red;
+                GUILayout.Button(EditorGUIUtility.IconContent("d_PauseButton").image, GUILayout.Width(35),
+                    GUILayout.Height(25));
+                GUI.color = originalColor;
+                GUI.color = Color.green; 
+                GUILayout.Button(EditorGUIUtility.IconContent("d_PlayButton").image, GUILayout.Width(35),
+                    GUILayout.Height(25));
+                GUI.color = originalColor;
+                GUILayout.FlexibleSpace();
+            }
+            GUILayout.EndHorizontal();
 
             Rect horizontalGroup = EditorGUILayout.BeginHorizontal(GUI.skin.box);
             {
-                EditorGUI.DrawRect(horizontalGroup, new Color(0.9f, 0.5f, 0.2f));
+                EditorGUI.DrawRect(horizontalGroup, _orangeColor);
 
                 Rect verticalGroupCheatMenu = EditorGUILayout.BeginVertical("window", GUILayout.Width(200));
                 {
@@ -228,87 +207,45 @@ namespace _Project.Editor
                 EditorGUILayout.EndVertical();
             }
             GUILayout.EndHorizontal();
-
-            /*GUILayout.Label("Menu Cheats:", EditorStyles.boldLabel);
-
-            GUILayout.Space(10);
-
-            EditorGUILayout.BeginVertical(GUILayout.MaxWidth(400));
-
-            GUILayout.Label("Money Section:");
-            EditorGUILayout.BeginHorizontal();
-
-            if (GUILayout.Button("Add Money", GUILayout.MaxWidth(150)))
-                AddMoney();
-
-            _addMoney = EditorGUILayout.IntField("", _addMoney, GUILayout.MaxWidth(50));
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
-
-            if (GUILayout.Button("Spend Money", GUILayout.MaxWidth(150)))
-                SpendMoney();
-
-            _spendMoney = EditorGUILayout.IntField("", _spendMoney, GUILayout.MaxWidth(50));
-            EditorGUILayout.EndHorizontal();
-
-            GUILayout.Label("Health Section:");
-
-            EditorGUILayout.BeginHorizontal(GUILayout.Width(200));
-            if (GUILayout.Button("Restore Health", GUILayout.MaxWidth(150)))
-            {
-                AddHealthTower();
-            }
-
-            _addHealth = EditorGUILayout.IntField("", _addHealth, GUILayout.MaxWidth(50));
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal(GUILayout.Width(200));
-
-            if (GUILayout.Button("Lower Health", GUILayout.MaxWidth(150)))
-                LowerHealth();
-
-            _spendHealth = EditorGUILayout.IntField("", _spendHealth, GUILayout.MaxWidth(50));
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.LabelField("Another:");
-
-            if (GUILayout.Button("Create Fast Enemy", GUILayout.MaxWidth(150)))
-                CreateEnemy(EnemyType.Fast);
-
-            if (GUILayout.Button("Create Default Enemy", GUILayout.MaxWidth(150)))
-                CreateEnemy(EnemyType.Default);
-
-            if (GUILayout.Button("Create Slow Enemy", GUILayout.MaxWidth(150)))
-                CreateEnemy(EnemyType.Slow);
-
-            if (GUILayout.Button("Kill Random Enemy", GUILayout.MaxWidth(150)))
-                KillRandomEnemy();
-
-            if (GUILayout.Button("Kill All Enemy", GUILayout.MaxWidth(150)))
-                KillAllEnemy();
-
-            EditorGUILayout.EndVertical();*/
         }
 
-        private Texture2D MakeText(int width, int height, Color color)
+        private void CreateStyles()
         {
-            Color[] pixel = new Color[width * height];
+            _initialStyle = new GUIStyle()
+            {
+                normal = { textColor = _orangeColor },
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleCenter,
+            };
 
-            for (int i = 0; i < pixel.Length; i++)
-                pixel[i] = color;
+            _foldoutStyle = new GUIStyle(EditorStyles.foldout)
+            {
+                normal = { textColor = _orangeColor },
+                fontSize = 14,
+                alignment = TextAnchor.MiddleLeft,
+            };
 
-            Texture2D result = new Texture2D(width, height);
-            result.SetPixels(pixel);
-            result.Apply();
-            return result;
+            _headerStyle = new GUIStyle(EditorStyles.helpBox)
+            {
+                normal =
+                {
+                    textColor = _orangeColor
+                },
+                padding = new RectOffset(10, 10, 5, 5),
+                fontSize = 18,
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleCenter,
+                imagePosition = ImagePosition.ImageAbove
+            };
         }
 
         private void ResettingFieldValueAndFindCheatManager()
         {
             Repaint();
 
+            _showEnemySection = false;
+            _showMoneySection = false;
+            _showHealthSection = false;
             _addMoney = 0;
             _spendMoney = 0;
             _addHealth = 0;
