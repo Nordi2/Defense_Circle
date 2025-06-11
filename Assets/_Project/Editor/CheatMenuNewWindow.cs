@@ -1,5 +1,8 @@
-﻿using _Project.Scripts.Gameplay;
+﻿using System.Collections.Generic;
+using _Project.Scripts.Gameplay;
 using _Project.Scripts.Gameplay.EnemyLogic;
+using DebugToolsPlus;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,20 +18,26 @@ namespace _Project.Editor
         private GUIStyle _headerStyle;
         private GUIStyle _foldoutStyle;
         private GUIStyle _buttonStyle;
-        
+
         private int _addMoney;
         private int _spendMoney;
         private int _addHealth;
         private int _spendHealth;
-
-        private readonly Color _orangeColor = new(0.9f, 0.5f, 0.2f);
         
+        private Vector2 _scrollPosition;
+        private string _filterText = "";
+        private bool _showErrors = true;
+        private bool _showWarnings = true;
+        private bool _showMessage = true;
+        
+        private readonly Color _orangeColor = new(0.9f, 0.5f, 0.2f);
+
         private bool _gameStarted => EditorApplication.isPlaying;
 
-        [MenuItem("Tools/Cheat-Menu")]
+        [MenuItem("Tools/Cheats-Window")]
         public static void ShowWindow()
         {
-            GetWindow<CheatMenuNewWindow>("Cheat Menu");
+            GetWindow<CheatMenuNewWindow>("Cheats-Window");
         }
 
         private void OnEnable()
@@ -38,44 +47,103 @@ namespace _Project.Editor
 
         private void OnGUI()
         {
-            EditorGUI.DrawRect(new Rect(0,0, position.width, position.height), Color.black);
+            EditorGUI.DrawRect(new Rect(0, 0, position.width, position.height), Color.black);
 
             if (!_gameStarted)
             {
-                GUILayout.FlexibleSpace();
-                GUILayout.Label("Start the game for the menu to appear", _initialStyle, GUILayout.ExpandWidth(true));
-                GUILayout.FlexibleSpace();
+                InitialPreview();
                 ResettingFieldValueAndFindCheatManager();
                 return;
             }
-            
-            GUILayout.BeginHorizontal();
-            {
-                GUILayout.FlexibleSpace();
-                Color originalColor = GUI.color;
-                GUI.color = Color.red;
-                GUILayout.Button(EditorGUIUtility.IconContent("d_PauseButton").image, GUILayout.Width(35),
-                    GUILayout.Height(25));
-                GUI.color = originalColor;
-                GUI.color = Color.green; 
-                GUILayout.Button(EditorGUIUtility.IconContent("d_PlayButton").image, GUILayout.Width(35),
-                    GUILayout.Height(25));
-                GUI.color = originalColor;
-                GUILayout.FlexibleSpace();
-            }
-            GUILayout.EndHorizontal();
+
+            PauseAndExitButton();
 
             Rect horizontalGroup = EditorGUILayout.BeginHorizontal(GUI.skin.box);
             {
                 EditorGUI.DrawRect(horizontalGroup, _orangeColor);
 
-                Rect verticalGroupCheatMenu = EditorGUILayout.BeginVertical("window", GUILayout.Width(200));
+                RenderingCheatMenu();
+
+                GUILayout.Space(5);
+
+                Rect verticalGroupGameInfo =
+                    EditorGUILayout.BeginVertical(GUI.skin.window, GUILayout.ExpandWidth(true));
                 {
-                    EditorGUI.DrawRect(verticalGroupCheatMenu, Color.black);
-                    GUILayout.Label("Cheat-Menu", _headerStyle, GUILayout.ExpandWidth(true));
+                    EditorGUI.DrawRect(verticalGroupGameInfo, Color.black);
+                    GUILayout.Label("Game Info", _headerStyle, GUILayout.ExpandWidth(true));
 
-                    GUILayout.Space(10);
+                    GUILayout.FlexibleSpace();
 
+                    EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
+                    {
+                        _filterText = EditorGUILayout.TextField(_filterText, EditorStyles.toolbarSearchField,
+                            GUILayout.Width(200));
+
+                        _showErrors = GUILayout.Toggle(_showErrors, "Errors", EditorStyles.toolbarButton);
+                        _showErrors = GUILayout.Toggle(_showErrors, "Warnings", EditorStyles.toolbarButton);
+                        _showErrors = GUILayout.Toggle(_showErrors, "Messages", EditorStyles.toolbarButton);
+                        
+                        GUILayout.FlexibleSpace();
+
+                        if (GUILayout.Button("Clear", EditorStyles.toolbarButton))
+                        {
+                            
+                        }
+
+                    }
+                    EditorGUILayout.EndHorizontal();
+
+                    _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
+                    {
+                        
+                    }
+                    EditorGUILayout.EndScrollView();
+                }
+                EditorGUILayout.EndVertical();
+            }
+            GUILayout.EndHorizontal();
+        }
+
+        private void InitialPreview()
+        {
+            GUILayout.FlexibleSpace();
+            GUILayout.BeginVertical();
+            {
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("Start the game for the menu to appear", _initialStyle,
+                        GUILayout.ExpandWidth(true));
+                }
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.FlexibleSpace();
+                    GUI.color = _orangeColor;
+                    if (GUILayout.Button(EditorGUIUtility.IconContent("d_PlayButton").image,
+                            GUILayout.ExpandWidth(true), GUILayout.Width(45), GUILayout.Height(35)))
+                    {
+                        EditorApplication.isPlaying = true;
+                    }
+
+                    GUILayout.FlexibleSpace();
+                }
+                GUILayout.EndHorizontal();
+            }
+            GUILayout.EndVertical();
+            GUILayout.FlexibleSpace();
+        }
+
+        private void RenderingCheatMenu()
+        {
+            Rect verticalGroupCheatMenu = EditorGUILayout.BeginVertical("window", GUILayout.Width(200));
+            {
+                EditorGUI.DrawRect(verticalGroupCheatMenu, Color.black);
+                GUILayout.Label("Cheat-Menu", _headerStyle, GUILayout.ExpandWidth(true));
+
+                GUILayout.Space(10);
+
+                EditorGUI.BeginDisabledGroup(CheatManager.TowerFacade is null);
+                {
                     #region Money Section
 
                     _showMoneySection =
@@ -123,7 +191,8 @@ namespace _Project.Editor
                     #region Health Section
 
                     _showHealthSection =
-                        EditorGUILayout.BeginFoldoutHeaderGroup(_showHealthSection, "Health Section", _foldoutStyle);
+                        EditorGUILayout.BeginFoldoutHeaderGroup(_showHealthSection, "Health Section",
+                            _foldoutStyle);
                     EditorGUILayout.EndFoldoutHeaderGroup();
 
                     if (_showHealthSection)
@@ -193,18 +262,34 @@ namespace _Project.Editor
 
                     #endregion
                 }
-                EditorGUILayout.EndVertical();
+                EditorGUI.EndDisabledGroup();
+            }
+            EditorGUILayout.EndVertical();
+        }
 
+        private void PauseAndExitButton()
+        {
+            GUILayout.BeginHorizontal();
+            {
+                GUILayout.FlexibleSpace();
+                Color originalColor = GUI.color;
 
-                GUILayout.Space(5);
-
-                Rect verticalGroupGameInfo =
-                    EditorGUILayout.BeginVertical(GUI.skin.window, GUILayout.ExpandWidth(true));
+                GUI.color = Color.magenta;
+                if (GUILayout.Button(EditorGUIUtility.IconContent("d_PauseButton").image, GUILayout.Width(35),
+                        GUILayout.Height(25)))
                 {
-                    EditorGUI.DrawRect(verticalGroupGameInfo, Color.black);
-                    GUILayout.Label("Game Info", _headerStyle, GUILayout.ExpandWidth(true));
+                    EditorApplication.isPaused = !EditorApplication.isPaused;
                 }
-                EditorGUILayout.EndVertical();
+
+                GUI.color = Color.red;
+                if (GUILayout.Button(EditorGUIUtility.IconContent("Cancel").image, GUILayout.Width(35),
+                        GUILayout.Height(25)))
+                {
+                    EditorApplication.isPlaying = false;
+                }
+
+                GUI.color = originalColor;
+                GUILayout.FlexibleSpace();
             }
             GUILayout.EndHorizontal();
         }
@@ -214,6 +299,7 @@ namespace _Project.Editor
             _initialStyle = new GUIStyle()
             {
                 normal = { textColor = _orangeColor },
+                fontSize = 15,
                 fontStyle = FontStyle.Bold,
                 alignment = TextAnchor.MiddleCenter,
             };
