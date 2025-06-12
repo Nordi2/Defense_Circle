@@ -34,6 +34,7 @@ namespace _Project.Scripts.Gameplay.Component
 
             if (!isDie)
                 takeDamageCallback?.Invoke(damage);
+            
 
             D.Log($"{GetType().Name}({type?.Name})",
                 D.FormatText(

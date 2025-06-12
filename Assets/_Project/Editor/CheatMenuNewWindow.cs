@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using _Project.Scripts.Gameplay;
+﻿using _Project.Scripts.Gameplay;
 using _Project.Scripts.Gameplay.EnemyLogic;
-using DebugToolsPlus;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -23,13 +20,7 @@ namespace _Project.Editor
         private int _spendMoney;
         private int _addHealth;
         private int _spendHealth;
-        
-        private Vector2 _scrollPosition;
-        private string _filterText = "";
-        private bool _showErrors = true;
-        private bool _showWarnings = true;
-        private bool _showMessage = true;
-        
+
         private readonly Color _orangeColor = new(0.9f, 0.5f, 0.2f);
 
         private bool _gameStarted => EditorApplication.isPlaying;
@@ -71,33 +62,16 @@ namespace _Project.Editor
                 {
                     EditorGUI.DrawRect(verticalGroupGameInfo, Color.black);
                     GUILayout.Label("Game Info", _headerStyle, GUILayout.ExpandWidth(true));
+                }
+                EditorGUILayout.EndVertical();
 
-                    GUILayout.FlexibleSpace();
+                GUILayout.Space(5);
 
-                    EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
-                    {
-                        _filterText = EditorGUILayout.TextField(_filterText, EditorStyles.toolbarSearchField,
-                            GUILayout.Width(200));
-
-                        _showErrors = GUILayout.Toggle(_showErrors, "Errors", EditorStyles.toolbarButton);
-                        _showErrors = GUILayout.Toggle(_showErrors, "Warnings", EditorStyles.toolbarButton);
-                        _showErrors = GUILayout.Toggle(_showErrors, "Messages", EditorStyles.toolbarButton);
-                        
-                        GUILayout.FlexibleSpace();
-
-                        if (GUILayout.Button("Clear", EditorStyles.toolbarButton))
-                        {
-                            
-                        }
-
-                    }
-                    EditorGUILayout.EndHorizontal();
-
-                    _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
-                    {
-                        
-                    }
-                    EditorGUILayout.EndScrollView();
+                Rect verticalGroupTowerInfo =
+                    EditorGUILayout.BeginVertical(GUI.skin.window, GUILayout.Width(400));
+                {
+                    EditorGUI.DrawRect(verticalGroupTowerInfo, Color.black);
+                    GUILayout.Label("Tower Info", _headerStyle, GUILayout.ExpandWidth(true));
                 }
                 EditorGUILayout.EndVertical();
             }
@@ -168,6 +142,8 @@ namespace _Project.Editor
                             }
                             GUILayout.EndHorizontal();
 
+                            GUILayout.Space(5);
+
                             GUILayout.BeginHorizontal(EditorStyles.toolbar);
                             {
                                 if (GUILayout.Button(
@@ -211,6 +187,8 @@ namespace _Project.Editor
                                     GUILayout.Height(30));
                             }
                             GUILayout.EndHorizontal();
+
+                            GUILayout.Space(5);
 
                             GUILayout.BeginHorizontal(EditorStyles.toolbar);
                             {
@@ -329,6 +307,7 @@ namespace _Project.Editor
         {
             Repaint();
 
+            CheatManager.TowerFacade = null;
             _showEnemySection = false;
             _showMoneySection = false;
             _showHealthSection = false;
