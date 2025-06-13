@@ -5,6 +5,7 @@ using _Project.Scripts.Gameplay.Money;
 using _Project.Scripts.Gameplay.Tower;
 using _Project.Scripts.Infrastructure;
 using _Project.Scripts.Infrastructure.Services.Pools;
+using _Project.Scripts.UI;
 using DebugToolsPlus;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -20,7 +21,8 @@ namespace _Project.Scripts.Gameplay
         public static EnemyPool EnemyPool;
         public static TowerFacade TowerFacade;
         public static Wallet Wallet;
-
+        public static ShopUpgrade ShopUpgrade;
+        
         private static readonly List<EnemyFacade> _enemiesInSpawned = new();
 
         public static void SpawnEnemy(EnemyType type)
@@ -111,6 +113,16 @@ namespace _Project.Scripts.Gameplay
             }
         }
 
+        public static void OpenShop()
+        {
+            ShopUpgrade.OpenShop();
+        }
+
+        public static void CloseShop()
+        {
+            ShopUpgrade.Hide();
+        }
+        
         public static void AddMoney(int amount)
         {
             D.Log(CheathManager.ToUpper(), $"AddMoney: {amount}", DColor.AQUAMARINE, true);

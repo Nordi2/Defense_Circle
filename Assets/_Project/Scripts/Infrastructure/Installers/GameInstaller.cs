@@ -6,6 +6,8 @@ using _Project.Scripts.Infrastructure.Services.GameLoop;
 using _Project.Scripts.Infrastructure.Services.Input;
 using _Project.Scripts.Infrastructure.Services.Pools;
 using _Project.Scripts.Infrastructure.Signals;
+using _Project.Scripts.Test;
+using _Project.Scripts.UI;
 using UnityEngine;
 using Zenject;
 
@@ -13,6 +15,8 @@ namespace _Project.Scripts.Infrastructure.Installers
 {
     public class GameInstaller : MonoInstaller
     {
+        [SerializeField] private EnemyFacade _enemyFacadePrefab;
+        
         public override void InstallBindings()
         {
             SignalBusInstaller.Install(Container);
@@ -48,12 +52,23 @@ namespace _Project.Scripts.Infrastructure.Installers
                 .BindInterfacesTo<TargetPoint>()
                 .FromComponentInNewPrefabResource(AssetPath.SpawnPointPath)
                 .AsSingle();
+
+            Container
+                .Bind<ShopUpgrade>()
+                .FromComponentInNewPrefabResource(AssetPath.ShopUpgradePath)
+                .AsSingle()
+                .NonLazy();
             
             Container
                 .BindInterfacesAndSelfTo<InitialTextLoadAfterLoading>()
                 .FromComponentInNewPrefabResource(AssetPath.InitialTextLoad)
                 .AsSingle();
 
+            Container
+                .Bind<SpawnerTest>()
+                .AsSingle()
+                .WithArguments(_enemyFacadePrefab);
+            
             Container
                 .Bind<Camera>()
                 .FromComponentInHierarchy()

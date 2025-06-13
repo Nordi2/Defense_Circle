@@ -50,6 +50,7 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
         private void CollisionTakeDamageObject(ITakeDamagble takeDamageObject)
         {
             _giveDamageComponent.GiveDamage(takeDamageObject, GiveDamageCallback);
+            gameObject.SetActive(false);
         }
 
         public void TakeDamage(int damage)

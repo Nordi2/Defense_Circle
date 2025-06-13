@@ -143,6 +143,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6693324951115431837}
+  - component: {fileID: 4934927494123830381}
   m_Layer: 5
   m_Name: UpgradeCart
   m_TagString: Untagged
@@ -170,6 +171,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 350, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4934927494123830381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323406797485885870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4232abbaa56459b9436937fe7249a07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moneyText: {fileID: 7635310018403927621}
+  _levelText: {fileID: 1105154455536921793}
+  _nameText: {fileID: 1536153774614178551}
+  _icon: {fileID: 4332502839749541193}
 --- !u!1 &398085124771002548
 GameObject:
   m_ObjectHideFlags: 0

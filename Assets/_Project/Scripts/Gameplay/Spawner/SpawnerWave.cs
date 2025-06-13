@@ -36,12 +36,12 @@ namespace _Project.Scripts.Gameplay.Spawner
         {
             _instantiator = instantiator;
         }
-
-        private async void Start()
-        {
-           // await StartWave(1);
-            Debug.Log("Конец волны");
-        }
+        
+        // private async void Start()
+        // {
+        //     await StartWave(1);
+        //     Debug.Log("Конец волны");
+        // }
 
         private Vector2 GetRandomSpawnPosition()
         {
@@ -94,7 +94,7 @@ namespace _Project.Scripts.Gameplay.Spawner
                     Debug.Log(randomCountSpawn);
                     _spawnedEnemies = Math.Clamp(_spawnedEnemies + randomCountSpawn, 1,
                         _waveSettings._maxEnemyWave[currentWave] - _spawnedEnemies);
-                    
+
                     _currentSpawnDelay = 0;
 
                     if (_spawnedEnemies <= _waveSettings._maxEnemyWave[currentWave])

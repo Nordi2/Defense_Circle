@@ -54,28 +54,50 @@ namespace _Project.Editor
                 EditorGUI.DrawRect(horizontalGroup, _orangeColor);
 
                 RenderingCheatMenu();
+                GUILayout.Space(5);
+
+                RenderingGameInfo();
 
                 GUILayout.Space(5);
 
-                Rect verticalGroupGameInfo =
-                    EditorGUILayout.BeginVertical(GUI.skin.window, GUILayout.ExpandWidth(true));
-                {
-                    EditorGUI.DrawRect(verticalGroupGameInfo, Color.black);
-                    GUILayout.Label("Game Info", _headerStyle, GUILayout.ExpandWidth(true));
-                }
-                EditorGUILayout.EndVertical();
-
-                GUILayout.Space(5);
-
-                Rect verticalGroupTowerInfo =
-                    EditorGUILayout.BeginVertical(GUI.skin.window, GUILayout.Width(400));
-                {
-                    EditorGUI.DrawRect(verticalGroupTowerInfo, Color.black);
-                    GUILayout.Label("Tower Info", _headerStyle, GUILayout.ExpandWidth(true));
-                }
-                EditorGUILayout.EndVertical();
+                RenderingTowerInfo();
             }
             GUILayout.EndHorizontal();
+        }
+
+        private void RenderingTowerInfo()
+        {
+            Rect verticalGroupTowerInfo =
+                EditorGUILayout.BeginVertical(GUI.skin.window, GUILayout.Width(400));
+            {
+                EditorGUI.DrawRect(verticalGroupTowerInfo, Color.black);
+                GUILayout.Label("Tower Info", _headerStyle, GUILayout.ExpandWidth(true));
+
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("Wallet:");
+
+                    if (CheatManager.Wallet is not null)
+                    {
+                        GUILayout.Label(CheatManager.Wallet.CurrentMoney.CurrentValue.ToString());
+                    }
+
+                    GUILayout.Label("Current money:");
+                }
+                GUILayout.EndHorizontal();
+            }
+            EditorGUILayout.EndVertical();
+        }
+
+        private void RenderingGameInfo()
+        {
+            Rect verticalGroupGameInfo =
+                EditorGUILayout.BeginVertical(GUI.skin.window, GUILayout.ExpandWidth(true));
+            {
+                EditorGUI.DrawRect(verticalGroupGameInfo, Color.black);
+                GUILayout.Label("Game Info", _headerStyle, GUILayout.ExpandWidth(true));
+            }
+            EditorGUILayout.EndVertical();
         }
 
         private void InitialPreview()
@@ -134,7 +156,7 @@ namespace _Project.Editor
                                         EditorStyles.toolbarButton,
                                         GUILayout.Height(30)))
                                 {
-                                    AddMoney();
+                                    AddMoney(_addMoney);
                                 }
 
                                 _addMoney = EditorGUILayout.IntField(_addMoney, EditorStyles.toolbarTextField,
@@ -151,7 +173,7 @@ namespace _Project.Editor
                                         EditorStyles.toolbarButton,
                                         GUILayout.Height(30)))
                                 {
-                                    SpendMoney();
+                                    SpendMoney(_spendMoney);
                                 }
 
                                 _spendMoney = EditorGUILayout.IntField(_spendMoney, EditorStyles.toolbarTextField,
@@ -241,6 +263,20 @@ namespace _Project.Editor
                     #endregion
                 }
                 EditorGUI.EndDisabledGroup();
+
+                GUILayout.BeginVertical();
+                {
+                    if (GUILayout.Button("OpenShop"))
+                    {
+                        CheatManager.OpenShop();
+                    }
+
+                    if (GUILayout.Button("CloseShop"))
+                    {
+                        CheatManager.CloseShop();
+                    }
+                }
+                GUILayout.EndVertical();
             }
             EditorGUILayout.EndVertical();
         }
@@ -308,6 +344,8 @@ namespace _Project.Editor
             Repaint();
 
             CheatManager.TowerFacade = null;
+            CheatManager.Wallet = null;
+            CheatManager.EnemyPool = null;
             _showEnemySection = false;
             _showMoneySection = false;
             _showHealthSection = false;
@@ -329,14 +367,14 @@ namespace _Project.Editor
         private void LowerHealth() =>
             CheatManager.TakeDamage(_spendHealth);
 
-        private void SpendMoney() =>
-            CheatManager.SpendMoney(_spendMoney);
-
         private void AddHealthTower()
         {
         }
 
-        private void AddMoney() =>
-            CheatManager.AddMoney(_addMoney);
+        private void SpendMoney(int money) =>
+            CheatManager.SpendMoney(money);
+
+        private void AddMoney(int money) =>
+            CheatManager.AddMoney(money);
     }
 }

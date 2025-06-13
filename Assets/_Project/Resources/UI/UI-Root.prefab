@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 507623050683342726}
   - component: {fileID: 8626182548896919129}
   - component: {fileID: 9113204054999318891}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,9 +153,9 @@ Canvas:
   m_GameObject: {fileID: 8985125330276613663}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 5
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -220,3 +220,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _container: {fileID: 7645696222972072933}
+  _canvas: {fileID: 0}
