@@ -1,6 +1,8 @@
-﻿using _Project.Scripts.Gameplay;
+﻿using _Project.Scripts.Data;
+using _Project.Scripts.Gameplay;
 using _Project.Scripts.Gameplay.EnemyLogic;
 using _Project.Scripts.Gameplay.Money;
+using _Project.Scripts.Gameplay.StatsLogic;
 using _Project.Scripts.Infrastructure.Services.Factory;
 using _Project.Scripts.Infrastructure.Services.GameLoop;
 using _Project.Scripts.Infrastructure.Services.Input;
@@ -16,7 +18,7 @@ namespace _Project.Scripts.Infrastructure.Installers
     public class GameInstaller : MonoInstaller
     {
         [SerializeField] private EnemyFacade _enemyFacadePrefab;
-        
+        [SerializeField] private TowerConfig _config;
         public override void InstallBindings()
         {
             SignalBusInstaller.Install(Container);
@@ -58,6 +60,12 @@ namespace _Project.Scripts.Infrastructure.Installers
                 .FromComponentInNewPrefabResource(AssetPath.ShopUpgradePath)
                 .AsSingle()
                 .NonLazy();
+
+            Container.BindInstance(_config).AsSingle();
+            Container.BindInterfacesTo<StatsController>().AsSingle();
+            Container.BindInterfacesTo<CreateStatsService>().AsSingle();
+            Container.Bind<StatsBuilder>().AsSingle();
+            Container.Bind<StatsStorage>().AsSingle();
             
             Container
                 .BindInterfacesAndSelfTo<InitialTextLoadAfterLoading>()

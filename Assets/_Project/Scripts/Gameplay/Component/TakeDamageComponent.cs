@@ -1,5 +1,6 @@
 ﻿using System;
 using _Project.Scripts.Gameplay.Stats;
+using _Project.Scripts.Gameplay.StatsLogic;
 using DebugToolsPlus;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -9,11 +10,11 @@ namespace _Project.Scripts.Gameplay.Component
     [UsedImplicitly]
     public class TakeDamageComponent
     {
-        private readonly HealthStat _healthStat;
+        private readonly HealthStats _healthStats;
 
-        public TakeDamageComponent(HealthStat healthStat)
+        public TakeDamageComponent(HealthStats healthStats)
         {
-            _healthStat = healthStat;
+            _healthStats = healthStats;
         }
 
         public void TakeDamage(
@@ -24,11 +25,11 @@ namespace _Project.Scripts.Gameplay.Component
             GameObject contextInfo = null)
         {
             int newValue = Math.Clamp(
-                _healthStat.CurrentHealth.CurrentValue - damage,
+                _healthStats.CurrentHealth.CurrentValue - damage,
                 0,
-                _healthStat.MaxHealth.CurrentValue);
+                _healthStats.MaxHealth.CurrentValue);
 
-            _healthStat.SetCurrentHealthValue(newValue);
+            _healthStats.SetCurrentHealthValue(newValue);
 
             isDie = newValue <= 0;
 
@@ -39,8 +40,8 @@ namespace _Project.Scripts.Gameplay.Component
             D.Log($"{GetType().Name}({type?.Name})",
                 D.FormatText(
                     $"\nTakeDamage: {damage}," +
-                    $"MaxHealth: {_healthStat.MaxHealth.CurrentValue}," +
-                    $"OldHealth: {Math.Clamp(_healthStat.CurrentHealth.CurrentValue + damage, 0, _healthStat.MaxHealth.CurrentValue)}," +
+                    $"MaxHealth: {_healthStats.MaxHealth.CurrentValue}," +
+                    $"OldHealth: {Math.Clamp(_healthStats.CurrentHealth.CurrentValue + damage, 0, _healthStats.MaxHealth.CurrentValue)}," +
                     $"CurrentHealth: {newValue}", DColor.RED),
                 contextInfo,
                 DColor.YELLOW);

@@ -7,9 +7,9 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
     [UsedImplicitly]
     public class ShowStats
     {
-        private readonly IStat[] _stats;
+        private readonly IStats[] _stats;
 
-        public ShowStats(IStat[] stats)
+        public ShowStats(IStats[] stats)
         {
             _stats = stats;
         }
@@ -18,7 +18,7 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            foreach (IStat stat in _stats) 
+            foreach (IStats stat in _stats) 
                 stringBuilder.Append(stat.ShowInfo());
             
             return stringBuilder.ToString();

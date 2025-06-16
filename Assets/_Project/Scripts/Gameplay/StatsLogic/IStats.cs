@@ -1,6 +1,6 @@
 ﻿namespace _Project.Scripts.Gameplay.Stats
 {
-    public interface IStat
+    public interface IStats
     {
         string ShowInfo();
     }

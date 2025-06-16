@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367db34ef8d64369baf4108ad1d22fab, type: 3}
   m_Name: TowerConfig
   m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 100
-  <AmountTarget>k__BackingField: 1
-  <ShootRate>k__BackingField: 0.25
+  <TowerStats>k__BackingField:
+  - {fileID: 11400000, guid: a96cd4d49a787364b8ae32c46104d045, type: 2}

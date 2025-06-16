@@ -3,6 +3,7 @@ using _Project.Scripts.Gameplay.Component;
 using _Project.Scripts.Gameplay.EnemyLogic.Callbacks;
 using _Project.Scripts.Gameplay.Stats;
 using _Project.Scripts.Gameplay.Stats.EnemyStats;
+using _Project.Scripts.Gameplay.StatsLogic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
@@ -57,22 +58,22 @@ namespace _Project.Scripts.Gameplay.EnemyLogic
                 .AsSingle();
             
             Container
-                .BindInterfacesAndSelfTo<HealthStat>()
+                .BindInterfacesAndSelfTo<HealthStats>()
                 .AsSingle()
                 .WithArguments(_config.GetRandomValueHealth());
 
             Container
-                .BindInterfacesAndSelfTo<MoveSpeedStat>()
+                .BindInterfacesAndSelfTo<MoveSpeedStats>()
                 .AsSingle()
                 .WithArguments(_config.GetRandomValueMoveSpeed());
 
             Container
-                .BindInterfacesAndSelfTo<MoneyStat>()
+                .BindInterfacesAndSelfTo<MoneyStats>()
                 .AsSingle()
                 .WithArguments(_config.GetRandomMoneyReward(),_config.GetRandomMoneySpend());
             
             Container
-                .BindInterfacesAndSelfTo<CollisionDamageStat>()
+                .BindInterfacesAndSelfTo<CollisionDamageStats>()
                 .AsSingle()
                 .WithArguments(_config.GetRandomValueCollisionDamage());
         }

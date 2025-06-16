@@ -1,5 +1,6 @@
 ﻿using System;
 using _Project.Scripts.Gameplay.Stats;
+using _Project.Scripts.Gameplay.StatsLogic;
 using JetBrains.Annotations;
 using R3;
 using UnityEngine;
@@ -13,25 +14,25 @@ namespace _Project.Scripts.Gameplay.Component
         IDisposable
     {
         private readonly HealthView _view;
-        private readonly HealthStat _healthStat;
+        private readonly HealthStats _healthStats;
 
         private readonly CompositeDisposable _disposable;
 
         public HealthPresenter(
             HealthView view,
-            HealthStat healthStat,
+            HealthStats healthStats,
             CompositeDisposable disposable)
         {
             _view = view;
-            _healthStat = healthStat;
+            _healthStats = healthStats;
             _disposable = disposable;
         }
 
         void IInitializable.Initialize()
         {
-            _healthStat
+            _healthStats
                 .CurrentHealth
-                .Prepend(_healthStat.MaxHealth.CurrentValue)
+                .Prepend(_healthStats.MaxHealth.CurrentValue)
                 .Pairwise()
                 .Subscribe(pair => UpdateCurrentHealthText(pair.Previous, pair.Current))
                 .AddTo(_disposable);

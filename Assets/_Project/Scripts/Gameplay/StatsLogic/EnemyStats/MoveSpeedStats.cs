@@ -1,9 +1,9 @@
 ﻿namespace _Project.Scripts.Gameplay.Stats.EnemyStats
 {
-    public readonly struct MoveSpeedStat : 
-        IStat
+    public readonly struct MoveSpeedStats : 
+        IStats
     {
-        public MoveSpeedStat(float speed)
+        public MoveSpeedStats(float speed)
         {
             Speed = speed;
         }

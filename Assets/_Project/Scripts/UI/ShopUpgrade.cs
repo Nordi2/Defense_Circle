@@ -16,7 +16,8 @@ namespace _Project.Scripts.UI
         [SerializeField] private GridLayoutGroup _gridLayoutGroup;
         [SerializeField] private UpgradeCartView _upgradeCartPrefab;
         [SerializeField] private ShopItemStorage _shopItemStorage;
-
+        [SerializeField] private AnimationCurve _animationCurve;
+        
         private List<UpgradeCartView> _upgradeCarts = new();
         private Sequence _animationSequence;
 
@@ -81,9 +82,9 @@ namespace _Project.Scripts.UI
             Sequence sequence = DOTween.Sequence();
 
             sequence
-                .Append(_upgradeCarts[0].transform.DOScale(Vector3.one, 0.5f).From(0).SetEase(Ease.OutBounce))
-                .Append(_upgradeCarts[1].transform.DOScale(Vector3.one, 0.5f).From(0).SetEase(Ease.OutBounce))
-                .Append(_upgradeCarts[2].transform.DOScale(Vector3.one, 0.5f).From(0).SetEase(Ease.OutBounce));
+                .Append(_upgradeCarts[0].transform.DOScale(Vector3.one, 0.5f).From(0).SetEase(_animationCurve))
+                .Append(_upgradeCarts[1].transform.DOScale(Vector3.one, 0.5f).From(0).SetEase(_animationCurve))
+                .Append(_upgradeCarts[2].transform.DOScale(Vector3.one, 0.5f).From(0).SetEase(_animationCurve));
 
             return sequence;
         }

@@ -10,6 +10,6 @@ namespace _Project.Scripts.Data
     public class ShopItemStorage : ScriptableObject
     {
         [SerializedDictionary("Type","Config")]
-        public SerializedDictionary<StatsType,StatsConfig> StatsConfigs;
+        public SerializedDictionary<StatsType,NewStatsConfig> StatsConfigs;
     }
 }

@@ -2,6 +2,7 @@
 using _Project.Scripts.Gameplay.Component;
 using _Project.Scripts.Gameplay.Observers;
 using _Project.Scripts.Gameplay.Stats;
+using _Project.Scripts.Gameplay.StatsLogic;
 using _Project.Scripts.Gameplay.Tower.Animation;
 using _Project.Scripts.Gameplay.Tower.Callbacks;
 using _Project.Scripts.UI.Presenters;
@@ -56,9 +57,9 @@ namespace _Project.Scripts.Gameplay.Tower
                 .NonLazy();
 
             Container
-                .Bind<HealthStat>()
+                .Bind<HealthStats>()
                 .AsSingle()
-                .WithArguments(_config.MaxHealth);
+                .WithArguments(100);
 
             Container
                 .Bind<HealthView>()

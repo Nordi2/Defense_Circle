@@ -1,9 +1,9 @@
 ﻿namespace _Project.Scripts.Gameplay.Stats.EnemyStats
 {
-    public readonly struct CollisionDamageStat :
-        IStat
+    public readonly struct CollisionDamageStats :
+        IStats
     {
-        public CollisionDamageStat(int damage)
+        public CollisionDamageStats(int damage)
         {
             Damage = damage;
         }

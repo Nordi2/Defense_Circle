@@ -11,24 +11,24 @@ namespace _Project.Scripts.Gameplay.EnemyLogic.Callbacks
         private readonly AnimationEnemy _animation;
         private readonly EnemyView _view;
         private readonly Wallet _wallet;
-        private readonly MoneyStat _moneyStat;
+        private readonly MoneyStats _moneyStats;
 
         public EnemyCallbacks(
             AnimationEnemy animation,
             EnemyView view,
             Wallet wallet,
-            MoneyStat moneyStat)
+            MoneyStats moneyStats)
         {
             _animation = animation;
             _view = view;
             _wallet = wallet;
-            _moneyStat = moneyStat;
+            _moneyStats = moneyStats;
         }
 
         public void GiveDamageCallback()
         {
             Object.Instantiate(_view.DieEffect, _view.transform.position, Quaternion.identity);
-            _wallet.SpendMoney(_moneyStat.SpendMoney);
+            _wallet.SpendMoney(_moneyStats.SpendMoney);
         }
 
         public void TakeDamageCallback(int damageValue)
@@ -44,7 +44,7 @@ namespace _Project.Scripts.Gameplay.EnemyLogic.Callbacks
         public void DieCallback()
         {
             Object.Instantiate(_view.DieEffect, _view.transform.position, Quaternion.identity);
-            _wallet.AddMoney(_moneyStat.RewardMoney);
+            _wallet.AddMoney(_moneyStats.RewardMoney);
         }
     }
 }

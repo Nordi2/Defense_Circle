@@ -1,9 +1,9 @@
 ﻿namespace _Project.Scripts.Gameplay.Stats.EnemyStats
 {
-    public readonly struct MoneyStat :
-        IStat
+    public readonly struct MoneyStats :
+        IStats
     {
-        public MoneyStat(
+        public MoneyStats(
             int rewardMoney,
             int spendMoney)
         {
