@@ -1,13 +1,13 @@
 ﻿#if UNITY_EDITOR
 using System.Collections.Generic;
-using _Project.Scripts.Gameplay.EnemyLogic;
-using _Project.Scripts.Gameplay.Money;
-using _Project.Scripts.Gameplay.Tower;
-using _Project.Scripts.Infrastructure;
-using _Project.Scripts.Infrastructure.Services.Pools;
 using _Project.Scripts.UI;
+using Cor.Enemy;
+using Cor.Enemy.Mono;
+using Cor.Tower.Mono;
 using DebugToolsPlus;
+using Infrastructure.Services;
 using JetBrains.Annotations;
+using Meta.Money;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

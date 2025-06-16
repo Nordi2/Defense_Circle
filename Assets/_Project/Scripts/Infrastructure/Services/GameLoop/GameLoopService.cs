@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Project.Scripts.Infrastructure.Signals;
+using Infrastructure.Signals;
 using JetBrains.Annotations;
 using Zenject;
 
-namespace _Project.Scripts.Infrastructure.Services.GameLoop
+namespace Infrastructure.Services
 {
     [UsedImplicitly]
     public class GameLoopService :

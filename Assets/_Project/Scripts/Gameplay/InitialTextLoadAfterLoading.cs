@@ -1,5 +1,5 @@
-﻿using _Project.Scripts.Infrastructure.Services.GameLoop;
-using DG.Tweening;
+﻿using DG.Tweening;
+using Infrastructure.Services;
 using TMPro;
 using UnityEngine;
 

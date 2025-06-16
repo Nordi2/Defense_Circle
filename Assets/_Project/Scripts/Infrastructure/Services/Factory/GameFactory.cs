@@ -1,10 +1,12 @@
-﻿using _Project.Scripts.Gameplay.Tower;
-using _Project.Scripts.Infrastructure.Services.GameLoop;
+﻿using _Project.Static;
+using Cor.Interfaces;
+using Cor.Tower.Mono;
+using Infrastructure.Services;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Scripts.Infrastructure.Services.Factory
+namespace _Project.Infrastructure.Services
 {
     [UsedImplicitly]
     public class GameFactory :

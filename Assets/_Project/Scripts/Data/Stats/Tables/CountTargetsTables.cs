@@ -1,7 +1,7 @@
-using JetBrains.Annotations;
+using Data.Tables.Parent;
 using UnityEngine;
 
-namespace _Project.Scripts.Data.Stats.Tables
+namespace Data.Tables
 {
     [System.Serializable]
     public class CountTargetsTables : StatsTables

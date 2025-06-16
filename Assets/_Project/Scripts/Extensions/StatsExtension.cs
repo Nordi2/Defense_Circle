@@ -1,9 +1,8 @@
-using _Project.Scripts.Data;
-using _Project.Scripts.Gameplay.Stats;
-using _Project.Scripts.Gameplay.StatsLogic;
+using Data.Tables.Parent;
+using Meta.Stats;
 using UnityEngine;
 
-namespace _Project.Scripts.Extensions
+namespace Extensions
 {
     public static class StatsExtension 
     {

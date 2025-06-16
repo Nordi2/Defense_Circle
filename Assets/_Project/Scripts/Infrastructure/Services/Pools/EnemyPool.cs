@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using _Project.Scripts.Gameplay.EnemyLogic;
-using _Project.Scripts.Gameplay.Tower;
+﻿using Cor.Enemy;
+using Cor.Enemy.Mono;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Scripts.Infrastructure.Services.Pools
+namespace Infrastructure.Services
 {
     [UsedImplicitly]
     public class EnemyPool : MonoMemoryPool<Vector3, EnemyFacade>

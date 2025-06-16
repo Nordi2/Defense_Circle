@@ -1,4 +1,4 @@
-﻿namespace _Project.Scripts.Infrastructure.Signals
+﻿namespace Infrastructure.Signals
 {
     public class PauseGameSignal
     {

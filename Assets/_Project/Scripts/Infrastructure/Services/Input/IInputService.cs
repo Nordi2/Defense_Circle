@@ -1,6 +1,6 @@
 ﻿using R3;
 
-namespace _Project.Scripts.Infrastructure.Services.Input
+namespace Infrastructure.Services
 {
     public interface IInputService
     {

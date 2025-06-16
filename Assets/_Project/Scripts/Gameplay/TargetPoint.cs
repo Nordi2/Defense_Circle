@@ -1,4 +1,4 @@
-using _Project.Scripts.Gameplay.Tower;
+using Cor.Interfaces;
 using UnityEngine;
 
 public class TargetPoint : MonoBehaviour , 

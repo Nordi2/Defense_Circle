@@ -1,8 +1,8 @@
-﻿using System;
-using _Project.Scripts.Data.Stats.Tables;
+﻿using Data.Stats.Config.Parent;
+using Data.Tables;
 using UnityEngine;
 
-namespace _Project.Scripts.Data.Stats
+namespace Data.Stats.Config
 {
     [CreateAssetMenu(
         fileName = "CountTargetsStats_Config",

@@ -1,19 +1,19 @@
-﻿using _Project.Scripts.Data;
+﻿using _Project.Infrastructure.EntryPoint;
+using _Project.Infrastructure.Services;
 using _Project.Scripts.Gameplay;
-using _Project.Scripts.Gameplay.EnemyLogic;
-using _Project.Scripts.Gameplay.Money;
-using _Project.Scripts.Gameplay.StatsLogic;
-using _Project.Scripts.Infrastructure.Services.Factory;
-using _Project.Scripts.Infrastructure.Services.GameLoop;
-using _Project.Scripts.Infrastructure.Services.Input;
-using _Project.Scripts.Infrastructure.Services.Pools;
-using _Project.Scripts.Infrastructure.Signals;
 using _Project.Scripts.Test;
 using _Project.Scripts.UI;
+using _Project.Static;
+using Cor.Enemy.Mono;
+using Data.Config;
+using Infrastructure.Services;
+using Infrastructure.Signals;
+using Meta.Money;
+using Meta.Stats;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Scripts.Infrastructure.Installers
+namespace Infrastructure.Installers
 {
     public class GameInstaller : MonoInstaller
     {
@@ -29,7 +29,7 @@ namespace _Project.Scripts.Infrastructure.Installers
             Container.DeclareSignal<ResumeGameSignal>();
 
             Container
-                .BindInterfacesTo<GameplayBootstrapper>()
+                .BindInterfacesTo<GameplayEntryPoint>()
                 .AsSingle()
                 .NonLazy();
 

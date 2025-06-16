@@ -4,7 +4,7 @@ using R3;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Scripts.Infrastructure.Services.Input
+namespace Infrastructure.Services
 {
     [UsedImplicitly]
     public class InputService :

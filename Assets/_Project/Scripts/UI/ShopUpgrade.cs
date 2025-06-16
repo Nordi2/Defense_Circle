@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using _Project.Scripts.Data;
-using _Project.Scripts.Gameplay.Stats;
 using _Project.Scripts.Test;
+using Data.Config;
 using DG.Tweening;
+using Meta.Stats;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;

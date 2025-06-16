@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace _Project.Scripts.Infrastructure
+namespace Infrastructure.Services
 {
     [UsedImplicitly]
     public class SceneLoader

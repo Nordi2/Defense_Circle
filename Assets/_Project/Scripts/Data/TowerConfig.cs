@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Data.Stats.Config.Parent;
+using UnityEngine;
 
-namespace _Project.Scripts.Data
+namespace Data.Config
 {
     [CreateAssetMenu(
         fileName = "TowerConfig",

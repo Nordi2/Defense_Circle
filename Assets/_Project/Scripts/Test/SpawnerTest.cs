@@ -1,6 +1,6 @@
 ﻿using System;
-using _Project.Scripts.Gameplay.EnemyLogic;
-using _Project.Scripts.Infrastructure.Signals;
+using Cor.Enemy;
+using Cor.Enemy.Mono;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;

@@ -1,8 +1,8 @@
-﻿using _Project.Scripts.Gameplay.Stats;
-using AYellowpaper.SerializedCollections;
+﻿using AYellowpaper.SerializedCollections;
+using Meta.Stats;
 using UnityEngine;
 
-namespace _Project.Scripts.Data
+namespace Data.Config
 {
     [CreateAssetMenu(
         fileName = "ShopItemStorage",

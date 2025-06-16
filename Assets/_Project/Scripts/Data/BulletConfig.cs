@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace _Project.Scripts.Data
+namespace Data.Config
 {
     [CreateAssetMenu(
         fileName = "BulletConfig",

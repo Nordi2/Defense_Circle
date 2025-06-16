@@ -1,4 +1,4 @@
-﻿namespace _Project.Scripts.Infrastructure.Services.GameLoop
+﻿namespace Infrastructure.Services
 {
     public interface IGameListener
     { }

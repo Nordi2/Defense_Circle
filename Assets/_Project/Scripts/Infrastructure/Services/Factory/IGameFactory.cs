@@ -1,6 +1,6 @@
-﻿using _Project.Scripts.Gameplay.Tower;
+﻿using Cor.Tower.Mono;
 
-namespace _Project.Scripts.Infrastructure.Services.Factory
+namespace _Project.Infrastructure.Services
 {
     public interface IGameFactory
     {

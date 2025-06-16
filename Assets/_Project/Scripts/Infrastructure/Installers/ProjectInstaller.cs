@@ -1,17 +1,18 @@
-using System;
-using _Project.Scripts.Infrastructure.Services.Data;
+using _Project.Infrastructure.EntryPoint;
 using _Project.Scripts.UI;
+using _Project.Static;
+using Infrastructure.Services;
 using R3;
 using Zenject;
 
-namespace _Project.Scripts.Infrastructure.Installers
+namespace Infrastructure.Installer
 {
     public class ProjectInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
             Container
-                .BindInterfacesTo<Bootstrap>()
+                .BindInterfacesTo<MainEntryPoint>()
                 .AsSingle()
                 .NonLazy();
             
@@ -22,11 +23,6 @@ namespace _Project.Scripts.Infrastructure.Installers
             Container
                 .Bind<CompositeDisposable>()
                 .AsSingle();
-
-            Container
-                .BindInterfacesTo<DataService>()
-                .AsSingle()
-                .OnInstantiated<DataService>(LoadingConfig);
             
             Container
                 .Bind<UIRoot>()
@@ -38,8 +34,5 @@ namespace _Project.Scripts.Infrastructure.Installers
                 .FromComponentInNewPrefabResource(AssetPath.CurtainPath)
                 .AsSingle();
         }
-
-        private void LoadingConfig(InjectContext arg1, DataService dataService) => 
-            dataService.LoadData();
     }
 }
