@@ -1,6 +1,5 @@
 ﻿using System;
-using Cor.Enemy;
-using Cor.Enemy.Mono;
+using _Project.Cor.Enemy.Mono;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;

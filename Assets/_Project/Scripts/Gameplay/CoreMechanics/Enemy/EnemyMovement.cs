@@ -1,10 +1,10 @@
-using Cor.Interfaces;
+using _Project.Cor.Interfaces;
+using _Project.Meta.Stats.NoneUpgrade;
 using JetBrains.Annotations;
-using Meta.Stats.NoneUpgrade;
 using UnityEngine;
 using Zenject;
 
-namespace Cor.Enemy
+namespace _Project.Cor.Enemy
 {
     [UsedImplicitly]
     public class EnemyMovement : 

@@ -1,6 +1,6 @@
-﻿using Cor.Interfaces;
+﻿using _Project.Cor.Interfaces;
 
-namespace Cor.Observers
+namespace _Project.Cor.Observers
 {
     public class TakeDamageObserver : TriggerObserver<ITakeDamagble>
     {

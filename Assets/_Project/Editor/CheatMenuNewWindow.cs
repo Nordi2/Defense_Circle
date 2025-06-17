@@ -1,5 +1,4 @@
-﻿using _Project.Scripts.Gameplay;
-using Cor.Enemy;
+﻿using _Project.Cor.Enemy;
 using UnityEditor;
 using UnityEngine;
 

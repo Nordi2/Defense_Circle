@@ -1,9 +1,9 @@
-﻿using Cor.Enemy.Mono;
+﻿using _Project.Cor.Enemy.Mono;
 using DG.Tweening;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Cor.Enemy
+namespace _Project.Cor.Enemy
 {
     [UsedImplicitly]
     public class AnimationEnemy

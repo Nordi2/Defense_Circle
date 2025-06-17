@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
 using R3;
 
-namespace Meta.Stats.Upgrade
+namespace _Project.Meta.Stats.Upgrade
 {
     [UsedImplicitly]
     public class HealthStats

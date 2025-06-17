@@ -1,7 +1,8 @@
-﻿using JetBrains.Annotations;
+﻿using _Project.Cor.Tower.Animation;
+using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Cor.Tower
+namespace _Project.Cor.Tower
 {
     [UsedImplicitly]
     public class TowerCallbacks

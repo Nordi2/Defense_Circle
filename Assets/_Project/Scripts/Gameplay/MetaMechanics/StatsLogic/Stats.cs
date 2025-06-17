@@ -1,8 +1,8 @@
 ﻿using System;
-using Data.Tables.Parent;
+using _Project.Data.Tables.Parent;
 using UnityEngine;
 
-namespace Meta.Stats
+namespace _Project.Meta.Stats
 {
     public abstract class Stats
     {

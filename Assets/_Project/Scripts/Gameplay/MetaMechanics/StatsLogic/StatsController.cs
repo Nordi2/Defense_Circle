@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Services;
 using Zenject;
 
-namespace Meta.Stats
+namespace _Project.Meta.Stats
 {
     public class StatsController :
         IInitializable

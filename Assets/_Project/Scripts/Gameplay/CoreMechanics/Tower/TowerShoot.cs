@@ -1,11 +1,11 @@
 ﻿using System;
-using Cor.Tower.Mono;
+using _Project.Cor.Tower.Mono;
+using _Project.Meta.Stats;
 using JetBrains.Annotations;
-using Meta.Stats;
 using UnityEngine;
 using Zenject;
 
-namespace Cor.Tower
+namespace _Project.Cor.Tower
 {
     [UsedImplicitly]
     public class TowerShoot : 

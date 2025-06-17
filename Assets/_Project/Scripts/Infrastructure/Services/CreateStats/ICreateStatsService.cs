@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Meta.Stats;
+using _Project.Meta.Stats;
 
 namespace Infrastructure.Services
 {

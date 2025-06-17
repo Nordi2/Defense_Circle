@@ -1,8 +1,8 @@
-﻿using Data.Stats.Config.Parent;
-using Data.Tables;
+﻿using _Project.Data.Stats.Config.Parent;
+using _Project.Data.Tables;
 using UnityEngine;
 
-namespace Data.Stats.Config
+namespace _Project.Data.Stats.Config
 {
     [CreateAssetMenu(
         fileName = "HealthStats_Config",

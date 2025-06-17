@@ -1,14 +1,12 @@
-﻿using _Project.Scripts.Gameplay.Component;
-using Cor.Component;
-using Cor.Interfaces;
-using Cor.Observers;
-using Cor.Enemy;
+﻿using _Project.Cor.Component;
+using _Project.Cor.Interfaces;
+using _Project.Cor.Observers;
 using DebugToolsPlus;
 using R3;
 using UnityEngine;
 using Zenject;
 
-namespace Cor.BulletLogic.Mono
+namespace _Project.Cor.BulletLogic.Mono
 {
     public class BulletFacade : MonoBehaviour
     {

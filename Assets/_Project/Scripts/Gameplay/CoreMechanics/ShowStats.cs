@@ -1,8 +1,8 @@
 ﻿using System.Text;
+using _Project.Meta.Stats;
 using JetBrains.Annotations;
-using Meta.Stats;
 
-namespace Cor
+namespace _Project.Cor
 {
     [UsedImplicitly]
     public class ShowStats

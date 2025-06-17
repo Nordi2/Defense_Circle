@@ -1,11 +1,10 @@
-﻿using _Project.Scripts.Gameplay.Component;
-using _Project.Scripts.Gameplay.Tower.Animation.AnimationSettings;
-using Cor.BulletLogic.Mono;
-using Cor.Observers;
-using Cor.BulletLogic;
+﻿using _Project.Cor.BulletLogic.Mono;
+using _Project.Cor.Observers;
+using _Project.Cor.Tower.Animation.AnimationSettings;
+using _Project.Scripts.Gameplay.Component;
 using UnityEngine;
 
-namespace Cor.Tower.Mono
+namespace _Project.Cor.Tower.Mono
 {
     public class TowerView : MonoBehaviour
     {

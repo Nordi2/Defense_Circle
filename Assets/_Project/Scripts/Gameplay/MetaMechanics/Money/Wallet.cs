@@ -3,7 +3,7 @@ using DebugToolsPlus;
 using JetBrains.Annotations;
 using R3;
 
-namespace Meta.Money
+namespace _Project.Meta.Money
 {
     [UsedImplicitly]
     public class Wallet

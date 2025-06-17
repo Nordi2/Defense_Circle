@@ -3,7 +3,7 @@ using Infrastructure.Services;
 using TMPro;
 using UnityEngine;
 
-namespace _Project.Scripts.Gameplay
+namespace _Project
 {
     public class InitialTextLoadAfterLoading : MonoBehaviour ,
         IGameStartListener

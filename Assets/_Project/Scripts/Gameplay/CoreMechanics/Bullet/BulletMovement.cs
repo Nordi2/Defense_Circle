@@ -1,9 +1,9 @@
-﻿using JetBrains.Annotations;
-using Meta.Stats.NoneUpgrade;
+﻿using _Project.Meta.Stats.NoneUpgrade;
+using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
-namespace Cor.BulletLogic
+namespace _Project.Cor.BulletLogic
 {
     [UsedImplicitly]
     public class BulletMovement : 

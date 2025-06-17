@@ -1,10 +1,10 @@
 ﻿using System;
+using _Project.Meta.Stats.Upgrade;
 using DebugToolsPlus;
 using JetBrains.Annotations;
-using Meta.Stats.Upgrade;
 using UnityEngine;
 
-namespace Cor.Component
+namespace _Project.Cor.Component
 {
     [UsedImplicitly]
     public class TakeDamageComponent

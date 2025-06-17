@@ -1,14 +1,12 @@
 ﻿using System;
-using _Project.Scripts.Gameplay.Component;
-using _Project.Scripts.Gameplay.Tower;
-using Cor.Component;
-using Cor.Interfaces;
-using Cor.Observers;
+using _Project.Cor.Component;
+using _Project.Cor.Interfaces;
+using _Project.Cor.Observers;
 using R3;
 using UnityEngine;
 using Zenject;
 
-namespace Cor.Enemy.Mono
+namespace _Project.Cor.Enemy.Mono
 {
     public class EnemyFacade : MonoBehaviour,
         ITakeDamagble

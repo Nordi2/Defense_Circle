@@ -1,9 +1,9 @@
 ﻿using System;
-using Cor.Interfaces;
+using _Project.Cor.Interfaces;
+using _Project.Meta.Stats.NoneUpgrade;
 using JetBrains.Annotations;
-using Meta.Stats.NoneUpgrade;
 
-namespace Cor.Component
+namespace _Project.Cor.Component
 {
     [UsedImplicitly]
     public class GiveDamageComponent

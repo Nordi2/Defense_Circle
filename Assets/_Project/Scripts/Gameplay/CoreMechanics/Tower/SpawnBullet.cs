@@ -1,12 +1,11 @@
 ﻿using System;
-using Cor.BulletLogic.Mono;
-using Cor.Tower.Mono;
-using Cor.BulletLogic;
+using _Project.Cor.BulletLogic.Mono;
+using _Project.Cor.Tower.Mono;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
-namespace Cor.Tower
+namespace _Project.Cor.Tower
 {
     [UsedImplicitly]
     public class SpawnBullet : 

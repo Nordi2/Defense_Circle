@@ -1,6 +1,7 @@
-﻿using Cor.Enemy.Mono;
+﻿
+using _Project.Cor.Enemy.Mono;
 
-namespace Cor.Observers
+namespace _Project.Cor.Observers
 {
     public class EnemyObserver : TriggerObserver<EnemyFacade>
     { }

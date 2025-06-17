@@ -1,8 +1,8 @@
-using Data.Tables.Parent;
-using Meta.Stats;
+using _Project.Data.Tables.Parent;
+using _Project.Meta.Stats;
 using UnityEngine;
 
-namespace Extensions
+namespace _Project.Extensions
 {
     public static class StatsExtension 
     {

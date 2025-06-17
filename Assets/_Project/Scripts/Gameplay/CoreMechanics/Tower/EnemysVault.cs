@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Cor.Enemy.Mono;
-using Cor.Observers;
-using Cor.Enemy;
+using _Project.Cor.Enemy.Mono;
+using _Project.Cor.Observers;
 using JetBrains.Annotations;
 using R3;
 using Zenject;
 
-namespace Cor.Tower
+namespace _Project.Cor.Tower
 {
     [UsedImplicitly]
     public class EnemysVault : 

@@ -1,10 +1,10 @@
-﻿using Cor.Component;
-using Cor.Interfaces;
+﻿using _Project.Cor.Component;
+using _Project.Cor.Interfaces;
 using Infrastructure.Services;
 using UnityEngine;
 using Zenject;
 
-namespace Cor.Tower.Mono
+namespace _Project.Cor.Tower.Mono
 {
     public class TowerFacade : MonoBehaviour,
         IGameStartListener,

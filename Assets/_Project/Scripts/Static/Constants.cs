@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Meta.Stats;
-using Meta.Stats.Upgrade;
+using _Project.Meta.Stats;
+using _Project.Meta.Stats.Upgrade;
 
 namespace _Project.Static
 {

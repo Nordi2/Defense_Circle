@@ -2,7 +2,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Cor.Enemy
+namespace _Project.Cor.Enemy
 {
     public class DamageText : MonoBehaviour
     {

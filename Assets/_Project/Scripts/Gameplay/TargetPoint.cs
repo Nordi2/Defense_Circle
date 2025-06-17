@@ -1,4 +1,4 @@
-using Cor.Interfaces;
+using _Project.Cor.Interfaces;
 using UnityEngine;
 
 public class TargetPoint : MonoBehaviour , 

@@ -1,4 +1,4 @@
-﻿namespace Meta.Stats.Upgrade
+﻿namespace _Project.Meta.Stats.Upgrade
 {
     public class CountTargetStats : Stats
     {

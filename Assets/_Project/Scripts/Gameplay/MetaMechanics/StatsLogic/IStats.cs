@@ -1,4 +1,4 @@
-﻿namespace Meta.Stats
+﻿namespace _Project.Meta.Stats
 {
     public interface IStats
     {

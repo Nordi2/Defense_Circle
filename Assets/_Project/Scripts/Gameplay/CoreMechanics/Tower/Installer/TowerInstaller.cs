@@ -1,14 +1,15 @@
-﻿using _Project.Scripts.Gameplay.Component;
-using Cor.Component;
-using Cor.Observers;
-using Cor.Tower.Mono;
-using Data.Config;
-using Meta.Money;
-using Meta.Stats.Upgrade;
+﻿using _Project.Cor.Component;
+using _Project.Cor.Observers;
+using _Project.Cor.Tower.Animation;
+using _Project.Cor.Tower.Mono;
+using _Project.Data.Config;
+using _Project.Meta.Money;
+using _Project.Meta.Stats.Upgrade;
+using _Project.Scripts.Gameplay.Component;
 using UnityEngine;
 using Zenject;
 
-namespace Cor.Tower.Installer
+namespace _Project.Cor.Tower.Installer
 {
     public class TowerInstaller : MonoInstaller
     {

@@ -1,7 +1,7 @@
 ﻿using _Project.Scripts.Gameplay;
 using UnityEngine;
 
-namespace Cor.Enemy.Mono
+namespace _Project.Cor.Enemy.Mono
 {
     public class EnemyView : MonoBehaviour
     {

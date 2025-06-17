@@ -1,13 +1,12 @@
 ﻿using System;
+using _Project.Cor.Tower.Mono;
 using _Project.Infrastructure.Services;
-using _Project.Scripts.Gameplay;
+using _Project.Meta.Money;
 using _Project.Scripts.Test;
 using _Project.Scripts.UI;
-using Cor.Tower.Mono;
 using Infrastructure.Services;
 using Infrastructure.Signals;
 using JetBrains.Annotations;
-using Meta.Money;
 using R3;
 using Zenject;
 

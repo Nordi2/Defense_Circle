@@ -1,6 +1,6 @@
-﻿using _Project.Static;
-using Cor.Interfaces;
-using Cor.Tower.Mono;
+﻿using _Project.Cor.Interfaces;
+using _Project.Cor.Tower.Mono;
+using _Project.Static;
 using Infrastructure.Services;
 using JetBrains.Annotations;
 using UnityEngine;

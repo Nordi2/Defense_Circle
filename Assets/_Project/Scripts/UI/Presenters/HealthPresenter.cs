@@ -1,6 +1,6 @@
 ﻿using System;
+using _Project.Meta.Stats.Upgrade;
 using JetBrains.Annotations;
-using Meta.Stats.Upgrade;
 using R3;
 using Zenject;
 

@@ -1,15 +1,15 @@
-﻿using _Project.Infrastructure.EntryPoint;
+﻿using _Project;
+using _Project.Cor.Enemy.Mono;
+using _Project.Data.Config;
+using _Project.Infrastructure.EntryPoint;
 using _Project.Infrastructure.Services;
-using _Project.Scripts.Gameplay;
+using _Project.Meta.Money;
+using _Project.Meta.Stats;
 using _Project.Scripts.Test;
 using _Project.Scripts.UI;
 using _Project.Static;
-using Cor.Enemy.Mono;
-using Data.Config;
 using Infrastructure.Services;
 using Infrastructure.Signals;
-using Meta.Money;
-using Meta.Stats;
 using UnityEngine;
 using Zenject;
 

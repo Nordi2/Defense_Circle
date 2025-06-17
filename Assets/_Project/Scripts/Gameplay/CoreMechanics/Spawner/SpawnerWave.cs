@@ -1,12 +1,11 @@
 using System;
-using Cor.Enemy.Mono;
-using Cor.Enemy;
+using _Project.Cor.Enemy.Mono;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-namespace Cor.Spawner
+namespace _Project.Cor.Spawner
 {
     public class SpawnerWave : MonoBehaviour
     {

@@ -1,6 +1,6 @@
-using Data.Tables.Parent;
+using _Project.Data.Tables.Parent;
 
-namespace Data.Tables
+namespace _Project.Data.Tables
 {
     [System.Serializable]
     public class HealthTable : StatsTables

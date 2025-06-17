@@ -1,8 +1,8 @@
-﻿using Data.Tables.Parent;
-using Meta.Stats;
+﻿using _Project.Data.Tables.Parent;
+using _Project.Meta.Stats;
 using UnityEngine;
 
-namespace Data.Stats.Config.Parent
+namespace _Project.Data.Stats.Config.Parent
 {
     public abstract class StatsConfig : ScriptableObject
     {

@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Meta.Money
+namespace _Project.Meta.Money
 {
     public class WalletView : MonoBehaviour
     {

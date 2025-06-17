@@ -1,17 +1,17 @@
 ﻿#if UNITY_EDITOR
 using System.Collections.Generic;
+using _Project.Cor.Enemy;
+using _Project.Cor.Enemy.Mono;
+using _Project.Cor.Tower.Mono;
+using _Project.Meta.Money;
 using _Project.Scripts.UI;
-using Cor.Enemy;
-using Cor.Enemy.Mono;
-using Cor.Tower.Mono;
 using DebugToolsPlus;
 using Infrastructure.Services;
 using JetBrains.Annotations;
-using Meta.Money;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace _Project.Scripts.Gameplay
+namespace _Project
 {
     [UsedImplicitly]
     public static class CheatManager

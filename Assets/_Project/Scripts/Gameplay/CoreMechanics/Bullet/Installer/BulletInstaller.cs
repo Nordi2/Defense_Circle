@@ -1,10 +1,10 @@
-﻿using Cor.Component;
-using Data.Config;
-using Meta.Stats.NoneUpgrade;
+﻿using _Project.Cor.Component;
+using _Project.Data.Config;
+using _Project.Meta.Stats.NoneUpgrade;
 using UnityEngine;
 using Zenject;
 
-namespace Cor.BulletLogic.Installer
+namespace _Project.Cor.BulletLogic.Installer
 {
     public class BulletInstaller : MonoInstaller
     {

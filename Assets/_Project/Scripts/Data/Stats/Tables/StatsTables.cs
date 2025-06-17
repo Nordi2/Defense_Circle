@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Data.Tables.Parent
+namespace _Project.Data.Tables.Parent
 {
     public abstract  class StatsTables
     {

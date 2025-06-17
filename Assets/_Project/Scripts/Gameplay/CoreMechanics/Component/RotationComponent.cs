@@ -1,10 +1,9 @@
-﻿using Cor.Enemy.Mono;
-using Cor.Enemy;
+﻿using _Project.Cor.Enemy.Mono;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
-namespace Cor.Component
+namespace _Project.Cor.Component
 {
     [UsedImplicitly]
     public class RotationComponent : ITickable

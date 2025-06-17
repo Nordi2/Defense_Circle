@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Project.Scripts.Gameplay.Tower.Animation.AnimationSettings
+namespace _Project.Cor.Tower.Animation.AnimationSettings
 {
     [System.Serializable]
     public struct TowerTakeDamageSettings

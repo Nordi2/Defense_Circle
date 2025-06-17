@@ -1,12 +1,12 @@
-﻿using Cor.Component;
-using Cor.Enemy.Mono;
-using Data.Config;
-using Meta.Stats.NoneUpgrade;
-using Meta.Stats.Upgrade;
+﻿using _Project.Cor.Component;
+using _Project.Cor.Enemy.Mono;
+using _Project.Data.Config;
+using _Project.Meta.Stats.NoneUpgrade;
+using _Project.Meta.Stats.Upgrade;
 using UnityEngine;
 using Zenject;
 
-namespace Cor.Enemy.Installer
+namespace _Project.Cor.Enemy.Installer
 {
     public class EnemyInstaller : MonoInstaller
     {

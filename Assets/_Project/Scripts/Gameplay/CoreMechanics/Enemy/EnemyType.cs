@@ -1,4 +1,4 @@
-﻿namespace Cor.Enemy
+﻿namespace _Project.Cor.Enemy
 {
     public enum EnemyType
     {

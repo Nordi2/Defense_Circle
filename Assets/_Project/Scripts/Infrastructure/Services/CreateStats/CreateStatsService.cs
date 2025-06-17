@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using Data.Config;
-using Data.Stats.Config;
-using Data.Stats.Config.Parent;
-using Data.Tables.Parent;
+using _Project.Data.Config;
+using _Project.Data.Stats.Config;
+using _Project.Data.Stats.Config.Parent;
+using _Project.Data.Tables.Parent;
+using _Project.Meta.Stats;
+using _Project.Meta.Stats.Upgrade;
 using Infrastructure.Services;
 using JetBrains.Annotations;
-using Meta.Stats;
-using Meta.Stats.Upgrade;
 using UnityEngine;
 
 namespace _Project.Infrastructure.Services

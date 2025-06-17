@@ -1,8 +1,8 @@
-﻿using Data.Tables.Parent;
-using Extensions;
+﻿using _Project.Data.Tables.Parent;
+using _Project.Extensions;
 using UnityEngine;
 
-namespace Meta.Stats
+namespace _Project.Meta.Stats
 {
     public class StatsBuilder
     {

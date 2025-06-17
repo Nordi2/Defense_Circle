@@ -1,7 +1,7 @@
 ﻿using R3;
 using UnityEngine;
 
-namespace Cor.Observers
+namespace _Project.Cor.Observers
 {
     public class TriggerObserver<T> : MonoBehaviour
     {

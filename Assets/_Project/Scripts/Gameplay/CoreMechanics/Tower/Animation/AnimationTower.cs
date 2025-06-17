@@ -1,14 +1,13 @@
 ﻿using System;
+using _Project.Cor.Tower.Animation.AnimationSettings;
+using _Project.Cor.Tower.Mono;
 using _Project.Scripts.Gameplay.Component;
-using _Project.Scripts.Gameplay.Tower;
-using _Project.Scripts.Gameplay.Tower.Animation.AnimationSettings;
-using Cor.Tower.Mono;
 using DG.Tweening;
 using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 
-namespace Cor.Tower
+namespace _Project.Cor.Tower.Animation
 {
     [UsedImplicitly]
     public class AnimationTower

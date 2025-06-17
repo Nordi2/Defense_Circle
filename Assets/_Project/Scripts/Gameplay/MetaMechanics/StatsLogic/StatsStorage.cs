@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Project.Meta.Stats.Upgrade;
 using _Project.Static;
 using JetBrains.Annotations;
-using Meta.Stats.Upgrade;
 
-namespace Meta.Stats
+namespace _Project.Meta.Stats
 {
     [UsedImplicitly]
     public class StatsStorage : IDisposable

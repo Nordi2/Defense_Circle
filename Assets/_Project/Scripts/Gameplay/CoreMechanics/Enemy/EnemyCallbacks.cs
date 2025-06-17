@@ -1,10 +1,10 @@
-﻿using Cor.Enemy.Mono;
+﻿using _Project.Cor.Enemy.Mono;
+using _Project.Meta.Money;
+using _Project.Meta.Stats.NoneUpgrade;
 using JetBrains.Annotations;
-using Meta.Money;
-using Meta.Stats.NoneUpgrade;
 using UnityEngine;
 
-namespace Cor.Enemy
+namespace _Project.Cor.Enemy
 {
     [UsedImplicitly]
     public class EnemyCallbacks

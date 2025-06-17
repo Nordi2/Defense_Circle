@@ -1,4 +1,4 @@
-﻿namespace Meta.Stats.NoneUpgrade
+﻿namespace _Project.Meta.Stats.NoneUpgrade
 {
     public readonly struct RewardStats :
         IStats

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Cor.Interfaces
+namespace _Project.Cor.Interfaces
 {
     public interface IGetTargetPosition
     {

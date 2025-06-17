@@ -2,7 +2,7 @@
 using R3;
 using Zenject;
 
-namespace Meta.Money
+namespace _Project.Meta.Money
 {
     public class WalletPresenter : 
         IInitializable ,

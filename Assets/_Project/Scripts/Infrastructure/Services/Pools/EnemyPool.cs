@@ -1,5 +1,4 @@
-﻿using Cor.Enemy;
-using Cor.Enemy.Mono;
+﻿using _Project.Cor.Enemy.Mono;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
