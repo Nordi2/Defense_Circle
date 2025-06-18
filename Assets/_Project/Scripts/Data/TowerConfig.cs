@@ -1,13 +1,13 @@
-﻿using _Project.Data.Stats.Config.Parent;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Project.Data.Config
 {
     [CreateAssetMenu(
         fileName = "TowerConfig",
-        menuName = "Configs/TowerConfig")]
+        menuName = "Configs/Tower")]
     public class TowerConfig : ScriptableObject
     {
-        [field: SerializeField] public StatsConfig [] TowerStats { get; private set; }
+        [field: SerializeField] public StatsConfig[] Stats {get; private set; }
+        [field: SerializeField] public int InitialMoney { get; private set; }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using _Project;
+using _Project.Cor;
 using _Project.Cor.Enemy.Mono;
 using _Project.Data.Config;
 using _Project.Infrastructure.EntryPoint;
 using _Project.Infrastructure.Services;
 using _Project.Meta.Money;
-using _Project.Meta.Stats;
-using _Project.Scripts.Test;
+using _Project.Meta.StatsLogic;
 using _Project.Scripts.UI;
 using _Project.Static;
 using Infrastructure.Services;
@@ -17,8 +17,8 @@ namespace Infrastructure.Installers
 {
     public class GameInstaller : MonoInstaller
     {
-        [SerializeField] private EnemyFacade _enemyFacadePrefab;
         [SerializeField] private TowerConfig _config;
+
         public override void InstallBindings()
         {
             SignalBusInstaller.Install(Container);
@@ -27,6 +27,12 @@ namespace Infrastructure.Installers
             Container.DeclareSignal<FinishGameSignal>();
             Container.DeclareSignal<PauseGameSignal>();
             Container.DeclareSignal<ResumeGameSignal>();
+
+            Container.Bind<StatsBuilder>().AsSingle();
+            Container.Bind<TowerConfig>().FromInstance(_config).AsSingle();
+            Container.BindInterfacesTo<CreateStatsService>().AsSingle();
+            Container.Bind<StatsStorage>().AsSingle();
+            Container.Bind<ShowStatsService>().AsSingle();
 
             Container
                 .BindInterfacesTo<GameplayEntryPoint>()
@@ -45,10 +51,11 @@ namespace Infrastructure.Installers
             Container
                 .BindInterfacesTo<GameFactory>()
                 .AsSingle();
-            
+
             Container
                 .Bind<Wallet>()
-                .AsSingle();
+                .AsSingle()
+                .WithArguments(_config.InitialMoney);
 
             Container
                 .BindInterfacesTo<TargetPoint>()
@@ -61,22 +68,17 @@ namespace Infrastructure.Installers
                 .AsSingle()
                 .NonLazy();
 
-            Container.BindInstance(_config).AsSingle();
-            Container.BindInterfacesTo<StatsController>().AsSingle();
-            Container.BindInterfacesTo<CreateStatsService>().AsSingle();
-            Container.Bind<StatsBuilder>().AsSingle();
-            Container.Bind<StatsStorage>().AsSingle();
-            
+            // Container.BindInstance(_config).AsSingle();
+            // Container.BindInterfacesTo<StatsController>().AsSingle();
+            // Container.BindInterfacesTo<CreateStatsService>().AsSingle();
+            // Container.Bind<StatsBuilder>().AsSingle();
+            // Container.Bind<StatsStorage>().AsSingle();
+
             Container
                 .BindInterfacesAndSelfTo<InitialTextLoadAfterLoading>()
                 .FromComponentInNewPrefabResource(AssetPath.InitialTextLoad)
                 .AsSingle();
 
-            Container
-                .Bind<SpawnerTest>()
-                .AsSingle()
-                .WithArguments(_enemyFacadePrefab);
-            
             Container
                 .Bind<Camera>()
                 .FromComponentInHierarchy()

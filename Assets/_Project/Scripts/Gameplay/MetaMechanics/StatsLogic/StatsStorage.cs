@@ -1,51 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Project.Meta.Stats.Upgrade;
-using _Project.Static;
+using _Project.Data.Config;
+using _Project.Meta.StatsLogic.Upgrade;
 using JetBrains.Annotations;
 
-namespace _Project.Meta.Stats
+namespace _Project.Meta.StatsLogic
 {
     [UsedImplicitly]
-    public class StatsStorage : IDisposable
+    public class StatsStorage
     {
-        public IReadOnlyList<Stats> ListStats;
+        private readonly TowerConfig _config;
+        private readonly Dictionary<Type, Stats> _dictionaryStats;
 
-        private readonly Dictionary<Type, float> _dictionaryStats = new();
-
-        public int CountTargetsValue => (int)GetValue<CountTargetStats>();
-
-
-        void IDisposable.Dispose()
+        public StatsStorage(TowerConfig config)
         {
-            foreach (Stats stat in ListStats)
-            {
-                stat.OnUpgradeStats -= SwitchValueStats;
-            }
+            _config = config;
+            _dictionaryStats = new Dictionary<Type, Stats>(_config.Stats.Length);
         }
 
-        public void AddStatsInStorage(List<Stats> stats)
+        public void AddStatsList(Stats stats)
         {
-            ListStats = new List<Stats>(stats);
-
-            foreach (Stats current in ListStats)
-            {
-                current.OnUpgradeStats += SwitchValueStats;
-                _dictionaryStats.Add(current.GetType(), current.ValueStats);
-            }
+            if (!_dictionaryStats.TryAdd(stats.GetType(), stats))
+                throw new Exception($"Attempt to add new stats: {stats.GetType().Name}");
         }
 
-        private float GetValue<T>() where T : Stats
+        public TStats GetStats<TStats>() where TStats : Stats
         {
-            return _dictionaryStats.ContainsKey(typeof(T))
-                ? _dictionaryStats[typeof(T)]
-                : Constants.GetDefaultValueStats<T>();
-        }
+            if (_dictionaryStats.TryGetValue(typeof(TStats), out var stats))
+                return (TStats)stats;
 
-        private void SwitchValueStats(Stats stats)
-        {
-            if (_dictionaryStats.ContainsKey(stats.GetType()))
-                _dictionaryStats[stats.GetType()] = stats.ValueStats;
+            throw new NullReferenceException("No stats found for type " + typeof(TStats).Name);
         }
     }
 }

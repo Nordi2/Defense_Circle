@@ -1,5 +1,5 @@
 ﻿using System;
-using _Project.Meta.Stats.Upgrade;
+using _Project.Meta.StatsLogic.Upgrade;
 using JetBrains.Annotations;
 using R3;
 using Zenject;

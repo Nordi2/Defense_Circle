@@ -1,4 +1,4 @@
-﻿using _Project.Meta.Stats.NoneUpgrade;
+﻿using _Project.Meta.StatsLogic.NoneUpgrade;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
@@ -16,10 +16,10 @@ namespace _Project.Cor.BulletLogic
 
         public BulletMovement(
             Transform bulletTransform,
-            MoveSpeedStats moveSpeedStats)
+            MoveSpeedShowStatsInfo moveSpeedShowStatsInfo)
         {
             _bulletTransform = bulletTransform;
-            _moveSpeed = moveSpeedStats.Speed;
+            _moveSpeed = moveSpeedShowStatsInfo.Speed;
         }
 
         public void Initialize(Vector3 direction)

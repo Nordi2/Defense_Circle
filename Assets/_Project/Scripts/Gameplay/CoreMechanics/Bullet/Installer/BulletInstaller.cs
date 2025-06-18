@@ -1,6 +1,6 @@
 ﻿using _Project.Cor.Component;
 using _Project.Data.Config;
-using _Project.Meta.Stats.NoneUpgrade;
+using _Project.Meta.StatsLogic.NoneUpgrade;
 using UnityEngine;
 using Zenject;
 
@@ -20,12 +20,12 @@ namespace _Project.Cor.BulletLogic.Installer
                 .WithArguments(_bulletTransform);
 
             Container
-                .BindInterfacesAndSelfTo<MoveSpeedStats>()
+                .BindInterfacesAndSelfTo<MoveSpeedShowStatsInfo>()
                 .AsSingle()
                 .WithArguments(_config.MoveSpeed);
             
             Container
-                .BindInterfacesAndSelfTo<CollisionDamageStats>()
+                .BindInterfacesAndSelfTo<CollisionDamageShowStatsInfo>()
                 .AsSingle()
                 .WithArguments(_config.GetRandomDamage());
 
@@ -33,7 +33,7 @@ namespace _Project.Cor.BulletLogic.Installer
                 .Bind<GiveDamageComponent>()
                 .AsSingle();
 
-            Container.Bind<ShowStats>().AsSingle();
+            Container.Bind<ShowStatsService>().AsSingle();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace _Project.Data.Config
 {
     [CreateAssetMenu(
         fileName = "EnemyConfig",
-        menuName = "Configs/EnemyConfig")]
+        menuName = "Configs/Enemy")]
     public class EnemyConfig : ScriptableObject
     {
         [SerializeField, Min(10)] private Vector2Int _minMaxHealth;

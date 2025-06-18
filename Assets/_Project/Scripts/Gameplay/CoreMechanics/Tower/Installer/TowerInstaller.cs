@@ -4,7 +4,7 @@ using _Project.Cor.Tower.Animation;
 using _Project.Cor.Tower.Mono;
 using _Project.Data.Config;
 using _Project.Meta.Money;
-using _Project.Meta.Stats.Upgrade;
+using _Project.Meta.StatsLogic.Upgrade;
 using _Project.Scripts.Gameplay.Component;
 using UnityEngine;
 using Zenject;

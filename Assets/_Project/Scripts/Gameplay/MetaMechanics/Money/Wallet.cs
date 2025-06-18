@@ -8,10 +8,15 @@ namespace _Project.Meta.Money
     [UsedImplicitly]
     public class Wallet
     {
-        private readonly ReactiveProperty<int> _currentMoney = new(0);
+        private readonly ReactiveProperty<int> _currentMoney;
 
         public ReadOnlyReactiveProperty<int> CurrentMoney => _currentMoney;
 
+        public Wallet(int initialMoney)
+        {
+            _currentMoney = new ReactiveProperty<int>(initialMoney);
+        }
+        
         public void AddMoney(int amountAddedMoney)
         {
             D.Log($"{GetType().Name}. Operation: AddMoney",

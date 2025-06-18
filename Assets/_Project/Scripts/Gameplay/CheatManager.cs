@@ -73,7 +73,7 @@ namespace _Project
             enemyFacade.OnDeath += DeleteFromList;
             _enemiesInSpawned.Add(enemyFacade);
 
-            D.Log(CheathManager.ToUpper(), log + D.FormatText(enemyFacade.ShowStats.ToString(), DColor.RED),
+            D.Log(CheathManager.ToUpper(), log + D.FormatText(enemyFacade.ShowStatsService.ToString(), DColor.RED),
                 enemyFacade.gameObject, DColor.AQUAMARINE, true);
         }
 

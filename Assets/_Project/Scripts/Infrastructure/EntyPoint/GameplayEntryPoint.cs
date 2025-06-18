@@ -2,7 +2,6 @@
 using _Project.Cor.Tower.Mono;
 using _Project.Infrastructure.Services;
 using _Project.Meta.Money;
-using _Project.Scripts.Test;
 using _Project.Scripts.UI;
 using Infrastructure.Services;
 using Infrastructure.Signals;
@@ -25,7 +24,6 @@ namespace _Project.Infrastructure.EntryPoint
         private readonly IGameFactory _gameFactory;
         private readonly DiContainer _container;
         private readonly ShopUpgrade _shopUpgrade;
-        private SpawnerTest _spawnerTest;
 
         public GameplayEntryPoint(
             InitialTextLoadAfterLoading initialText,
@@ -35,14 +33,12 @@ namespace _Project.Infrastructure.EntryPoint
             SignalBus signalBus,
             IGameFactory gameFactory,
             DiContainer container,
-            SpawnerTest spawnerTest,
             ShopUpgrade shopUpgrade)
         {
             _disposable = disposable;
             _signalBus = signalBus;
             _gameFactory = gameFactory;
             _container = container;
-            _spawnerTest = spawnerTest;
             _shopUpgrade = shopUpgrade;
             _initialText = initialText;
             _uiRoot = uiRoot;

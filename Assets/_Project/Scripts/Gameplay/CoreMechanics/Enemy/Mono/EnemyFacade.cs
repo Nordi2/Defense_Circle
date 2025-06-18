@@ -24,16 +24,16 @@ namespace _Project.Cor.Enemy.Mono
         private void Construct(
             TakeDamageComponent takeDamageComponent,
             GiveDamageComponent giveDamageComponent,
-            ShowStats showStats,
+            ShowStatsService showStatsService,
             EnemyCallbacks enemyCallbacks)
         {
             _enemyCallbacks = enemyCallbacks;
             _takeDamageComponent = takeDamageComponent;
             _giveDamageComponent = giveDamageComponent;
-            ShowStats = showStats;
+            ShowStatsService = showStatsService;
         }
 
-        public ShowStats ShowStats { get; private set; }
+        public ShowStatsService ShowStatsService { get; private set; }
 
         private void OnEnable()
         {

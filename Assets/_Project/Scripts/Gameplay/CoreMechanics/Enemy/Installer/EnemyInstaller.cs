@@ -1,8 +1,8 @@
 ﻿using _Project.Cor.Component;
 using _Project.Cor.Enemy.Mono;
 using _Project.Data.Config;
-using _Project.Meta.Stats.NoneUpgrade;
-using _Project.Meta.Stats.Upgrade;
+using _Project.Meta.StatsLogic.NoneUpgrade;
+using _Project.Meta.StatsLogic.Upgrade;
 using UnityEngine;
 using Zenject;
 
@@ -30,7 +30,7 @@ namespace _Project.Cor.Enemy.Installer
                 .AsSingle();
 
             Container
-                .Bind<ShowStats>()
+                .Bind<ShowStatsService>()
                 .AsSingle();
 
             Container
@@ -61,17 +61,17 @@ namespace _Project.Cor.Enemy.Installer
                 .WithArguments(_config.GetRandomValueHealth());
 
             Container
-                .BindInterfacesAndSelfTo<MoveSpeedStats>()
+                .BindInterfacesAndSelfTo<MoveSpeedShowStatsInfo>()
                 .AsSingle()
                 .WithArguments(_config.GetRandomValueMoveSpeed());
 
             Container
-                .BindInterfacesAndSelfTo<RewardStats>()
+                .BindInterfacesAndSelfTo<RewardShowStatsInfo>()
                 .AsSingle()
                 .WithArguments(_config.GetRandomMoneyReward(),_config.GetRandomMoneySpend());
             
             Container
-                .BindInterfacesAndSelfTo<CollisionDamageStats>()
+                .BindInterfacesAndSelfTo<CollisionDamageShowStatsInfo>()
                 .AsSingle()
                 .WithArguments(_config.GetRandomValueCollisionDamage());
         }

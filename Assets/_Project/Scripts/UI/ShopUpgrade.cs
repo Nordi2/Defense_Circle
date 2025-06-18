@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using _Project.Data.Config;
-using _Project.Meta.Stats;
-using _Project.Scripts.Test;
+using _Project.Meta.StatsLogic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace _Project.Scripts.UI
 {
@@ -15,21 +13,11 @@ namespace _Project.Scripts.UI
         [SerializeField] private Image _image;
         [SerializeField] private GridLayoutGroup _gridLayoutGroup;
         [SerializeField] private UpgradeCartView _upgradeCartPrefab;
-        [SerializeField] private ShopItemStorage _shopItemStorage;
         [SerializeField] private AnimationCurve _animationCurve;
         
         private List<UpgradeCartView> _upgradeCarts = new();
         private Sequence _animationSequence;
-
-        private SpawnerTest _spawnerTest;
-
-
-        [Inject]
-        private void Construct(SpawnerTest spawnerTest)
-        {
-            _spawnerTest = spawnerTest;
-        }
-
+        
         public RectTransform RectTransform => _rectTransform;
 
         private void Awake()
@@ -39,16 +27,6 @@ namespace _Project.Scripts.UI
                 UpgradeCartView upgradeCart = Instantiate(_upgradeCartPrefab, _gridLayoutGroup.transform);
                 _upgradeCarts.Add(upgradeCart);
             }
-        }
-
-        private void Start()
-        {
-            _spawnerTest.OnEndWave += OpenShop;
-        }
-
-        private void OnDestroy()
-        {
-            _spawnerTest.OnEndWave -= OpenShop;
         }
 
         public void OpenShop()
@@ -64,11 +42,11 @@ namespace _Project.Scripts.UI
 
             for (int i = 0; i < _upgradeCarts.Count; i++)
             {
-                _upgradeCarts[i].UpdateIcon(_shopItemStorage.StatsConfigs[StatsType.Health].IconStats);
-                _upgradeCarts[i].UpdateNameText(_shopItemStorage.StatsConfigs[StatsType.Health].NameStats);
-                _upgradeCarts[i]
-                    .UpdateMoneyText(
-                        $"Money: {_shopItemStorage.StatsConfigs[StatsType.Health].GetPrice(1).ToString()}$");
+                // _upgradeCarts[i].UpdateIcon(_shopItemStorage.StatsConfigs[StatsType.Health].IconStats);
+                // _upgradeCarts[i].UpdateNameText(_shopItemStorage.StatsConfigs[StatsType.Health].NameStats);
+                // _upgradeCarts[i]
+                //     .UpdateMoneyText(
+                //         $"Money: {_shopItemStorage.StatsConfigs[StatsType.Health].GetPrice(1).ToString()}$");
             }
 
             _animationSequence

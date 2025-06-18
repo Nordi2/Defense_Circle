@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
 using R3;
 
-namespace _Project.Meta.Stats.Upgrade
+namespace _Project.Meta.StatsLogic.Upgrade
 {
     [UsedImplicitly]
     public class HealthStats
@@ -17,11 +17,8 @@ namespace _Project.Meta.Stats.Upgrade
             _maxHealth = new ReactiveProperty<int>(maxHealth);
             _currentHealth = new ReactiveProperty<int>(maxHealth);
         }
-        
+
         public void SetCurrentHealthValue(int newValue) =>
             _currentHealth.Value = newValue;
-
-        public string ShowInfo() =>
-            $"MaxHealth: {_maxHealth.Value}. ";
     }
 }

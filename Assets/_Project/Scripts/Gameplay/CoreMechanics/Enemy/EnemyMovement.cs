@@ -1,5 +1,5 @@
 using _Project.Cor.Interfaces;
-using _Project.Meta.Stats.NoneUpgrade;
+using _Project.Meta.StatsLogic.NoneUpgrade;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
@@ -17,11 +17,11 @@ namespace _Project.Cor.Enemy
         public EnemyMovement(
             IGetTargetPosition getTarget,
             Transform objectTransform,
-            MoveSpeedStats moveSpeedStats)
+            MoveSpeedShowStatsInfo moveSpeedShowStatsInfo)
         {
             _targetPosition = getTarget.GetPosition();
             _objectTransform = objectTransform;
-            _moveSpeed = moveSpeedStats.Speed;
+            _moveSpeed = moveSpeedShowStatsInfo.Speed;
         }
 
         void ITickable.Tick()

@@ -1,41 +1,19 @@
-﻿using _Project.Data.Tables.Parent;
-using _Project.Extensions;
-using UnityEngine;
+﻿using _Project.Extensions;
+using JetBrains.Annotations;
 
-namespace _Project.Meta.Stats
+namespace _Project.Meta.StatsLogic
 {
+    [UsedImplicitly]
     public class StatsBuilder
     {
         private int _currentLevel;
         private int _maxLevel;
         private int _price;
-        private float _valueStats;
-        private Sprite _icon;
-        private PriceTable _priceTable;
-        private StatsTables _statsTables;
+        private int _valueStats;
 
-        public StatsBuilder WithValueStats(float valueStats)
+        public StatsBuilder WithValueStats(int value)
         {
-            _valueStats = valueStats;
-            return this;
-        }
-
-        public StatsBuilder WithStatsTable(StatsTables statsTable)
-        {
-            _statsTables = statsTable;
-            return this;
-        }
-
-        public StatsBuilder WithPriceTable(PriceTable priceTable)
-        {
-            _priceTable = priceTable;
-
-            return this;
-        }
-
-        public StatsBuilder WithCurrentLevel(int initialLevel)
-        {
-            _currentLevel = initialLevel;
+            _valueStats = value;
             return this;
         }
 
@@ -51,35 +29,30 @@ namespace _Project.Meta.Stats
             return this;
         }
 
-        public StatsBuilder WithIcon(Sprite icon)
+        public StatsBuilder WithCurrentLevel(int initialLevel)
         {
-            _icon = icon;
+            _currentLevel = initialLevel;
             return this;
         }
 
-        public T Build<T>() where T : Stats, new()
+        public T Build<T>() where T : Upgrade.Stats, new()
         {
             T createdStats = new T();
 
             createdStats
-                .SetCurrentLevel(_currentLevel)
                 .SetMaxLevel(_maxLevel)
+                .SetCurrentLevel(_currentLevel)
                 .SetPrice(_price)
-                .SetIcon(_icon)
-                .SetPriceTable(_priceTable)
-                .SetStatsTables(_statsTables)
                 .SetValueStats(_valueStats);
-            
+
             return createdStats;
         }
-
+        
         public StatsBuilder Reset()
         {
             _currentLevel = 0;
             _maxLevel = 0;
             _price = 0;
-            _icon = null;
-            _priceTable = null;
 
             return this;
         }

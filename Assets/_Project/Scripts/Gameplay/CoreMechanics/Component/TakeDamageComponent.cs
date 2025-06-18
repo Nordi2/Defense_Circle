@@ -1,5 +1,5 @@
 ﻿using System;
-using _Project.Meta.Stats.Upgrade;
+using _Project.Meta.StatsLogic.Upgrade;
 using DebugToolsPlus;
 using JetBrains.Annotations;
 using UnityEngine;
