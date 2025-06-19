@@ -1,12 +1,9 @@
-﻿using System;
-using _Project.Meta.Money;
+﻿using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
 using _Project.Meta.StatsLogic.Upgrade;
 using _Project.Static;
 using _Project.UI.Shop;
 using R3;
-using UnityEngine;
-using Zenject;
 using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.UI.Shop
@@ -29,6 +26,12 @@ namespace _Project.Scripts.UI.Shop
             _disposable = disposable;
             _statsStorage = statsStorage;
         }
+
+        public void OpenShop() =>
+            _view.OpenShop();
+
+        public void HideShop() =>
+            _view.CloseShop();
 
         public void CreateUpgradeCarts()
         {

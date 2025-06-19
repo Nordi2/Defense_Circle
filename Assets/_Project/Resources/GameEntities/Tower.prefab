@@ -478,8 +478,6 @@ GameObject:
   - component: {fileID: 1788986089515114125}
   - component: {fileID: 7447734464313752220}
   - component: {fileID: 8496516773948229889}
-  - component: {fileID: 2154697777157200864}
-  - component: {fileID: 8039722057452569451}
   m_Layer: 9
   m_Name: Tower
   m_TagString: Untagged
@@ -613,41 +611,6 @@ MonoBehaviour:
     <DurationDoScale>k__BackingField: 1
     <EaseType>k__BackingField: 30
   _enemyObserver: {fileID: 425366101399624716}
---- !u!114 &2154697777157200864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120365737338634439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
-  _monoInstallers:
-  - {fileID: 8039722057452569451}
-  _installerPrefabs: []
-  _autoRun: 1
-  _kernel: {fileID: 0}
---- !u!114 &8039722057452569451
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120365737338634439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a66694764ae47aba1c9124a7408dd35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyObserver: {fileID: 425366101399624716}
-  _view: {fileID: 8496516773948229889}
-  _healthView: {fileID: 2988036011989207867}
-  _walletView: {fileID: 8890338634986145054}
-  _config: {fileID: 11400000, guid: 39fc9cfbfc5fb9e4e8494c998f4c1c2c, type: 2}
 --- !u!1 &1200317321189261032
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,9 +15,8 @@ namespace _Project.Cor.Tower.Mono
         private TowerCallbacks _towerCallbacks;
         private TakeDamageComponent _takeDamageComponent;
         private ShowStatsService _showStatsService;
-        
-        [Inject]
-        private void Construct(
+
+        public void Init(
             TakeDamageComponent takeDamageComponent,
             TowerCallbacks towerCallbacks,
             ShowStatsService showStatsService)

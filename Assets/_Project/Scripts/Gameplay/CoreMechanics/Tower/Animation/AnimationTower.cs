@@ -72,7 +72,7 @@ namespace _Project.Cor.Tower.Animation
                 _sequence.Kill();
 
             _sequence = DOTween.Sequence();
-
+            
             _sequence
                 .Append(_camera.DOShakePosition(_durationShake, _strengthShake))
                 .Join(AnimationSprites())

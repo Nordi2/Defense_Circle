@@ -11,6 +11,7 @@ namespace _Project.Editor
         private bool _showHealthSection;
         private bool _showEnemySection;
         private bool _showStatsSection;
+        private bool _showUISection;
         
         private bool _showAmountStats;
 
@@ -44,7 +45,6 @@ namespace _Project.Editor
         {
             EditorGUI.DrawRect(new Rect(0, 0, position.width, position.height), Color.black);
             
-            Debug.Log(_gameStarted);
             if (!_gameStarted)
             {
                 InitialPreview();
@@ -188,9 +188,7 @@ namespace _Project.Editor
                                 if (GUILayout.Button(EditorGUIUtility.IconContent("d_Toolbar Plus").image,
                                         EditorStyles.toolbarButton,
                                         GUILayout.Height(30)))
-                                {
-                                    AddMoney(_addMoney);
-                                }
+                                    CheatManager.AddMoney(_addMoney);
 
                                 _addMoney = EditorGUILayout.IntField(_addMoney, EditorStyles.toolbarTextField,
                                     GUILayout.Height(30));
@@ -205,9 +203,7 @@ namespace _Project.Editor
                                         EditorGUIUtility.IconContent("d_Toolbar Minus").image,
                                         EditorStyles.toolbarButton,
                                         GUILayout.Height(30)))
-                                {
-                                    SpendMoney(_spendMoney);
-                                }
+                                    CheatManager.SpendMoney(_spendMoney);
 
                                 _spendMoney = EditorGUILayout.IntField(_spendMoney, EditorStyles.toolbarTextField,
                                     GUILayout.Height(30));
@@ -236,7 +232,7 @@ namespace _Project.Editor
                                         EditorGUIUtility.IconContent("d_Toolbar Plus").image,
                                         EditorStyles.toolbarButton,
                                         GUILayout.Height(30)))
-                                    AddHealthTower();
+                                    CheatManager.HealPlayer(_addHealth);
 
                                 _addHealth = EditorGUILayout.IntField(_addHealth, EditorStyles.toolbarTextField,
                                     GUILayout.Height(30));
@@ -251,7 +247,7 @@ namespace _Project.Editor
                                         EditorGUIUtility.IconContent("d_Toolbar Minus").image,
                                         EditorStyles.toolbarButton,
                                         GUILayout.Height(30)))
-                                    LowerHealth();
+                                    CheatManager.TakeDamage(_spendHealth);
 
                                 _spendHealth = EditorGUILayout.IntField(_spendHealth, EditorStyles.toolbarTextField,
                                     GUILayout.Height(30));
@@ -274,19 +270,19 @@ namespace _Project.Editor
                         EditorGUILayout.BeginVertical("box");
                         {
                             if (GUILayout.Button("Create Fast Enemy", EditorStyles.miniButton))
-                                CreateEnemy(EnemyType.Fast);
+                                CheatManager.SpawnEnemy(EnemyType.Fast);
                             if (GUILayout.Button("Create Default Enemy", EditorStyles.miniButton))
-                                CreateEnemy(EnemyType.Default);
+                                CheatManager.SpawnEnemy(EnemyType.Default);
                             if (GUILayout.Button("Create Slow Enemy", EditorStyles.miniButton))
-                                CreateEnemy(EnemyType.Slow);
-
+                                CheatManager.SpawnEnemy(EnemyType.Slow);
+                                
                             EditorGUILayout.BeginHorizontal();
                             {
                                 if (GUILayout.Button("Kill Random Enemy", EditorStyles.miniButton))
-                                    KillRandomEnemy();
+                                    CheatManager.KillRandomSpawnedEnemies();
 
                                 if (GUILayout.Button("Kill All Enemy", EditorStyles.miniButton))
-                                    KillAllEnemy();
+                                    CheatManager.KillAllSpawnedEnemies();
                             }
                             EditorGUILayout.EndHorizontal();
                         }
@@ -307,22 +303,29 @@ namespace _Project.Editor
                     }
 
                     #endregion
+                    
+                    #region UISection
+
+                    _showUISection =
+                        EditorGUILayout.BeginFoldoutHeaderGroup(_showUISection, "UI Section", _foldoutStyle);
+                    EditorGUILayout.EndFoldoutHeaderGroup();
+
+                    if (_showUISection)
+                    {
+                        GUILayout.BeginVertical();
+                        {
+                            if (GUILayout.Button("OpenShop"))
+                                CheatManager.OpenShop();
+
+                            if (GUILayout.Button("CloseShop"))
+                                CheatManager.CloseShop();
+                        }
+                        GUILayout.EndVertical();
+                    }
+
+                    #endregion
                 }
                 EditorGUI.EndDisabledGroup();
-
-                GUILayout.BeginVertical();
-                {
-                    if (GUILayout.Button("OpenShop"))
-                    {
-                        CheatManager.OpenShop();
-                    }
-
-                    if (GUILayout.Button("CloseShop"))
-                    {
-                        CheatManager.CloseShop();
-                    }
-                }
-                GUILayout.EndVertical();
             }
             EditorGUILayout.EndVertical();
         }
@@ -411,27 +414,5 @@ namespace _Project.Editor
             _addHealth = 0;
             _spendHealth = 0;
         }
-
-        private void KillAllEnemy() =>
-            CheatManager.KillAllSpawnedEnemies();
-
-        private void KillRandomEnemy() =>
-            CheatManager.KillRandomSpawnedEnemies();
-
-        private void CreateEnemy(EnemyType type) =>
-            CheatManager.SpawnEnemy(type);
-
-        private void LowerHealth() =>
-            CheatManager.TakeDamage(_spendHealth);
-
-        private void AddHealthTower()
-        {
-        }
-
-        private void SpendMoney(int money) =>
-            CheatManager.SpendMoney(money);
-
-        private void AddMoney(int money) =>
-            CheatManager.AddMoney(money);
     }
 }

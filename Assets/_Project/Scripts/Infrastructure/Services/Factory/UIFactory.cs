@@ -4,6 +4,7 @@ using _Project.Scripts.UI;
 using _Project.Scripts.UI.Shop;
 using _Project.Static;
 using _Project.UI.Shop;
+using DebugToolsPlus;
 using Infrastructure.Services;
 using JetBrains.Annotations;
 using R3;
@@ -35,8 +36,10 @@ namespace _Project.Infrastructure.Services
             _gameLoopService = gameLoopService;
         }
 
-        public ShopView CreateShop()
+        public (ShopPresenter, ShopView) CreateShop()
         {
+            D.Log(GetType().Name ,"Create SHOP",DColor.GREEN,true);
+            
             GameObject shopPrefab =
                 Object.Instantiate(Resources.Load<GameObject>(AssetPath.ShopUpgradePath));
 
@@ -46,11 +49,13 @@ namespace _Project.Infrastructure.Services
             _uiRoot.AddToContainer(view.GetComponent<RectTransform>());
             shopPresenter.CreateUpgradeCarts();
 
-            return view;
+            return (shopPresenter, view);
         }
 
         public InitialTextLoadAfterLoading CreateInitialTextLoadAfterLoading()
         {
+            D.Log(GetType().Name ,"Create INITIAL-TEXT",DColor.GREEN,true);
+            
             GameObject textPrefab = Object.Instantiate(Resources.Load<GameObject>(AssetPath.InitialTextLoad));
 
             InitialTextLoadAfterLoading view = textPrefab.GetComponent<InitialTextLoadAfterLoading>();

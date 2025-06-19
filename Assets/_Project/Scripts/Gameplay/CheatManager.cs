@@ -5,6 +5,7 @@ using _Project.Cor.Enemy.Mono;
 using _Project.Cor.Tower.Mono;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
+using _Project.Scripts.UI.Shop;
 using DebugToolsPlus;
 using Infrastructure.Services;
 using JetBrains.Annotations;
@@ -22,6 +23,7 @@ namespace _Project
         public static TowerFacade TowerFacade;
         public static Wallet Wallet;
         public static StatsStorage StatsStorage;
+        public static ShopPresenter ShopPresenter;
 
         private static readonly List<EnemyFacade> _enemiesInSpawned = new();
 
@@ -78,13 +80,11 @@ namespace _Project
             }
         }
 
-        public static void OpenShop()
-        {
-        }
+        public static void OpenShop() =>
+            ShopPresenter.OpenShop();
 
-        public static void CloseShop()
-        {
-        }
+        public static void CloseShop() =>
+            ShopPresenter.HideShop();
 
         public static void AddMoney(int amount)
         {
@@ -134,6 +134,7 @@ namespace _Project
             TowerFacade = null;
             Wallet = null;
             StatsStorage = null;
+            ShopPresenter = null;
         }
     }
 }
