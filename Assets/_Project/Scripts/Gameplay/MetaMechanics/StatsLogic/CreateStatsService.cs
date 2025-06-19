@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using _Project.Cor;
 using _Project.Data.Config;
 using _Project.Meta.StatsLogic.Upgrade;
 using JetBrains.Annotations;
-using UnityEngine;
 using Zenject;
 
 namespace _Project.Meta.StatsLogic
@@ -60,6 +58,7 @@ namespace _Project.Meta.StatsLogic
                 .WithMaxLevel(config.MaxLevel)
                 .WithPrice(config.GetPrice(config.InitialLevel))
                 .WithValueStats(config.GetValue(config.InitialLevel))
+                .WithViewStats(config.View)
                 .Build<TStats>();
 
             return currentStats;

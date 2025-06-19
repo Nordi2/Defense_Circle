@@ -1,4 +1,5 @@
 ﻿using System;
+using Infrastructure.Signals;
 using JetBrains.Annotations;
 using R3;
 using UnityEngine;
@@ -8,26 +9,30 @@ namespace Infrastructure.Services
 {
     [UsedImplicitly]
     public class InputService :
-        IInputService,
         IInitializable,
         IDisposable
     {
-        public Subject<Unit> OnClickSpaceButton { get; } = new();
-        
         private readonly CompositeDisposable _disposable;
+        private readonly SignalBus _signalBus;
 
-        public InputService(CompositeDisposable disposable)
+        public InputService(CompositeDisposable disposable, SignalBus signalBus)
         {
             _disposable = disposable;
+            _signalBus = signalBus;
         }
 
         void IInitializable.Initialize()
         {
             Observable.EveryUpdate()
-                .Where(_ => UnityEngine.Input.GetKeyDown(KeyCode.Space))
+                .Where(_ => Input.GetKeyDown(KeyCode.Space))
                 .Take(1)
-                .Subscribe(_ => OnClickSpaceButton.OnNext(Unit.Default))
+                .Subscribe(_ => GameStart())
                 .AddTo(_disposable);
+        }
+
+        private void GameStart()
+        {
+            _signalBus.Fire(new StartGameSignal());
         }
 
         void IDisposable.Dispose()

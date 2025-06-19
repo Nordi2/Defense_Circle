@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc5d3d72cc9439abf07dd6d9984c3fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 237701870159708346}
+  <RectTransform>k__BackingField: {fileID: 237701870159708346}
   _textPressSpace: {fileID: 6120791541620850243}
   _animationDuration: 1
   _endScaleValue: 1.5

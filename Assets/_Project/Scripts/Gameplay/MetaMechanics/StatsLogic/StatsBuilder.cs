@@ -10,6 +10,13 @@ namespace _Project.Meta.StatsLogic
         private int _maxLevel;
         private int _price;
         private int _valueStats;
+        private StatsView _view;
+
+        public StatsBuilder WithViewStats(StatsView view)
+        {
+            _view = view;
+            return this;
+        }
 
         public StatsBuilder WithValueStats(int value)
         {
@@ -43,16 +50,18 @@ namespace _Project.Meta.StatsLogic
                 .SetMaxLevel(_maxLevel)
                 .SetCurrentLevel(_currentLevel)
                 .SetPrice(_price)
-                .SetValueStats(_valueStats);
+                .SetValueStats(_valueStats)
+                .SetStatsView(_view);
 
             return createdStats;
         }
-        
+
         public StatsBuilder Reset()
         {
             _currentLevel = 0;
             _maxLevel = 0;
             _price = 0;
+            _view = default;
 
             return this;
         }

@@ -12,7 +12,7 @@ namespace Infrastructure.Installer
         public override void InstallBindings()
         {
             Container
-                .BindInterfacesTo<MainEntryPoint>()
+                .BindInterfacesTo<EntryPoint>()
                 .AsSingle()
                 .NonLazy();
             

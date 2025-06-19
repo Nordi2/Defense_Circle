@@ -4,6 +4,12 @@ namespace _Project.Extensions
 {
     public static class StatsExtension
     {
+        public static Stats SetStatsView(this Stats stats, StatsView view)
+        {
+            stats.StatsView = view;
+            return stats;
+        }
+
         public static Stats SetValueStats(this Stats stats, int value)
         {
             stats.CurrentValue = value;

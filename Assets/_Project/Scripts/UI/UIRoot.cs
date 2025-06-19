@@ -4,6 +4,7 @@ namespace _Project.Scripts.UI
 {
     public class UIRoot : MonoBehaviour
     {
+        public RectTransform Container { get;private set; }
         [SerializeField] private RectTransform _container;
 
         public void AddToContainer(RectTransform addUIObject) =>

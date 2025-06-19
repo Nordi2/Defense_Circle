@@ -1,4 +1,3 @@
-using _Project.Scripts;
 using _Project.Scripts.UI;
 using _Project.Static;
 using DG.Tweening;
@@ -10,13 +9,13 @@ using Zenject;
 namespace _Project.Infrastructure.EntryPoint
 {
     [UsedImplicitly]
-    public class MainEntryPoint :
+    public class EntryPoint :
         IInitializable
     {
         private readonly SceneLoader _sceneLoader;
         private readonly Curtain _curtain;
         
-        public MainEntryPoint(
+        public EntryPoint(
             SceneLoader sceneLoader,
             Curtain curtain)
         {

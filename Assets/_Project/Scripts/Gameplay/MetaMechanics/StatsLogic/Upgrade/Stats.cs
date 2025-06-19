@@ -7,6 +7,7 @@
         public int CurrentLevel { get; set; }
         public int Price { get; set; }
         public int CurrentValue { get; set; }
+        public StatsView StatsView { get; set; }
 
         private bool _isMaxLevel =>
             CurrentLevel > MaxLevel;

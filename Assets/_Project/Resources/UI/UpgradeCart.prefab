@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 587605518775522433}
   - component: {fileID: 7635310018403927621}
   m_Layer: 5
-  m_Name: Money-Text
+  m_Name: Price-Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Money: 100$'
+  m_text: 'Price: none$'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e0a582322c6e3c340b20c6b36f6749d2, type: 2}
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30.9
+  m_fontSize: 31.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -183,9 +183,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4232abbaa56459b9436937fe7249a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moneyText: {fileID: 7635310018403927621}
-  _levelText: {fileID: 1105154455536921793}
-  _nameText: {fileID: 1536153774614178551}
+  _priceText: {fileID: 7635310018403927621}
+  _currentMaxLevelText: {fileID: 1105154455536921793}
+  _nameStatsText: {fileID: 1536153774614178551}
   _icon: {fileID: 4332502839749541193}
 --- !u!1 &398085124771002548
 GameObject:
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Target Count
+  m_text: none
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e0a582322c6e3c340b20c6b36f6749d2, type: 2}
@@ -665,7 +665,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level<br>Current: 1<br>Max: 10'
+  m_text: 'Level<br>Current: none<br>Max: none'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e0a582322c6e3c340b20c6b36f6749d2, type: 2}

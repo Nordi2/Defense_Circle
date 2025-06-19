@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using _Project.Data.Config;
 using _Project.Meta.StatsLogic.Upgrade;
 using JetBrains.Annotations;
+using UnityEngine;
 
 namespace _Project.Meta.StatsLogic
 {
     [UsedImplicitly]
     public class StatsStorage
     {
+        public readonly List<Stats> StatsList = new();
+
         private readonly TowerConfig _config;
         private readonly Dictionary<Type, Stats> _dictionaryStats;
 
@@ -22,6 +25,8 @@ namespace _Project.Meta.StatsLogic
 
         public void AddStatsList(Stats stats)
         {
+            StatsList.Add(stats);
+
             if (!_dictionaryStats.TryAdd(stats.GetType(), stats))
                 throw new Exception($"Attempt to add new stats: {stats.GetType().Name}");
         }

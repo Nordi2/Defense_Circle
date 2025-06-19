@@ -1,12 +1,10 @@
-﻿using _Project;
-using _Project.Cor;
+﻿using _Project.Cor;
 using _Project.Cor.Enemy.Mono;
 using _Project.Data.Config;
 using _Project.Infrastructure.EntryPoint;
 using _Project.Infrastructure.Services;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
-using _Project.Scripts.UI;
 using _Project.Static;
 using Infrastructure.Services;
 using Infrastructure.Signals;
@@ -27,12 +25,17 @@ namespace Infrastructure.Installers
             Container.DeclareSignal<FinishGameSignal>();
             Container.DeclareSignal<PauseGameSignal>();
             Container.DeclareSignal<ResumeGameSignal>();
-
+            
+            //Container.BindInterfacesTo<ShopPresenter>().AsSingle();
             Container.Bind<StatsBuilder>().AsSingle();
             Container.Bind<TowerConfig>().FromInstance(_config).AsSingle();
             Container.BindInterfacesTo<CreateStatsService>().AsSingle();
             Container.Bind<StatsStorage>().AsSingle();
             Container.Bind<ShowStatsService>().AsSingle();
+
+            Container
+                .BindInterfacesTo<UIFactory>()
+                .AsSingle();
 
             Container
                 .BindInterfacesTo<GameplayEntryPoint>()
@@ -46,7 +49,8 @@ namespace Infrastructure.Installers
 
             Container
                 .BindInterfacesTo<InputService>()
-                .AsSingle();
+                .AsSingle()
+                .NonLazy();
 
             Container
                 .BindInterfacesTo<GameFactory>()
@@ -61,24 +65,7 @@ namespace Infrastructure.Installers
                 .BindInterfacesTo<TargetPoint>()
                 .FromComponentInNewPrefabResource(AssetPath.SpawnPointPath)
                 .AsSingle();
-
-            Container
-                .Bind<ShopUpgrade>()
-                .FromComponentInNewPrefabResource(AssetPath.ShopUpgradePath)
-                .AsSingle()
-                .NonLazy();
-
-            // Container.BindInstance(_config).AsSingle();
-            // Container.BindInterfacesTo<StatsController>().AsSingle();
-            // Container.BindInterfacesTo<CreateStatsService>().AsSingle();
-            // Container.Bind<StatsBuilder>().AsSingle();
-            // Container.Bind<StatsStorage>().AsSingle();
-
-            Container
-                .BindInterfacesAndSelfTo<InitialTextLoadAfterLoading>()
-                .FromComponentInNewPrefabResource(AssetPath.InitialTextLoad)
-                .AsSingle();
-
+            
             Container
                 .Bind<Camera>()
                 .FromComponentInHierarchy()

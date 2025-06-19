@@ -23,7 +23,6 @@ namespace _Project
         public static EnemyPool EnemyPool;
         public static TowerFacade TowerFacade;
         public static Wallet Wallet;
-        public static ShopUpgrade ShopUpgrade;
         public static StatsStorage StatsStorage;
 
         private static readonly List<EnemyFacade> _enemiesInSpawned = new();
@@ -118,12 +117,10 @@ namespace _Project
 
         public static void OpenShop()
         {
-            ShopUpgrade.OpenShop();
         }
 
         public static void CloseShop()
         {
-            ShopUpgrade.Hide();
         }
 
         public static void AddMoney(int amount)

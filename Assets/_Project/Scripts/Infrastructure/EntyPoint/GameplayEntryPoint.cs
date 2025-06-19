@@ -1,85 +1,42 @@
-﻿using System;
-using _Project.Cor.Tower.Mono;
+﻿using _Project.Cor.Tower.Mono;
 using _Project.Infrastructure.Services;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
 using _Project.Scripts.UI;
+using _Project.UI.Shop;
 using Infrastructure.Services;
-using Infrastructure.Signals;
 using JetBrains.Annotations;
 using R3;
+using UnityEngine;
 using Zenject;
 
 namespace _Project.Infrastructure.EntryPoint
 {
     [UsedImplicitly]
     public class GameplayEntryPoint :
-        IInitializable,
-        IDisposable
+        IInitializable
     {
-        private readonly SignalBus _signalBus;
-        private readonly CompositeDisposable _disposable;
-        private readonly IInputService _inputService;
-        private readonly InitialTextLoadAfterLoading _initialText;
-        private readonly UIRoot _uiRoot;
         private readonly IGameFactory _gameFactory;
-        private readonly DiContainer _container;
-        private readonly ShopUpgrade _shopUpgrade;
-        private readonly StatsStorage _statsStorage;
+        private readonly IUIFactory _uiFactory;
 
         public GameplayEntryPoint(
-            InitialTextLoadAfterLoading initialText,
-            UIRoot uiRoot,
-            IInputService inputService,
-            CompositeDisposable disposable,
-            SignalBus signalBus,
             IGameFactory gameFactory,
-            DiContainer container,
-            ShopUpgrade shopUpgrade,
-            StatsStorage statsStorage)
+            IUIFactory uiFactory)
         {
-            _disposable = disposable;
-            _signalBus = signalBus;
             _gameFactory = gameFactory;
-            _container = container;
-            _shopUpgrade = shopUpgrade;
-            _statsStorage = statsStorage;
-            _initialText = initialText;
-            _uiRoot = uiRoot;
-            _inputService = inputService;
+            _uiFactory = uiFactory;
         }
 
         void IInitializable.Initialize()
         {
-            _inputService
-                .OnClickSpaceButton
-                .Subscribe(RunGame)
-                .AddTo(_disposable);
+            ShopView shopView = _uiFactory.CreateShop();
+            InitialTextLoadAfterLoading initialText = _uiFactory.CreateInitialTextLoadAfterLoading();
 
-            _shopUpgrade.Hide();
-            _uiRoot.AddToContainer(_initialText.RectTransform);
-            _uiRoot.AddToContainer(_shopUpgrade.RectTransform);
-            _initialText.StartAnimation();
-        }
-
-        void IDisposable.Dispose() =>
-            _disposable.Dispose();
-
-        private void RunGame(Unit unit)
-        {
             TowerFacade tower = _gameFactory.CreateTower();
 
-            _signalBus.Fire(new StartGameSignal());
-
-            // _spawnerTest.StartSpawn();
-
-#if UNITY_EDITOR
-            CheatManager.TowerFacade = tower;
-            CheatManager.EnemyPool = _container.Resolve<EnemyPool>();
-            CheatManager.Wallet = _container.Resolve<Wallet>();
-            CheatManager.ShopUpgrade = _shopUpgrade;
-            CheatManager.StatsStorage = _statsStorage;
-#endif
+            tower.gameObject.SetActive(false);
+            shopView.gameObject.SetActive(false);
+            initialText.StartAnimation();
         }
     }
 }
