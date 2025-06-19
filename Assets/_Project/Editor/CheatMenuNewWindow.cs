@@ -43,7 +43,8 @@ namespace _Project.Editor
         private void OnGUI()
         {
             EditorGUI.DrawRect(new Rect(0, 0, position.width, position.height), Color.black);
-
+            
+            Debug.Log(_gameStarted);
             if (!_gameStarted)
             {
                 InitialPreview();
@@ -399,10 +400,7 @@ namespace _Project.Editor
         {
             Repaint();
 
-            CheatManager.TowerFacade = null;
-            CheatManager.Wallet = null;
-            CheatManager.EnemyPool = null;
-            CheatManager.StatsStorage = null;
+            CheatManager.StaticZero();
 
             _showEnemySection = false;
             _showMoneySection = false;

@@ -16,7 +16,7 @@ MonoBehaviour:
   <InitialLevel>k__BackingField: 5
   <View>k__BackingField:
     <Icon>k__BackingField: {fileID: 21300000, guid: 25180e46342b2214a9d68d0f0ce01ca5, type: 3}
-    <Name>k__BackingField: Health
+    <Name>k__BackingField: Amount Targets
   <Type>k__BackingField: 2
   _initialPrice: 50
   _value: 0100000002000000030000000400000005000000

@@ -30,10 +30,8 @@ namespace Infrastructure.Services
                 .AddTo(_disposable);
         }
 
-        private void GameStart()
-        {
+        private void GameStart() => 
             _signalBus.Fire(new StartGameSignal());
-        }
 
         void IDisposable.Dispose()
         {

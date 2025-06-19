@@ -7,6 +7,7 @@ using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
 using _Project.Static;
 using Infrastructure.Services;
+using Infrastructure.Services.Services.InitializeCheatManager;
 using Infrastructure.Signals;
 using UnityEngine;
 using Zenject;
@@ -76,6 +77,12 @@ namespace Infrastructure.Installers
                 .ExpandByOneAtATime()
                 .FromComponentInNewPrefabResource(AssetPath.EnemyDefaultPath)
                 .UnderTransformGroup("EnemyPool");
+
+#if UNITY_EDITOR
+            Container
+                .Bind<InitializeCheatManagerService>()
+                .AsSingle();
+#endif
         }
     }
 }

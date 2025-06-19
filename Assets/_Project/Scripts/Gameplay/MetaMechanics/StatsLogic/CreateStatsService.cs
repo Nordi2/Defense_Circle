@@ -3,13 +3,11 @@ using _Project.Cor;
 using _Project.Data.Config;
 using _Project.Meta.StatsLogic.Upgrade;
 using JetBrains.Annotations;
-using Zenject;
 
 namespace _Project.Meta.StatsLogic
 {
     [UsedImplicitly]
-    public class CreateStatsService : 
-        IInitializable
+    public class CreateStatsService : ICreateStatsService
     {
         private readonly TowerConfig _config;
         private readonly StatsBuilder _statsBuilder;
@@ -27,11 +25,8 @@ namespace _Project.Meta.StatsLogic
             _statsStorage = statsStorage;
             _showStatsService = showStatsService;
         }
-
-        void IInitializable.Initialize() => 
-            CreateStats();
-
-        private void CreateStats()
+        
+        public void CreateStats()
         {
             foreach (StatsConfig current in _config.Stats)
             {

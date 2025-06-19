@@ -35,6 +35,7 @@ namespace _Project.Scripts.UI.Shop
             for (int i = 0; i < Constants.AmountUpgradeCart; i++)
             {
                 UpgradeCartView cartView = _view.SpawnCart();
+                UpgradeCartPresenter cartPresenter = new UpgradeCartPresenter(cartView, _wallet, RandomizeCart());
             }
         }
 

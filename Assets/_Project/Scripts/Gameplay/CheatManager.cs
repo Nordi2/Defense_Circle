@@ -1,12 +1,10 @@
 ﻿#if UNITY_EDITOR
 using System.Collections.Generic;
-using System.Data.SqlTypes;
 using _Project.Cor.Enemy;
 using _Project.Cor.Enemy.Mono;
 using _Project.Cor.Tower.Mono;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
-using _Project.Scripts.UI;
 using DebugToolsPlus;
 using Infrastructure.Services;
 using JetBrains.Annotations;
@@ -32,41 +30,6 @@ namespace _Project
             Vector3 randomPosition = GetRandomSpawnPosition();
 
             SpawnEnemyAndGetLog(randomPosition, "Create Enemy\n");
-            /*switch (type)
-            {
-                case EnemyType.Default:
-                    if (EnemyFacadeDefaultPrefab == null)
-                    {
-                        D.LogWarning(CheathManager.ToUpper(), "Reference to prefab is null. Start playing",
-                            DColor.AQUAMARINE, true);
-                        return;
-                    }
-
-                    CreateEnemyAndGetLog(randomPosition, "Create: Default-Enemy\n", EnemyFacadeDefaultPrefab);
-                    break;
-                case EnemyType.Fast:
-                    if (EnemyFacadeFastPrefab == null)
-                    {
-                        D.LogWarning(CheathManager.ToUpper(), "Reference to prefab is null. Start playing",
-                            DColor.AQUAMARINE, true);
-                        return;
-                    }
-
-                    CreateEnemyAndGetLog(randomPosition, "Create: Fast-Enemy\n", EnemyFacadeFastPrefab);
-                    break;
-                case EnemyType.Slow:
-                    if (EnemyFacadeSlowPrefab == null)
-                    {
-                        D.LogWarning(CheathManager.ToUpper(), "Reference to prefab is null. Start playing",
-                            DColor.AQUAMARINE, true);
-                        return;
-                    }
-
-                    CreateEnemyAndGetLog(randomPosition, "Create: Slow-Enemy\n", EnemyFacadeSlowPrefab);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }*/
         }
 
         private static void SpawnEnemyAndGetLog(Vector3 randomPosition, string log)
@@ -163,6 +126,14 @@ namespace _Project
             float distance = Random.Range(minDistance, maxDistance);
 
             return direction * distance;
+        }
+
+        public static void StaticZero()
+        {
+            EnemyPool = null;
+            TowerFacade = null;
+            Wallet = null;
+            StatsStorage = null;
         }
     }
 }
