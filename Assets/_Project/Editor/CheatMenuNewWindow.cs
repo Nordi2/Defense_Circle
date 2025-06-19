@@ -1,4 +1,5 @@
 ﻿using _Project.Cor.Enemy;
+using _Project.Meta.StatsLogic.Upgrade;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,8 +10,12 @@ namespace _Project.Editor
         private bool _showMoneySection;
         private bool _showHealthSection;
         private bool _showEnemySection;
+        private bool _showStatsSection;
+        
+        private bool _showAmountStats;
 
         private GUIStyle _initialStyle;
+        private GUIStyle _headerGroupStyle;
         private GUIStyle _headerStyle;
         private GUIStyle _foldoutStyle;
         private GUIStyle _buttonStyle;
@@ -70,22 +75,50 @@ namespace _Project.Editor
                 EditorGUILayout.BeginVertical(GUI.skin.window, GUILayout.Width(400));
             {
                 EditorGUI.DrawRect(verticalGroupTowerInfo, Color.black);
-                GUILayout.Label("Tower Info", _headerStyle, GUILayout.ExpandWidth(true));
+                GUILayout.Label("Tower Info", _headerGroupStyle, GUILayout.ExpandWidth(true));
 
-                GUILayout.BeginHorizontal();
+                if (CheatManager.Wallet is not null)
                 {
-                    GUILayout.Label("Wallet:");
+                    GUILayout.Label("Wallet", _headerStyle, GUILayout.ExpandWidth(true));
 
-                    if (CheatManager.Wallet is not null)
+                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
                     {
-                        GUILayout.Label(CheatManager.Wallet.CurrentMoney.CurrentValue.ToString());
+                        GUILayout.Label(
+                            $"Current money: {CheatManager.Wallet.CurrentMoney.CurrentValue.ToString()}",
+                            _headerStyle, GUILayout.ExpandWidth(true));
                     }
+                    GUILayout.EndHorizontal();
 
-                    GUILayout.Label("Current money:");
+                    GUILayout.Label("Stats", _headerStyle, GUILayout.ExpandWidth(true));
+
+                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
+                    {
+                        _showAmountStats =
+                            EditorGUILayout.BeginFoldoutHeaderGroup(_showAmountStats, "AmountTargets");
+                        {
+                            if (_showAmountStats)
+                            {
+                                for (int i = 0; i < CheatManager.StatsStorage.Lenght; i++)
+                                {
+                                    RenderingStats<AmountTargetsStats>();
+                                }
+                            }
+                        }
+                        EditorGUILayout.EndFoldoutHeaderGroup();
+                    }
+                    GUILayout.EndHorizontal();
                 }
-                GUILayout.EndHorizontal();
             }
             EditorGUILayout.EndVertical();
+
+            void RenderingStats<TStats>() where TStats : Stats
+            {
+                TStats stats = CheatManager.StatsStorage.GetStats<TStats>();
+                GUILayout.Label($"Current Level: {stats.CurrentLevel}\n" +
+                                $"Max Level: {stats.MaxLevel}\n"
+                                + $"Value: {stats.CurrentValue}\n"
+                                + $"NexValue:", EditorStyles.boldLabel);
+            }
         }
 
         private void RenderingGameInfo()
@@ -94,7 +127,7 @@ namespace _Project.Editor
                 EditorGUILayout.BeginVertical(GUI.skin.window, GUILayout.ExpandWidth(true));
             {
                 EditorGUI.DrawRect(verticalGroupGameInfo, Color.black);
-                GUILayout.Label("Game Info", _headerStyle, GUILayout.ExpandWidth(true));
+                GUILayout.Label("Game Info", _headerGroupStyle, GUILayout.ExpandWidth(true));
             }
             EditorGUILayout.EndVertical();
         }
@@ -133,7 +166,7 @@ namespace _Project.Editor
             Rect verticalGroupCheatMenu = EditorGUILayout.BeginVertical("window", GUILayout.Width(200));
             {
                 EditorGUI.DrawRect(verticalGroupCheatMenu, Color.black);
-                GUILayout.Label("Cheat-Menu", _headerStyle, GUILayout.ExpandWidth(true));
+                GUILayout.Label("Cheat-Menu", _headerGroupStyle, GUILayout.ExpandWidth(true));
 
                 GUILayout.Space(10);
 
@@ -260,6 +293,19 @@ namespace _Project.Editor
                     }
 
                     #endregion
+                    
+                    #region StatsSection
+
+                    _showStatsSection =
+                        EditorGUILayout.BeginFoldoutHeaderGroup(_showStatsSection, "Stats Section", _foldoutStyle);
+                    EditorGUILayout.EndFoldoutHeaderGroup();
+
+                    if (_showStatsSection)
+                    {
+                        
+                    }
+
+                    #endregion
                 }
                 EditorGUI.EndDisabledGroup();
 
@@ -317,24 +363,35 @@ namespace _Project.Editor
                 alignment = TextAnchor.MiddleCenter,
             };
 
-            _foldoutStyle = new GUIStyle(EditorStyles.foldout)
+            _foldoutStyle = new GUIStyle(EditorStyles.foldoutHeader)
             {
                 normal = { textColor = _orangeColor },
                 fontSize = 14,
                 alignment = TextAnchor.MiddleLeft,
             };
 
-            _headerStyle = new GUIStyle(EditorStyles.helpBox)
+            _headerGroupStyle = new GUIStyle(EditorStyles.selectionRect)
             {
                 normal =
                 {
                     textColor = _orangeColor
                 },
-                padding = new RectOffset(10, 10, 5, 5),
                 fontSize = 18,
                 fontStyle = FontStyle.Bold,
                 alignment = TextAnchor.MiddleCenter,
                 imagePosition = ImagePosition.ImageAbove
+            };
+
+            _headerStyle = new GUIStyle(EditorStyles.whiteLabel)
+            {
+                normal =
+                {
+                    textColor = _orangeColor
+                },
+
+                fontSize = 16,
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleCenter,
             };
         }
 
@@ -345,9 +402,12 @@ namespace _Project.Editor
             CheatManager.TowerFacade = null;
             CheatManager.Wallet = null;
             CheatManager.EnemyPool = null;
+            CheatManager.StatsStorage = null;
+
             _showEnemySection = false;
             _showMoneySection = false;
             _showHealthSection = false;
+
             _addMoney = 0;
             _spendMoney = 0;
             _addHealth = 0;

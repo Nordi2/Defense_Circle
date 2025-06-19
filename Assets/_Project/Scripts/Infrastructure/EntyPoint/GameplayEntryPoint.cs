@@ -2,6 +2,7 @@
 using _Project.Cor.Tower.Mono;
 using _Project.Infrastructure.Services;
 using _Project.Meta.Money;
+using _Project.Meta.StatsLogic;
 using _Project.Scripts.UI;
 using Infrastructure.Services;
 using Infrastructure.Signals;
@@ -24,6 +25,7 @@ namespace _Project.Infrastructure.EntryPoint
         private readonly IGameFactory _gameFactory;
         private readonly DiContainer _container;
         private readonly ShopUpgrade _shopUpgrade;
+        private readonly StatsStorage _statsStorage;
 
         public GameplayEntryPoint(
             InitialTextLoadAfterLoading initialText,
@@ -33,13 +35,15 @@ namespace _Project.Infrastructure.EntryPoint
             SignalBus signalBus,
             IGameFactory gameFactory,
             DiContainer container,
-            ShopUpgrade shopUpgrade)
+            ShopUpgrade shopUpgrade,
+            StatsStorage statsStorage)
         {
             _disposable = disposable;
             _signalBus = signalBus;
             _gameFactory = gameFactory;
             _container = container;
             _shopUpgrade = shopUpgrade;
+            _statsStorage = statsStorage;
             _initialText = initialText;
             _uiRoot = uiRoot;
             _inputService = inputService;
@@ -52,7 +56,7 @@ namespace _Project.Infrastructure.EntryPoint
                 .Subscribe(RunGame)
                 .AddTo(_disposable);
 
-            _shopUpgrade.Hide(true);
+            _shopUpgrade.Hide();
             _uiRoot.AddToContainer(_initialText.RectTransform);
             _uiRoot.AddToContainer(_shopUpgrade.RectTransform);
             _initialText.StartAnimation();
@@ -74,6 +78,7 @@ namespace _Project.Infrastructure.EntryPoint
             CheatManager.EnemyPool = _container.Resolve<EnemyPool>();
             CheatManager.Wallet = _container.Resolve<Wallet>();
             CheatManager.ShopUpgrade = _shopUpgrade;
+            CheatManager.StatsStorage = _statsStorage;
 #endif
         }
     }

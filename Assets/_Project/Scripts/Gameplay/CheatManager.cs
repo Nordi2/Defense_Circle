@@ -1,9 +1,11 @@
 ﻿#if UNITY_EDITOR
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using _Project.Cor.Enemy;
 using _Project.Cor.Enemy.Mono;
 using _Project.Cor.Tower.Mono;
 using _Project.Meta.Money;
+using _Project.Meta.StatsLogic;
 using _Project.Scripts.UI;
 using DebugToolsPlus;
 using Infrastructure.Services;
@@ -22,7 +24,8 @@ namespace _Project
         public static TowerFacade TowerFacade;
         public static Wallet Wallet;
         public static ShopUpgrade ShopUpgrade;
-        
+        public static StatsStorage StatsStorage;
+
         private static readonly List<EnemyFacade> _enemiesInSpawned = new();
 
         public static void SpawnEnemy(EnemyType type)
@@ -122,7 +125,7 @@ namespace _Project
         {
             ShopUpgrade.Hide();
         }
-        
+
         public static void AddMoney(int amount)
         {
             D.Log(CheathManager.ToUpper(), $"AddMoney: {amount}", DColor.AQUAMARINE, true);

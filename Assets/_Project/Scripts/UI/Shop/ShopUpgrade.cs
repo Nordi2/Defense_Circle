@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using _Project.Data.Config;
-using _Project.Meta.StatsLogic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,11 +32,14 @@ namespace _Project.Scripts.UI
             Show();
         }
 
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
         private void Show()
         {
-            Debug.Log("Show");
-
-            _animationSequence = DOTween.Sequence();
+            /*_animationSequence = DOTween.Sequence();
 
             for (int i = 0; i < _upgradeCarts.Count; i++)
             {
@@ -52,30 +53,30 @@ namespace _Project.Scripts.UI
             _animationSequence
                 .AppendCallback(() => gameObject.SetActive(true))
                 .Append(_image.DOFade(0.5f, 0.5f).From(0))
-                .Append(AnimationUpgradeCart());
+                .Append(AnimationUpgradeCart());*/
         }
 
-        private Sequence AnimationUpgradeCart()
-        {
-            Sequence sequence = DOTween.Sequence();
+        // private Sequence AnimationUpgradeCart()
+        // {
+        //     Sequence sequence = DOTween.Sequence();
+        //
+        //     sequence
+        //         .Append(_upgradeCarts[0].transform.DOScale(Vector3.one, 0.5f).From(0).SetEase(_animationCurve))
+        //         .Append(_upgradeCarts[1].transform.DOScale(Vector3.one, 0.5f).From(0).SetEase(_animationCurve))
+        //         .Append(_upgradeCarts[2].transform.DOScale(Vector3.one, 0.5f).From(0).SetEase(_animationCurve));
+        //
+        //     return sequence;
+        // }
 
-            sequence
-                .Append(_upgradeCarts[0].transform.DOScale(Vector3.one, 0.5f).From(0).SetEase(_animationCurve))
-                .Append(_upgradeCarts[1].transform.DOScale(Vector3.one, 0.5f).From(0).SetEase(_animationCurve))
-                .Append(_upgradeCarts[2].transform.DOScale(Vector3.one, 0.5f).From(0).SetEase(_animationCurve));
-
-            return sequence;
-        }
-
-        public void Hide(bool isFirst = false)
-        {
-            if (isFirst)
-            {
-                gameObject.SetActive(false);
-                return;
-            }
-
-            _image.DOFade(0, 1).From(1).OnComplete(() => gameObject.SetActive(false));
-        }
+        // public void Hide(bool isFirst = false)
+        // {
+        //     if (isFirst)
+        //     {
+        //         gameObject.SetActive(false);
+        //         return;
+        //     }
+        //
+        //     _image.DOFade(0, 1).From(1).OnComplete(() => gameObject.SetActive(false));
+        // }
     }
 }
