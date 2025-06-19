@@ -13,7 +13,7 @@ namespace _Project.Meta.StatsLogic
         private readonly StatsBuilder _statsBuilder;
         private readonly StatsStorage _statsStorage;
         private readonly ShowStatsService _showStatsService;
-        
+
         public CreateStatsService(
             TowerConfig config,
             StatsBuilder statsBuilder,
@@ -25,7 +25,7 @@ namespace _Project.Meta.StatsLogic
             _statsStorage = statsStorage;
             _showStatsService = showStatsService;
         }
-        
+
         public void CreateStats()
         {
             foreach (StatsConfig current in _config.Stats)
@@ -37,9 +37,14 @@ namespace _Project.Meta.StatsLogic
                     case StatsType.Health:
                         break;
                     case StatsType.AmountTargets:
-                        AmountTargetsStats stats = CreateCurrentStats<AmountTargetsStats>(current);
-                        _statsStorage.AddStatsList(stats);
-                        _showStatsService.AddStats(stats);
+                        AmountTargetsStats amountStats = CreateCurrentStats<AmountTargetsStats>(current);
+                        _statsStorage.AddStatsList(amountStats);
+                        _showStatsService.AddStats(amountStats);
+                        break;
+                    case StatsType.Damage:
+                        BulletDamageStats damageStats = CreateCurrentStats<BulletDamageStats>(current);
+                        _statsStorage.AddStatsList(damageStats);
+                        _showStatsService.AddStats(damageStats);
                         break;
                 }
             }

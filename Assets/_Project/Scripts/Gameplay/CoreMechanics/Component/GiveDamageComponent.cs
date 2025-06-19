@@ -8,9 +8,9 @@ namespace _Project.Cor.Component
     [UsedImplicitly]
     public class GiveDamageComponent
     {
-        private readonly CollisionDamageShowStatsInfo _collisionDamageShow;
+        private readonly CollisionDamage _collisionDamageShow;
         
-        public GiveDamageComponent(CollisionDamageShowStatsInfo collisionDamageShow)
+        public GiveDamageComponent(CollisionDamage collisionDamageShow)
         {
             _collisionDamageShow = collisionDamageShow;
         }

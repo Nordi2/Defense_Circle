@@ -71,7 +71,7 @@ namespace _Project.Cor.Enemy.Installer
                 .WithArguments(_config.GetRandomMoneyReward(),_config.GetRandomMoneySpend());
             
             Container
-                .BindInterfacesAndSelfTo<CollisionDamageShowStatsInfo>()
+                .BindInterfacesAndSelfTo<CollisionDamage>()
                 .AsSingle()
                 .WithArguments(_config.GetRandomValueCollisionDamage());
         }

@@ -27,8 +27,11 @@ namespace _Project.Scripts.UI.Shop
             _statsStorage = statsStorage;
         }
 
-        public void OpenShop() =>
+        public void OpenShop()
+        {
+            _view.UpdateAmountMoney($"Money: {_wallet.CurrentMoney.CurrentValue}$");
             _view.OpenShop();
+        }
 
         public void HideShop() =>
             _view.CloseShop();

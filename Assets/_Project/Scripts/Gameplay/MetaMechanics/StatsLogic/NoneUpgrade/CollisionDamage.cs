@@ -1,10 +1,10 @@
 ﻿
 namespace _Project.Meta.StatsLogic.NoneUpgrade
 {
-    public readonly struct CollisionDamageShowStatsInfo :
+    public readonly struct CollisionDamage :
         IShowStatsInfo
     {
-        public CollisionDamageShowStatsInfo(int damage)
+        public CollisionDamage(int damage)
         {
             Damage = damage;
         }

@@ -5,6 +5,7 @@
         None = 0,
 
         Health = 1,
-        AmountTargets = 2
+        AmountTargets = 2,
+        Damage = 3
     }
 }

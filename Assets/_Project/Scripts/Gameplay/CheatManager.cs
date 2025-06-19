@@ -31,7 +31,7 @@ namespace _Project
         {
             Vector3 randomPosition = GetRandomSpawnPosition();
 
-            SpawnEnemyAndGetLog(randomPosition, "Create Enemy\n");
+            SpawnEnemyAndGetLog(randomPosition, "Create Enemy");
         }
 
         private static void SpawnEnemyAndGetLog(Vector3 randomPosition, string log)

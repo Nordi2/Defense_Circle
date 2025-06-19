@@ -25,7 +25,7 @@ namespace _Project.Cor.BulletLogic.Installer
                 .WithArguments(_config.MoveSpeed);
             
             Container
-                .BindInterfacesAndSelfTo<CollisionDamageShowStatsInfo>()
+                .BindInterfacesAndSelfTo<CollisionDamage>()
                 .AsSingle()
                 .WithArguments(_config.GetRandomDamage());
 

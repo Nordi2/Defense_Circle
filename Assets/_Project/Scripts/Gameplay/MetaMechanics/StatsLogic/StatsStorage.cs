@@ -18,7 +18,7 @@ namespace _Project.Meta.StatsLogic
         public StatsStorage(TowerConfig config)
         {
             _config = config;
-            _dictionaryStats = new Dictionary<Type, Stats>(_config.Stats.Length);
+            _dictionaryStats = new Dictionary<Type, Stats>(_config.Stats.Count);
         }
 
         public int Lenght => _dictionaryStats.Count;
