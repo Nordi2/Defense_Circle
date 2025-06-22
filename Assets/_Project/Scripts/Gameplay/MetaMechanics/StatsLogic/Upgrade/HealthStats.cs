@@ -18,6 +18,9 @@ namespace _Project.Meta.StatsLogic.Upgrade
             _currentHealth = new ReactiveProperty<int>(maxHealth);
         }
 
+        public void AddHealth(int amount) => 
+            _currentHealth.Value += amount;
+
         public void SetCurrentHealthValue(int newValue) =>
             _currentHealth.Value = newValue;
     }

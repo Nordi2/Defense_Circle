@@ -1,6 +1,6 @@
 ﻿namespace _Project.Meta.StatsLogic.Upgrade
 {
-    public class BulletDamageStats : Stats
+    public class PassiveHealthStats : Stats
     {
         
     }

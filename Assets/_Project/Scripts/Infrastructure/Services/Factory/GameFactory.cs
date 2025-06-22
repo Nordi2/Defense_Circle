@@ -69,12 +69,15 @@ namespace _Project.Infrastructure.Services
 
             EnemysVault enemysVault = new EnemysVault(enemyObserver, _disposables);
             TowerShoot shootComponent = new TowerShoot(enemysVault, view, _statsStorage);
+            
             HealthStats healthStats = new HealthStats(100);
             HealthPresenter healthPresenter = new HealthPresenter(healthView, healthStats, _disposables);
             WalletPresenter walletPresenter = new WalletPresenter(walletView, _wallet, _disposables);
 
             TakeDamageComponent takeDamageComponent = new TakeDamageComponent(healthStats);
-
+            
+            PassiveHealthComponent passiveHealthComponent = new PassiveHealthComponent(healthStats, _statsStorage);
+            
             SpawnBullet spawnBullet = new SpawnBullet(shootComponent, view, _instantiator);
 
             towerFacade.transform.position = _getTargetPosition.GetPosition();
@@ -92,7 +95,9 @@ namespace _Project.Infrastructure.Services
                 spawnBullet,
                 enemysVault);
 
-            _gameLoopService.AddTickable(shootComponent);
+            _gameLoopService.AddTickable(
+                shootComponent,
+                passiveHealthComponent);
 
             _gameLoopService.AddGameListener(towerFacade);
 

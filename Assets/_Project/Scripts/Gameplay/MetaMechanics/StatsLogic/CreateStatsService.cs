@@ -37,13 +37,18 @@ namespace _Project.Meta.StatsLogic
                         throw new Exception("Invalid Stats Type");
                     case StatsType.Health:
                         break;
+                    case StatsType.PassiveHealing:
+                        PassiveHealthStats passiveHealthStats = CreateCurrentStats<PassiveHealthStats>(current);
+                        _statsStorage.AddStatsList(passiveHealthStats);
+                        _showStatsService.AddStats(passiveHealthStats);
+                        break;
                     case StatsType.AmountTargets:
                         AmountTargetsStats amountStats = CreateCurrentStats<AmountTargetsStats>(current);
                         _statsStorage.AddStatsList(amountStats);
                         _showStatsService.AddStats(amountStats);
                         break;
                     case StatsType.Damage:
-                        BulletDamageStats damageStats = CreateCurrentStats<BulletDamageStats>(current);
+                        DamageStats damageStats = CreateCurrentStats<DamageStats>(current);
                         _statsStorage.AddStatsList(damageStats);
                         _showStatsService.AddStats(damageStats);
                         break;

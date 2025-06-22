@@ -1,10 +1,8 @@
 ﻿using _Project.Cor.Component;
 using _Project.Cor.Interfaces;
-using _Project.Meta.StatsLogic.Upgrade;
 using DebugToolsPlus;
 using Infrastructure.Services;
 using UnityEngine;
-using Zenject;
 
 namespace _Project.Cor.Tower.Mono
 {

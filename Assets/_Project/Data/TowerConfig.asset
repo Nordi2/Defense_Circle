@@ -15,4 +15,5 @@ MonoBehaviour:
   <Stats>k__BackingField:
   - {fileID: 11400000, guid: 9b3270e41dde3154a8f7854997fd7bdf, type: 2}
   - {fileID: 11400000, guid: 3370586cb8c6a634cb9bd58335f7c246, type: 2}
+  - {fileID: 11400000, guid: 58d54c3a93c20f04b96cb0aa356fbc33, type: 2}
   <InitialMoney>k__BackingField: 100000

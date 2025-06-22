@@ -10,17 +10,17 @@ namespace _Project.Meta.StatsLogic.Upgrade
         public int MaxLevel { get; set; }
         public int CurrentLevel { get; set; }
         public int Price { get; set; }
-        public int CurrentValue { get; set; }
+        public float CurrentValue { get; set; }
         public StatsView StatsView { get; set; }
         public PriceTables PriceTables { get; set; }
         public ValueTables ValueTables { get; set; }
 
-        private bool _isMaxLevel =>
+        public bool IsMaxLevel =>
             CurrentLevel > MaxLevel;
 
-        public void UpgradeStats()
+        public virtual void  UpgradeStats()
         {
-            if (_isMaxLevel)
+            if (IsMaxLevel)
                 return;
 
             CurrentLevel++;
@@ -35,7 +35,7 @@ namespace _Project.Meta.StatsLogic.Upgrade
             Price = PriceTables.GetPrice(CurrentLevel);
         }
 
-        public string ShowInfo()
+        public virtual string ShowInfo()
         {
             return $"Type: {GetType().Name}\n " +
                    $"Max Level: {MaxLevel} " +
