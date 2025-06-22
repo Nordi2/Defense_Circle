@@ -14,7 +14,7 @@ namespace _Project.Infrastructure.EntryPoint
     {
         private readonly SceneLoader _sceneLoader;
         private readonly Curtain _curtain;
-        
+
         public EntryPoint(
             SceneLoader sceneLoader,
             Curtain curtain)

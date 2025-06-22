@@ -14,8 +14,8 @@ namespace _Project.Scripts.UI.Shop
         private readonly StatsStorage _statsStorage;
         private readonly Wallet _wallet;
         private readonly ShopView _view;
-        private readonly List<UpgradeCartPresenter> _upgradeCartPresenters = new();
-        private readonly HashSet<int> _uniqueIndexes = new();
+        private readonly List<UpgradeCartPresenter> _upgradeCartPresenters;
+        private readonly HashSet<int> _uniqueIndexes;
 
         public ShopPresenter(
             Wallet wallet,
@@ -25,6 +25,9 @@ namespace _Project.Scripts.UI.Shop
             _wallet = wallet;
             _view = view;
             _statsStorage = statsStorage;
+
+            _upgradeCartPresenters = new List<UpgradeCartPresenter>(_statsStorage.Lenght);
+            _uniqueIndexes = new HashSet<int>(_statsStorage.Lenght);
         }
 
         public void OpenShop()

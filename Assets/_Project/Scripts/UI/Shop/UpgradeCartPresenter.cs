@@ -6,9 +6,10 @@ namespace _Project.Scripts.UI.Shop
 {
     public class UpgradeCartPresenter
     {
+        private Stats _stats;
+        
         private readonly UpgradeCartView _view;
         private readonly Wallet _wallet;
-        private Stats _stats;
 
         public UpgradeCartPresenter(
             UpgradeCartView view,
@@ -35,14 +36,15 @@ namespace _Project.Scripts.UI.Shop
 
         private void BuyUpgrade()
         {
-            if (_wallet.IsHaveMoney(_stats.Price))
+            if (!_wallet.IsHaveMoney(_stats.Price))
             {
-                _wallet.SpendMoney(_stats.Price);
+                D.Log("Shop", $"Have no money. Have to: {_stats.Price}, has a: {_wallet.CurrentMoney}", DColor.YELLOW,
+                    true);
                 return;
             }
 
-            D.Log("Shop", $"Have no money. Have to: {_stats.Price}, has a: {_wallet.CurrentMoney}", DColor.YELLOW,
-                true);
+            _wallet.SpendMoney(_stats.Price);
+            _stats.UpgradeStats();
         }
     }
 }

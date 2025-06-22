@@ -67,7 +67,8 @@ namespace _Project.Meta.StatsLogic
                 .SetPrice(_price)
                 .SetValueStats(_valueStats)
                 .SetStatsView(_view)
-                .SetPriceTables(_priceTables);
+                .SetPriceTables(_priceTables)
+                .SetValueTables(_valueTables);
 
             return createdStats;
         }
@@ -78,6 +79,8 @@ namespace _Project.Meta.StatsLogic
             _maxLevel = 0;
             _price = 0;
             _view = default;
+            _valueTables = null;
+            _priceTables = null;
 
             return this;
         }

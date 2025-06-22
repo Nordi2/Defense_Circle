@@ -1,4 +1,6 @@
 ﻿using _Project.Data.Config.Stats;
+using DebugToolsPlus;
+using UnityEngine;
 
 namespace _Project.Meta.StatsLogic.Upgrade
 {
@@ -22,7 +24,13 @@ namespace _Project.Meta.StatsLogic.Upgrade
                 return;
 
             CurrentLevel++;
-            
+
+            D.Log(GetType().Name, D.FormatText("Upgrade Stats: " +
+                                               $"Current Level: {CurrentLevel}," +
+                                               $"Old Level: {CurrentLevel - 1}," +
+                                               $"Max Level: {MaxLevel}", DColor.RED),
+                DColor.YELLOW);
+
             CurrentValue = ValueTables.GetValue(CurrentLevel);
             Price = PriceTables.GetPrice(CurrentLevel);
         }
