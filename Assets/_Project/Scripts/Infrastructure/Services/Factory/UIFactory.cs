@@ -21,7 +21,7 @@ namespace _Project.Infrastructure.Services
         private readonly Wallet _wallet;
         private readonly CompositeDisposable _disposable;
         private readonly GameLoopService _gameLoopService;
-        
+
         public UIFactory(
             UIRoot uiRoot,
             CompositeDisposable disposable,
@@ -38,31 +38,33 @@ namespace _Project.Infrastructure.Services
 
         public (ShopPresenter, ShopView) CreateShop()
         {
-            D.Log(GetType().Name ,"Create SHOP",DColor.GREEN,true);
-            
+            D.Log(GetType().Name, "Create SHOP", DColor.GREEN, true);
+
             GameObject shopPrefab =
                 Object.Instantiate(Resources.Load<GameObject>(AssetPath.ShopUpgradePath));
 
             ShopView view = shopPrefab.GetComponent<ShopView>();
-            ShopPresenter shopPresenter = new ShopPresenter(_wallet, view, _disposable, _statsStorage);
+            ShopPresenter shopPresenter = new ShopPresenter(_wallet, view, _statsStorage);
 
             _uiRoot.AddToContainer(view.GetComponent<RectTransform>());
             shopPresenter.CreateUpgradeCarts();
+
+            _gameLoopService.AddDisposable(shopPresenter);
 
             return (shopPresenter, view);
         }
 
         public InitialTextLoadAfterLoading CreateInitialTextLoadAfterLoading()
         {
-            D.Log(GetType().Name ,"Create INITIAL-TEXT",DColor.GREEN,true);
-            
+            D.Log(GetType().Name, "Create INITIAL-TEXT", DColor.GREEN, true);
+
             GameObject textPrefab = Object.Instantiate(Resources.Load<GameObject>(AssetPath.InitialTextLoad));
 
             InitialTextLoadAfterLoading view = textPrefab.GetComponent<InitialTextLoadAfterLoading>();
-            
+
             _uiRoot.AddToContainer(view.GetComponent<RectTransform>());
             _gameLoopService.AddGameListener(view);
-            
+
             return view;
         }
     }

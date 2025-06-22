@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4232abbaa56459b9436937fe7249a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <UpgradeButton>k__BackingField: {fileID: 4111844878520274680}
   _priceText: {fileID: 7635310018403927621}
   _currentMaxLevelText: {fileID: 1105154455536921793}
   _nameStatsText: {fileID: 1536153774614178551}

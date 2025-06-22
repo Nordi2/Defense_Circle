@@ -16,7 +16,7 @@ namespace _Project.Meta.Money
         {
             _currentMoney = new ReactiveProperty<int>(initialMoney);
         }
-        
+
         public void AddMoney(int amountAddedMoney)
         {
             D.Log($"{GetType().Name}. Operation: AddMoney",
@@ -34,13 +34,10 @@ namespace _Project.Meta.Money
                     $"\nOldMoney: {_currentMoney}, NewMoney: {Math.Clamp(_currentMoney.CurrentValue - amountSpentMoney, 0, int.MaxValue)}",
                     DColor.RED), DColor.YELLOW);
 
-            if (_currentMoney.CurrentValue - amountSpentMoney <= 0)
-            {
-                _currentMoney.Value = 0;
-                return;
-            }
-
-            _currentMoney.Value -= amountSpentMoney;
+            _currentMoney.Value = Math.Clamp(_currentMoney.Value - amountSpentMoney, 0, int.MaxValue);
         }
+
+        public bool IsHaveMoney(int amountSpentMoney) => 
+            _currentMoney.Value >= amountSpentMoney;
     }
 }
