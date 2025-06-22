@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Project.Data.Config.Stats;
 using UnityEngine;
 
 namespace _Project.Data.Config

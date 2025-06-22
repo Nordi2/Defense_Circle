@@ -18,6 +18,8 @@ MonoBehaviour:
     <Icon>k__BackingField: {fileID: 21300000, guid: 9c1bd758ff5093a428bf7013bb9aac33, type: 3}
     <Name>k__BackingField: Damage
   <Type>k__BackingField: 3
+  <PriceTables>k__BackingField:
+    <PriceTable>k__BackingField: 19000000320000004b000000640000007d000000
+  <ValueTables>k__BackingField:
+    <ValueTable>k__BackingField: 19000000320000004b000000640000007d000000
   _initialPrice: 150
-  _value: 0f00000019000000230000002b00000036000000
-  _price: 2b0000001f0200002d000000220000001f020000

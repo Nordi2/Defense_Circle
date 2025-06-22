@@ -1,4 +1,6 @@
-﻿namespace _Project.Meta.StatsLogic.Upgrade
+﻿using _Project.Data.Config.Stats;
+
+namespace _Project.Meta.StatsLogic.Upgrade
 {
     public abstract class Stats :
         IShowStatsInfo
@@ -8,6 +10,8 @@
         public int Price { get; set; }
         public int CurrentValue { get; set; }
         public StatsView StatsView { get; set; }
+        public PriceTables PriceTables { get; set; }
+        public ValueTables ValueTables { get; set; }
 
         private bool _isMaxLevel =>
             CurrentLevel > MaxLevel;
@@ -18,6 +22,9 @@
                 return;
 
             CurrentLevel++;
+            
+            CurrentValue = ValueTables.GetValue(CurrentLevel);
+            Price = PriceTables.GetPrice(CurrentLevel);
         }
 
         public string ShowInfo()

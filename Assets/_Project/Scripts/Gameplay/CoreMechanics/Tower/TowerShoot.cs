@@ -17,9 +17,7 @@ namespace _Project.Cor.Tower
         private readonly StatsStorage _statsStorage;
         private readonly EnemysVault _enemysVault;
         private readonly Transform _shootPoint;
-
-        private readonly int _initialCountTarget = 2;
-
+        
         private readonly float _shootRate = 0.5f;
         private float _nextShootTime;
 

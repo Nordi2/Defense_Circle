@@ -1,6 +1,7 @@
 ﻿using System;
 using _Project.Cor;
 using _Project.Data.Config;
+using _Project.Data.Config.Stats;
 using _Project.Meta.StatsLogic.Upgrade;
 using JetBrains.Annotations;
 
@@ -56,9 +57,11 @@ namespace _Project.Meta.StatsLogic
                 .Reset()
                 .WithCurrentLevel(config.InitialLevel)
                 .WithMaxLevel(config.MaxLevel)
-                .WithPrice(config.GetPrice(config.InitialLevel))
-                .WithValueStats(config.GetValue(config.InitialLevel))
+                .WithPrice(config.PriceTables.GetPrice(config.InitialLevel))
+                .WithValueStats(config.ValueTables.GetValue(config.InitialLevel))
                 .WithViewStats(config.View)
+                .WithPriceTables(config.PriceTables)
+                .WithValueTables(config.ValueTables)
                 .Build<TStats>();
 
             return currentStats;

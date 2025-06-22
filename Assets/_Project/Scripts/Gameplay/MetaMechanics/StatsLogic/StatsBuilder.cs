@@ -1,4 +1,5 @@
-﻿using _Project.Extensions;
+﻿using _Project.Data.Config.Stats;
+using _Project.Extensions;
 using JetBrains.Annotations;
 
 namespace _Project.Meta.StatsLogic
@@ -11,6 +12,20 @@ namespace _Project.Meta.StatsLogic
         private int _price;
         private int _valueStats;
         private StatsView _view;
+        private PriceTables _priceTables;
+        private ValueTables _valueTables;
+        
+        public StatsBuilder WithValueTables(ValueTables valueTables)
+        {
+            _valueTables = valueTables;
+            return this;
+        }
+
+        public StatsBuilder WithPriceTables(PriceTables priceTables)
+        {
+            _priceTables = priceTables;
+            return this;
+        }
 
         public StatsBuilder WithViewStats(StatsView view)
         {
@@ -51,7 +66,8 @@ namespace _Project.Meta.StatsLogic
                 .SetCurrentLevel(_currentLevel)
                 .SetPrice(_price)
                 .SetValueStats(_valueStats)
-                .SetStatsView(_view);
+                .SetStatsView(_view)
+                .SetPriceTables(_priceTables);
 
             return createdStats;
         }

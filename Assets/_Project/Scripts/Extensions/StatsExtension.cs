@@ -1,4 +1,5 @@
-﻿using _Project.Meta.StatsLogic.Upgrade;
+﻿using _Project.Data.Config.Stats;
+using _Project.Meta.StatsLogic.Upgrade;
 
 namespace _Project.Extensions
 {
@@ -32,6 +33,18 @@ namespace _Project.Extensions
         public static Stats SetPrice(this Stats stats, int price)
         {
             stats.Price = price;
+            return stats;
+        }
+
+        public static Stats SetPriceTables(this Stats stats, PriceTables priceTables)
+        {
+            stats.PriceTables = priceTables;
+            return stats;
+        }
+
+        public static Stats SetValueTables(this Stats stats, ValueTables valueTables)
+        {
+            stats.ValueTables = valueTables;
             return stats;
         }
     }
