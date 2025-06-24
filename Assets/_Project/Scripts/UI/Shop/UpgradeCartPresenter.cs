@@ -1,4 +1,5 @@
-﻿using _Project.Meta.Money;
+﻿using System;
+using _Project.Meta.Money;
 using _Project.Meta.StatsLogic.Upgrade;
 using DebugToolsPlus;
 
@@ -6,6 +7,8 @@ namespace _Project.Scripts.UI.Shop
 {
     public class UpgradeCartPresenter
     {
+        public event Action OnUpgrade;
+        
         private Stats _stats;
         
         private readonly UpgradeCartView _view;
@@ -45,6 +48,8 @@ namespace _Project.Scripts.UI.Shop
 
             _wallet.SpendMoney(_stats.Price);
             _stats.UpgradeStats();
+            
+            OnUpgrade?.Invoke();
         }
     }
 }

@@ -10,8 +10,8 @@ namespace _Project.Data.Config
         menuName = "Configs/Tower")]
     public class TowerConfig : ScriptableObject
     {
-        [field: SerializeField] public List<StatsConfig> Stats { get; private set; }
         [field: SerializeField] public int InitialMoney { get; private set; }
+        [field: SerializeField] public List<StatsConfig> Stats { get; private set; }
 
         private void OnValidate()
         {

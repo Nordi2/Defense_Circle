@@ -11,7 +11,7 @@ namespace _Project.Extensions
             return stats;
         }
 
-        public static Stats SetValueStats(this Stats stats, int value)
+        public static Stats SetValueStats(this Stats stats, float value)
         {
             stats.CurrentValue = value;
             return stats;

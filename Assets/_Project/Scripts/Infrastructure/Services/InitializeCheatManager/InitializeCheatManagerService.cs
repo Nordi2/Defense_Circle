@@ -1,33 +1,59 @@
 ﻿#if UNITY_EDITOR
 
+using System;
 using _Project;
 using _Project.Cor.Tower.Mono;
+using _Project.Infrastructure.Services;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
 using _Project.Scripts.UI.Shop;
+using Infrastructure.Signals;
 using JetBrains.Annotations;
 using Zenject;
 
 namespace Infrastructure.Services.Services.InitializeCheatManager
 {
     [UsedImplicitly]
-    public class InitializeCheatManagerService
+    public class InitializeCheatManagerService :
+        IInitializable,
+        IDisposable
     {
-        private readonly DiContainer _container;
+        private readonly SignalBus _signalBus;
+        private readonly StatsStorage _statsStorage;
+        private readonly Wallet _wallet;
+        private readonly IGameFactory _gameFactory;
 
-        public InitializeCheatManagerService(DiContainer container)
+        public InitializeCheatManagerService(
+            SignalBus signalBus,
+            StatsStorage statsStorage,
+            Wallet wallet,
+            IGameFactory gameFactory)
         {
-            _container = container;
+            _signalBus = signalBus;
+            _statsStorage = statsStorage;
+            _wallet = wallet;
+            _gameFactory = gameFactory;
         }
+
+        void IInitializable.Initialize() =>
+            _signalBus.Subscribe<StartGameSignal>(OnStartGame);
+
+        void IDisposable.Dispose() =>
+            _signalBus.Unsubscribe<StartGameSignal>(OnStartGame);
 
         public void Init(TowerFacade tower, ShopPresenter presenter)
         {
             CheatManager.TowerFacade = tower;
 
             CheatManager.ShopPresenter = presenter;
-            CheatManager.EnemyPool = _container.Resolve<EnemyPool>();
-            CheatManager.StatsStorage = _container.Resolve<StatsStorage>();
-            CheatManager.Wallet = _container.Resolve<Wallet>();
+            CheatManager.StatsStorage = _statsStorage;
+            CheatManager.Wallet = _wallet;
+            CheatManager.GameFactory = _gameFactory;
+        }
+
+        private void OnStartGame()
+        {
+            CheatManager.ActivateCheats = true;
         }
     }
 }

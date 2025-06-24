@@ -1,4 +1,6 @@
-﻿using _Project.Cor.Enemy;
+﻿using System;
+using System.Collections.Generic;
+using _Project.Cor.Enemy;
 using _Project.Meta.StatsLogic.Upgrade;
 using UnityEditor;
 using UnityEngine;
@@ -12,8 +14,8 @@ namespace _Project.Editor
         private bool _showEnemySection;
         private bool _showStatsSection;
         private bool _showUISection;
-        
-        private bool _showAmountStats;
+
+        private readonly Dictionary<Type, bool> _foldoutStates = new();
 
         private GUIStyle _initialStyle;
         private GUIStyle _headerGroupStyle;
@@ -44,7 +46,7 @@ namespace _Project.Editor
         private void OnGUI()
         {
             EditorGUI.DrawRect(new Rect(0, 0, position.width, position.height), Color.black);
-            
+
             if (!_gameStarted)
             {
                 InitialPreview();
@@ -92,33 +94,46 @@ namespace _Project.Editor
 
                     GUILayout.Label("Stats", _headerStyle, GUILayout.ExpandWidth(true));
 
-                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
+                    for (int i = 0; i < CheatManager.StatsStorage.StatsList.Count; i++)
                     {
-                        _showAmountStats =
-                            EditorGUILayout.BeginFoldoutHeaderGroup(_showAmountStats, "AmountTargets");
-                        {
-                            if (_showAmountStats)
-                            {
-                                for (int i = 0; i < CheatManager.StatsStorage.Lenght; i++)
-                                {
-                                    RenderingStats<AmountTargetsStats>();
-                                }
-                            }
-                        }
-                        EditorGUILayout.EndFoldoutHeaderGroup();
+                        Stats stats = CheatManager.StatsStorage.StatsList[i];
+                        RenderingStats(stats);
                     }
-                    GUILayout.EndHorizontal();
                 }
             }
             EditorGUILayout.EndVertical();
+        }
 
-            void RenderingStats<TStats>() where TStats : Stats
+        private void RenderingStats(Stats stats)
+        {
+            if (!_foldoutStates.TryGetValue(stats.GetType(), out bool isOpen))
             {
-                TStats stats = CheatManager.StatsStorage.GetStats<TStats>();
+                isOpen = false;
+                _foldoutStates[stats.GetType()] = isOpen;
+            }
+
+            GUI.color = _orangeColor;
+            GUILayout.BeginHorizontal(EditorStyles.helpBox);
+            {
+                isOpen =
+                    EditorGUILayout.BeginFoldoutHeaderGroup(isOpen, stats.GetType().Name);
+                _foldoutStates[stats.GetType()] = isOpen;
+                {
+                    if (isOpen)
+                    {
+                        RenderingValueStats();
+                    }
+                }
+                EditorGUILayout.EndFoldoutHeaderGroup();
+            }
+            GUILayout.EndHorizontal();
+
+            void RenderingValueStats()
+            {
                 GUILayout.Label($"Current Level: {stats.CurrentLevel}\n" +
-                                $"Max Level: {stats.MaxLevel}\n"
-                                + $"Value: {stats.CurrentValue}\n"
-                                + $"NexValue:", EditorStyles.boldLabel);
+                                $"Max Level: {stats.MaxLevel}\n" +
+                                $"Value: {stats.CurrentValue}",
+                    EditorStyles.boldLabel);
             }
         }
 
@@ -171,7 +186,7 @@ namespace _Project.Editor
 
                 GUILayout.Space(10);
 
-                EditorGUI.BeginDisabledGroup(CheatManager.TowerFacade is null);
+                EditorGUI.BeginDisabledGroup(!CheatManager.ActivateCheats);
                 {
                     #region Money Section
 
@@ -275,7 +290,7 @@ namespace _Project.Editor
                                 CheatManager.SpawnEnemy(EnemyType.Default);
                             if (GUILayout.Button("Create Slow Enemy", EditorStyles.miniButton))
                                 CheatManager.SpawnEnemy(EnemyType.Slow);
-                                
+
                             EditorGUILayout.BeginHorizontal();
                             {
                                 if (GUILayout.Button("Kill Random Enemy", EditorStyles.miniButton))
@@ -290,7 +305,7 @@ namespace _Project.Editor
                     }
 
                     #endregion
-                    
+
                     #region StatsSection
 
                     _showStatsSection =
@@ -299,11 +314,11 @@ namespace _Project.Editor
 
                     if (_showStatsSection)
                     {
-                        
+                    
                     }
 
                     #endregion
-                    
+
                     #region UISection
 
                     _showUISection =
@@ -340,16 +355,12 @@ namespace _Project.Editor
                 GUI.color = Color.magenta;
                 if (GUILayout.Button(EditorGUIUtility.IconContent("d_PauseButton").image, GUILayout.Width(35),
                         GUILayout.Height(25)))
-                {
                     EditorApplication.isPaused = !EditorApplication.isPaused;
-                }
 
                 GUI.color = Color.red;
                 if (GUILayout.Button(EditorGUIUtility.IconContent("Cancel").image, GUILayout.Width(35),
                         GUILayout.Height(25)))
-                {
                     EditorApplication.isPlaying = false;
-                }
 
                 GUI.color = originalColor;
                 GUILayout.FlexibleSpace();

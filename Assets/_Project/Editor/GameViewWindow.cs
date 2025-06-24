@@ -12,7 +12,7 @@ public class GameViewWindow : EditorWindow
     {
         GetWindow<GameViewWindow>("Game Preview");
     }
-
+    
     void OnEnable()
     {
         // Создаем Render Texture

@@ -1,10 +1,10 @@
 ﻿
 namespace _Project.Meta.StatsLogic.NoneUpgrade
 {
-    public readonly struct MoveSpeedShowStatsInfo : 
+    public readonly struct MoveSpeedStats : 
         IShowStatsInfo
     {
-        public MoveSpeedShowStatsInfo(float speed)
+        public MoveSpeedStats(float speed)
         {
             Speed = speed;
         }

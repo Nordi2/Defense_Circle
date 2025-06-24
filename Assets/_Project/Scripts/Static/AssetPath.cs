@@ -9,7 +9,7 @@ namespace _Project.Static
         public const string InitialTextLoad = "UI/TextAfterLoading";
         
         public const string TowerPath = "GameEntities/Tower";
-        public const string EnemyDefaultPath = "GameEntities/Enemy";
+        public const string EnemyDefaultPath = "GameEntities/Enemy_Default";
         public const string SpawnPointPath = "GameEntities/SpawnPointTower";
     }
 }

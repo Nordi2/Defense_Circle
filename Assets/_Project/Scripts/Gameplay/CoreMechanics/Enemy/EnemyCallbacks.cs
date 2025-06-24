@@ -12,24 +12,24 @@ namespace _Project.Cor.Enemy
         private readonly AnimationEnemy _animation;
         private readonly EnemyView _view;
         private readonly Wallet _wallet;
-        private readonly RewardShowStatsInfo _rewardShowStatsInfo;
+        private readonly RewardSpendStats _rewardSpendStats;
 
         public EnemyCallbacks(
             AnimationEnemy animation,
             EnemyView view,
             Wallet wallet,
-            RewardShowStatsInfo rewardShowStatsInfo)
+            RewardSpendStats rewardSpendStats)
         {
             _animation = animation;
             _view = view;
             _wallet = wallet;
-            _rewardShowStatsInfo = rewardShowStatsInfo;
+            _rewardSpendStats = rewardSpendStats;
         }
 
         public void GiveDamageCallback()
         {
             Object.Instantiate(_view.DieEffect, _view.transform.position, Quaternion.identity);
-            _wallet.SpendMoney(_rewardShowStatsInfo.SpendMoney);
+            _wallet.SpendMoney(_rewardSpendStats.SpendMoney);
         }
 
         public void TakeDamageCallback(int damageValue)
@@ -45,7 +45,7 @@ namespace _Project.Cor.Enemy
         public void DieCallback()
         {
             Object.Instantiate(_view.DieEffect, _view.transform.position, Quaternion.identity);
-            _wallet.AddMoney(_rewardShowStatsInfo.RewardMoney);
+            _wallet.AddMoney(_rewardSpendStats.RewardMoney);
         }
     }
 }

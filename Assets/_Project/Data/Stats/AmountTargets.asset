@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AmountTargets
   m_EditorClassIdentifier: 
   <MaxLevel>k__BackingField: 5
-  <InitialLevel>k__BackingField: 3
+  <InitialLevel>k__BackingField: 1
   <View>k__BackingField:
     <Icon>k__BackingField: {fileID: 21300000, guid: 25180e46342b2214a9d68d0f0ce01ca5, type: 3}
     <Name>k__BackingField: Amount Targets
@@ -21,5 +21,10 @@ MonoBehaviour:
   <PriceTables>k__BackingField:
     <PriceTable>k__BackingField: 220000003600000041000000b411000084400300
   <ValueTables>k__BackingField:
-    <ValueTable>k__BackingField: aa0c0000a77e0000440100000c00000040530000
+    <ValueTable>k__BackingField:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
   _initialPrice: 50

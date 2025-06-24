@@ -1,4 +1,5 @@
-﻿using _Project.Meta.Money;
+﻿using _Project.Data.Config;
+using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
 using _Project.Scripts.UI;
 using _Project.Scripts.UI.Shop;
@@ -21,19 +22,21 @@ namespace _Project.Infrastructure.Services
         private readonly Wallet _wallet;
         private readonly CompositeDisposable _disposable;
         private readonly GameLoopService _gameLoopService;
-
+        private readonly GameConfig _gameConfig;
+        
         public UIFactory(
             UIRoot uiRoot,
             CompositeDisposable disposable,
             Wallet wallet,
             StatsStorage statsStorage,
-            GameLoopService gameLoopService)
+            GameLoopService gameLoopService, GameConfig gameConfig)
         {
             _uiRoot = uiRoot;
             _disposable = disposable;
             _wallet = wallet;
             _statsStorage = statsStorage;
             _gameLoopService = gameLoopService;
+            _gameConfig = gameConfig;
         }
 
         public (ShopPresenter, ShopView) CreateShop()
@@ -44,7 +47,7 @@ namespace _Project.Infrastructure.Services
                 Object.Instantiate(Resources.Load<GameObject>(AssetPath.ShopUpgradePath));
 
             ShopView view = shopPrefab.GetComponent<ShopView>();
-            ShopPresenter shopPresenter = new ShopPresenter(_wallet, view, _statsStorage);
+            ShopPresenter shopPresenter = new ShopPresenter(_wallet, view, _statsStorage,_gameConfig.AmountUpgradeCart);
 
             _uiRoot.AddToContainer(view.GetComponent<RectTransform>());
             shopPresenter.CreateUpgradeCarts();

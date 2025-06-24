@@ -1,10 +1,13 @@
 ﻿#if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using _Project.Cor.Enemy;
 using _Project.Cor.Enemy.Mono;
 using _Project.Cor.Tower.Mono;
+using _Project.Infrastructure.Services;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
+using _Project.Meta.StatsLogic.Upgrade;
 using _Project.Scripts.UI.Shop;
 using DebugToolsPlus;
 using Infrastructure.Services;
@@ -19,7 +22,8 @@ namespace _Project
     {
         private const string CheathManager = "CheathManager";
 
-        public static EnemyPool EnemyPool;
+        public static bool ActivateCheats;
+        public static IGameFactory GameFactory;
         public static TowerFacade TowerFacade;
         public static Wallet Wallet;
         public static StatsStorage StatsStorage;
@@ -30,18 +34,39 @@ namespace _Project
         public static void SpawnEnemy(EnemyType type)
         {
             Vector3 randomPosition = GetRandomSpawnPosition();
+            
+            switch (type)
+            {
+                case EnemyType.Default:
+                    CreateEnemyAndGetLog(randomPosition, "Create: Default-Enemy\n");
+                    break;
+                case EnemyType.Fast:
+                        D.LogWarning(CheathManager.ToUpper(), "Reference to prefab is null. Start playing",
+                            DColor.AQUAMARINE, true);
+                        return;
+                   // CreateEnemyAndGetLog(randomPosition, "Create: Fast-Enemy\n", EnemyFacadeFastPrefab);
+                    break;
+                case EnemyType.Slow:
 
-            SpawnEnemyAndGetLog(randomPosition, "Create Enemy");
+                        D.LogWarning(CheathManager.ToUpper(), "Reference to prefab is null. Start playing",
+                            DColor.AQUAMARINE, true);
+                        return;
+                   // CreateEnemyAndGetLog(randomPosition, "Create: Slow-Enemy\n", EnemyFacadeSlowPrefab);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
         }
 
-        private static void SpawnEnemyAndGetLog(Vector3 randomPosition, string log)
+        private static void CreateEnemyAndGetLog(Vector3 randomPosition, string log)
         {
-            EnemyFacade enemyFacade = EnemyPool.Spawn(randomPosition);
+            EnemyFacade enemyFacade = GameFactory.CreateEnemy();
+            enemyFacade.transform.position = randomPosition;
             enemyFacade.OnDeath += DeleteFromList;
             _enemiesInSpawned.Add(enemyFacade);
-
-            D.Log(CheathManager.ToUpper(), log + D.FormatText(enemyFacade.ShowStatsService.ToString(), DColor.RED),
-                enemyFacade.gameObject, DColor.AQUAMARINE, true);
+          
+            // D.Log(CheathManager.ToUpper(), log + D.FormatText(enemyFacade.ShowStatsService.ToString(), DColor.RED),
+            //     enemyFacade.gameObject, DColor.AQUAMARINE, true);
         }
 
         private static void DeleteFromList(EnemyFacade concreteEnemyFacade)
@@ -130,7 +155,7 @@ namespace _Project
 
         public static void StaticZero()
         {
-            EnemyPool = null;
+            ActivateCheats = false;
             TowerFacade = null;
             Wallet = null;
             StatsStorage = null;

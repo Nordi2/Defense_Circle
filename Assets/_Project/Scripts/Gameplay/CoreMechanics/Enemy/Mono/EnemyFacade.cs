@@ -19,20 +19,18 @@ namespace _Project.Cor.Enemy.Mono
         private GiveDamageComponent _giveDamageComponent;
         private EnemyCallbacks _enemyCallbacks;
         private IDisposable _disposable;
-        
-        [Inject]
-        private void Construct(
+
+
+        public void Init(
             TakeDamageComponent takeDamageComponent,
             GiveDamageComponent giveDamageComponent,
-            ShowStatsService showStatsService,
             EnemyCallbacks enemyCallbacks)
         {
             _enemyCallbacks = enemyCallbacks;
             _takeDamageComponent = takeDamageComponent;
             _giveDamageComponent = giveDamageComponent;
-            ShowStatsService = showStatsService;
         }
-
+        
         public ShowStatsService ShowStatsService { get; private set; }
 
         private void OnEnable()

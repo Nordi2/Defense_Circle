@@ -5,15 +5,15 @@ namespace _Project.Data.Config.Stats
     [System.Serializable]
     public class ValueTables
     {
-        [field: SerializeField] public int[] ValueTable { get; private set; }
+        [field: SerializeField] public float[] ValueTable { get; private set; }
 
         public void CreateValueTable(int arrayLength)
         {
             if (ValueTable.Length != arrayLength)
-                ValueTable = new int[arrayLength];
+                ValueTable = new float[arrayLength];
         }
         
-        public int GetValue(int level)
+        public float GetValue(int level)
         {
             level -= 1;
             

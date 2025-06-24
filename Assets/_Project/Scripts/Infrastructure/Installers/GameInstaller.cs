@@ -5,6 +5,7 @@ using _Project.Infrastructure.EntryPoint;
 using _Project.Infrastructure.Services;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
+using _Project.Scripts.UI.Shop;
 using _Project.Static;
 using Infrastructure.Services;
 using Infrastructure.Services.Services.InitializeCheatManager;
@@ -16,7 +17,7 @@ namespace Infrastructure.Installers
 {
     public class GameInstaller : MonoInstaller
     {
-        [SerializeField] private TowerConfig _config;
+        [SerializeField] private GameConfig _gameConfig;
 
         public override void InstallBindings()
         {
@@ -26,10 +27,10 @@ namespace Infrastructure.Installers
             Container.DeclareSignal<FinishGameSignal>();
             Container.DeclareSignal<PauseGameSignal>();
             Container.DeclareSignal<ResumeGameSignal>();
-            
-            //Container.BindInterfacesTo<ShopPresenter>().AsSingle();
+
+            Container.Bind<GameConfig>().FromInstance(_gameConfig).AsSingle();
+            Container.Bind<TowerConfig>().FromInstance(_gameConfig.TowerConfig).AsSingle();
             Container.Bind<StatsBuilder>().AsSingle();
-            Container.Bind<TowerConfig>().FromInstance(_config).AsSingle();
             Container.BindInterfacesTo<CreateStatsService>().AsSingle();
             Container.Bind<StatsStorage>().AsSingle();
             Container.Bind<ShowStatsService>().AsSingle();
@@ -60,13 +61,13 @@ namespace Infrastructure.Installers
             Container
                 .Bind<Wallet>()
                 .AsSingle()
-                .WithArguments(_config.InitialMoney);
+                .WithArguments(_gameConfig.TowerConfig.InitialMoney);
 
             Container
                 .BindInterfacesTo<TargetPoint>()
                 .FromComponentInNewPrefabResource(AssetPath.SpawnPointPath)
                 .AsSingle();
-            
+
             Container
                 .Bind<Camera>()
                 .FromComponentInHierarchy()
@@ -80,7 +81,7 @@ namespace Infrastructure.Installers
 
 #if UNITY_EDITOR
             Container
-                .Bind<InitializeCheatManagerService>()
+                .BindInterfacesAndSelfTo<InitializeCheatManagerService>()
                 .AsSingle();
 #endif
         }

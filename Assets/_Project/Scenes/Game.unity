@@ -5426,8 +5426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ea65f5a2a54df8ab09dac1cc2f3e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyFacadePrefab: {fileID: 5136957325367538346, guid: 3dca7d2498aab6e4cb652c9cbfa33a37, type: 3}
-  _config: {fileID: 11400000, guid: 39fc9cfbfc5fb9e4e8494c998f4c1c2c, type: 2}
+  _gameConfig: {fileID: 11400000, guid: accfe19d76cb09947adec7f8d8a26135, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

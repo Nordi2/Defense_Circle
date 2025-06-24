@@ -10,7 +10,7 @@ namespace _Project.Meta.StatsLogic
         private int _currentLevel;
         private int _maxLevel;
         private int _price;
-        private int _valueStats;
+        private float _valueStats;
         private StatsView _view;
         private PriceTables _priceTables;
         private ValueTables _valueTables;
@@ -33,7 +33,7 @@ namespace _Project.Meta.StatsLogic
             return this;
         }
 
-        public StatsBuilder WithValueStats(int value)
+        public StatsBuilder WithValueStats(float value)
         {
             _valueStats = value;
             return this;

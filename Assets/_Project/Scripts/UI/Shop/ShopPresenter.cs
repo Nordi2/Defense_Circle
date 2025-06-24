@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.UI.Shop
 {
-    public class ShopPresenter : 
+    public class ShopPresenter :
         IDisposable
     {
         private readonly StatsStorage _statsStorage;
@@ -16,15 +16,18 @@ namespace _Project.Scripts.UI.Shop
         private readonly ShopView _view;
         private readonly List<UpgradeCartPresenter> _upgradeCartPresenters;
         private readonly HashSet<int> _uniqueIndexes;
+        private readonly int _amountUpgradeCart;
 
         public ShopPresenter(
             Wallet wallet,
             ShopView view,
-            StatsStorage statsStorage)
+            StatsStorage statsStorage,
+            int amountUpgradeCart)
         {
             _wallet = wallet;
             _view = view;
             _statsStorage = statsStorage;
+            _amountUpgradeCart = amountUpgradeCart;
 
             _upgradeCartPresenters = new List<UpgradeCartPresenter>(_statsStorage.Lenght);
             _uniqueIndexes = new HashSet<int>(_statsStorage.Lenght);
@@ -32,8 +35,6 @@ namespace _Project.Scripts.UI.Shop
 
         public void OpenShop()
         {
-            GenerateIndex();
-
             for (int i = 0; i < _upgradeCartPresenters.Count; i++)
             {
                 _upgradeCartPresenters[i].UpdateViewCart(GetCart(i));
@@ -45,18 +46,19 @@ namespace _Project.Scripts.UI.Shop
 
         public void HideShop()
         {
-            _uniqueIndexes.Clear();
             _view.CloseShop();
         }
 
         public void CreateUpgradeCarts()
         {
-            for (int i = 0; i < _statsStorage.StatsList.Count; i++)
+            for (int i = 0; i < _amountUpgradeCart; i++)
             {
                 UpgradeCartView cartView = _view.SpawnCart();
                 UpgradeCartPresenter cartPresenter = new UpgradeCartPresenter(cartView, _wallet);
+                cartPresenter.OnUpgrade += HideShop;
                 _upgradeCartPresenters.Add(cartPresenter);
                 cartPresenter.Subscribe();
+                GenerateIndex();
             }
         }
 
@@ -80,7 +82,10 @@ namespace _Project.Scripts.UI.Shop
         void IDisposable.Dispose()
         {
             foreach (UpgradeCartPresenter cartPresenter in _upgradeCartPresenters)
+            {
+                cartPresenter.OnUpgrade -= HideShop;
                 cartPresenter.Unsubscribe();
+            }
         }
     }
 }

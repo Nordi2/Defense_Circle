@@ -16,15 +16,15 @@ namespace _Project.Meta.StatsLogic.Upgrade
         public ValueTables ValueTables { get; set; }
 
         public bool IsMaxLevel =>
-            CurrentLevel > MaxLevel;
+            CurrentLevel >= MaxLevel;
 
-        public virtual void  UpgradeStats()
+        public virtual void UpgradeStats()
         {
             if (IsMaxLevel)
                 return;
-
+            
             CurrentLevel++;
-
+            
             D.Log(GetType().Name, D.FormatText("Upgrade Stats: " +
                                                $"Current Level: {CurrentLevel}," +
                                                $"Old Level: {CurrentLevel - 1}," +
