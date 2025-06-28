@@ -1,5 +1,7 @@
 ﻿using _Project.Cor.Enemy;
+using _Project.Cor.Enemy.Mono;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace _Project.Data.Config
@@ -10,13 +12,16 @@ namespace _Project.Data.Config
     public class EnemyConfig : ScriptableObject
     {
         [field: SerializeField] public EnemyType Type { get; private set; } = EnemyType.Default;
-        
+        [field: SerializeField] public EnemyFacade EnemyPrefab { get; private set; }
+
         [SerializeField, Min(10)] private Vector2Int _minMaxHealth;
         [SerializeField, Min(1)] private Vector2Int _minMaxCollisionDamage;
         [SerializeField, Min(0.1f)] private Vector2 _minMaxMoveSpeed;
         [SerializeField] private Vector2 _minMaxRotatitonSpeed;
         [SerializeField] private Vector2Int _minMaxMoneyReward;
         [SerializeField] private Vector2Int _minMaxMoneySpend;
+
+
         private void OnValidate()
         {
             if (_minMaxHealth.x > _minMaxHealth.y)
@@ -35,7 +40,7 @@ namespace _Project.Data.Config
             }
         }
 
-        public int GetRandomMoneySpend() => 
+        public int GetRandomMoneySpend() =>
             Random.Range(_minMaxMoneySpend.x, _minMaxMoneySpend.y);
 
         public int GetRandomMoneyReward() =>

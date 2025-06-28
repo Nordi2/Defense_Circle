@@ -2,6 +2,7 @@ using _Project.Infrastructure.EntryPoint;
 using _Project.Scripts.UI;
 using _Project.Static;
 using Infrastructure.Services;
+using Infrastructure.Services.Services.LoadData;
 using R3;
 using Zenject;
 
@@ -22,6 +23,10 @@ namespace Infrastructure.Installer
             
             Container
                 .Bind<CompositeDisposable>()
+                .AsSingle();
+
+            Container
+                .BindInterfacesTo<LoadDataService>()
                 .AsSingle();
             
             Container

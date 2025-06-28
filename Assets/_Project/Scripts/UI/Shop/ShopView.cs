@@ -1,7 +1,6 @@
 ﻿using _Project.Scripts.UI;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Project.UI.Shop
 {

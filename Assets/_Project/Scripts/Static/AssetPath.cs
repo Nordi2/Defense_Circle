@@ -4,7 +4,7 @@ namespace _Project.Static
     {
         public const string UIRootPath = "UI/UI-Root";
         public const string CurtainPath = "UI/Curtain";
-        
+
         public const string ShopUpgradePath = "UI/Shop";
         public const string InitialTextLoad = "UI/TextAfterLoading";
         

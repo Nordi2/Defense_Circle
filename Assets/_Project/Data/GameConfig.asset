@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   <TowerConfig>k__BackingField: {fileID: 11400000, guid: 39fc9cfbfc5fb9e4e8494c998f4c1c2c, type: 2}
-  <AmountUpgradeCart>k__BackingField: 3
+  <SpawnerConfig>k__BackingField: {fileID: 11400000, guid: e56ac002df446794384b0440c3043a61, type: 2}

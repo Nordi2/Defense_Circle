@@ -15,31 +15,24 @@ namespace _Project.Scripts.UI.Shop
         private readonly Wallet _wallet;
         private readonly ShopView _view;
         private readonly List<UpgradeCartPresenter> _upgradeCartPresenters;
-        private readonly HashSet<int> _uniqueIndexes;
-        private readonly int _amountUpgradeCart;
 
         public ShopPresenter(
             Wallet wallet,
             ShopView view,
-            StatsStorage statsStorage,
-            int amountUpgradeCart)
+            StatsStorage statsStorage)
         {
             _wallet = wallet;
             _view = view;
             _statsStorage = statsStorage;
-            _amountUpgradeCart = amountUpgradeCart;
 
-            _upgradeCartPresenters = new List<UpgradeCartPresenter>(_statsStorage.Lenght);
-            _uniqueIndexes = new HashSet<int>(_statsStorage.Lenght);
+            _upgradeCartPresenters = new List<UpgradeCartPresenter>(_statsStorage.StatsList.Count);
         }
 
         public void OpenShop()
         {
-            for (int i = 0; i < _upgradeCartPresenters.Count; i++)
-            {
-                _upgradeCartPresenters[i].UpdateViewCart(GetCart(i));
-            }
-
+            for (int i = 0; i < _upgradeCartPresenters.Count; i++) 
+                _upgradeCartPresenters[i].UpdateViewCart(_statsStorage.StatsList[i]);
+            
             _view.UpdateAmountMoney($"Money: {_wallet.CurrentMoney.CurrentValue}$");
             _view.OpenShop();
         }
@@ -51,32 +44,16 @@ namespace _Project.Scripts.UI.Shop
 
         public void CreateUpgradeCarts()
         {
-            for (int i = 0; i < _amountUpgradeCart; i++)
+            for (int i = 0; i < _statsStorage.StatsList.Count; i++)
             {
                 UpgradeCartView cartView = _view.SpawnCart();
                 UpgradeCartPresenter cartPresenter = new UpgradeCartPresenter(cartView, _wallet);
+                
                 cartPresenter.OnUpgrade += HideShop;
-                _upgradeCartPresenters.Add(cartPresenter);
                 cartPresenter.Subscribe();
-                GenerateIndex();
+                
+                _upgradeCartPresenters.Add(cartPresenter);
             }
-        }
-
-        private void GenerateIndex()
-        {
-            while (_uniqueIndexes.Count < _statsStorage.StatsList.Count)
-            {
-                int randomIndex = Random.Range(0, _statsStorage.StatsList.Count);
-                _uniqueIndexes.Add(randomIndex);
-            }
-        }
-
-        private Stats GetCart(int index)
-        {
-            if (_uniqueIndexes.TryGetValue(index, out int value))
-                return _statsStorage.StatsList[value];
-
-            throw new Exception();
         }
 
         void IDisposable.Dispose()

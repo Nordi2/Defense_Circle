@@ -1,4 +1,5 @@
-﻿using _Project.Cor;
+﻿using System;
+using _Project.Cor;
 using _Project.Cor.Component;
 using _Project.Cor.Enemy;
 using _Project.Cor.Enemy.Mono;
@@ -7,6 +8,7 @@ using _Project.Cor.Observers;
 using _Project.Cor.Tower;
 using _Project.Cor.Tower.Animation;
 using _Project.Cor.Tower.Mono;
+using _Project.Data.Config;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
 using _Project.Meta.StatsLogic.NoneUpgrade;
@@ -15,6 +17,7 @@ using _Project.Scripts.Gameplay.Component;
 using _Project.Static;
 using DebugToolsPlus;
 using Infrastructure.Services;
+using Infrastructure.Services.Services.LoadData;
 using JetBrains.Annotations;
 using R3;
 using UnityEngine;
@@ -28,6 +31,7 @@ namespace _Project.Infrastructure.Services
     {
         private readonly IInstantiator _instantiator;
         private readonly IGetTargetPosition _getTargetPosition;
+        private readonly IGameLoadDataService _gameLoadDataService;
         private readonly GameLoopService _gameLoopService;
         private readonly Camera _camera;
         private readonly StatsStorage _statsStorage;
@@ -37,6 +41,7 @@ namespace _Project.Infrastructure.Services
 
         public GameFactory(
             IInstantiator instantiator,
+            IGameLoadDataService gameLoadDataService,
             IGetTargetPosition getTargetPosition,
             GameLoopService gameLoopService,
             StatsStorage statsStorage,
@@ -53,6 +58,7 @@ namespace _Project.Infrastructure.Services
             _showStatsService = showStatsService;
             _camera = camera;
             _wallet = wallet;
+            _gameLoadDataService = gameLoadDataService;
         }
 
         public TowerFacade CreateTower()
@@ -79,13 +85,13 @@ namespace _Project.Infrastructure.Services
             WalletPresenter walletPresenter = new WalletPresenter(walletView, _wallet, _disposables);
 
             TakeDamageComponent takeDamageComponent = new TakeDamageComponent(healthStats);
-
             PassiveHealthComponent passiveHealthComponent = new PassiveHealthComponent(healthStats, _statsStorage);
+            RecoverComponent recoverComponent = new RecoverComponent(healthStats);
 
             SpawnBullet spawnBullet = new SpawnBullet(shootComponent, view, _instantiator);
 
             towerFacade.transform.position = _getTargetPosition.GetPosition();
-            towerFacade.Init(takeDamageComponent, callbacks, _showStatsService);
+            towerFacade.Init(takeDamageComponent, callbacks, _showStatsService, recoverComponent);
 
             _gameLoopService.AddInitializable(
                 walletPresenter,
@@ -108,25 +114,38 @@ namespace _Project.Infrastructure.Services
             return towerFacade;
         }
 
-        public EnemyFacade CreateEnemy()
+        public EnemyFacade CreateEnemy(EnemyType type)
         {
-            GameObject enemyPrefab = _instantiator.InstantiatePrefab(Resources.Load(AssetPath.EnemyDefaultPath));
+            return type switch
+            {
+                EnemyType.Default => LoadConfigAndCreateEnemy(EnemyType.Default),
+                EnemyType.Fast => LoadConfigAndCreateEnemy(EnemyType.Fast),
+                EnemyType.Slow => LoadConfigAndCreateEnemy(EnemyType.Slow),
+                _ => throw new NotImplementedException()
+            };
+        }
+
+        private EnemyFacade CreateConcreteEnemy(EnemyConfig config)
+        {
+            GameObject enemyPrefab = _instantiator.InstantiatePrefab(config.EnemyPrefab);
 
             EnemyFacade facade = enemyPrefab.GetComponent<EnemyFacade>();
             EnemyView view = enemyPrefab.GetComponent<EnemyView>();
 
-            MoveSpeedStats moveSpeedStatsStats = new MoveSpeedStats(25);
-            CollisionDamageStats collisionDamageStatsStats = new CollisionDamageStats(25);
-            RewardSpendStats rewardSpendStats = new RewardSpendStats(25, 25);
-            HealthStats healthStats = new HealthStats(100);
+            MoveSpeedStats moveSpeedStats = new MoveSpeedStats(config.GetRandomValueMoveSpeed());
+            CollisionDamageStats collisionDamageStats =
+                new CollisionDamageStats(config.GetRandomValueCollisionDamage());
+            RewardSpendStats rewardSpendStats =
+                new RewardSpendStats(config.GetRandomMoneyReward(), config.GetRandomMoneySpend());
+            HealthStats healthStats = new HealthStats(config.GetRandomValueHealth());
 
-            AnimationEnemy animation = new AnimationEnemy(view);
-            RotationComponent rotationComponent = new RotationComponent(view, 20f);
-            GiveDamageComponent giveDamageComponent = new GiveDamageComponent(collisionDamageStatsStats);
+            RotationComponent rotationComponent = new RotationComponent(view, config.GetRandomRotationSpeed());
+            GiveDamageComponent giveDamageComponent = new GiveDamageComponent(collisionDamageStats);
             TakeDamageComponent takeDamageComponent = new TakeDamageComponent(healthStats);
 
+            AnimationEnemy animation = new AnimationEnemy(view);
             EnemyCallbacks enemyCallbacks = new EnemyCallbacks(animation, view, _wallet, rewardSpendStats);
-            EnemyMovement movement = new EnemyMovement(_getTargetPosition, facade.transform, moveSpeedStatsStats);
+            EnemyMovement movement = new EnemyMovement(_getTargetPosition, facade.transform, moveSpeedStats);
 
             facade.Init(
                 takeDamageComponent,
@@ -136,8 +155,16 @@ namespace _Project.Infrastructure.Services
             _gameLoopService.AddTickable(
                 rotationComponent,
                 movement);
-            
+
             return facade;
+        }
+
+        private EnemyFacade LoadConfigAndCreateEnemy(EnemyType type)
+        {
+            D.Log(GetType().Name, $"Create Enemy {type}", DColor.GREEN, true);
+
+            EnemyConfig enemyConfig = _gameLoadDataService.GetEnemyConfig(type);
+            return CreateConcreteEnemy(enemyConfig);
         }
     }
 }

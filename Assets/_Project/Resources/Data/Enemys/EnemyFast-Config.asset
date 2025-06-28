@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 70b5ee6863394f4b9e07e8dd9fa23831, type: 3}
-  m_Name: EnemySlow-Config
+  m_Name: EnemyFast-Config
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 2
-  _minMaxHealth: {x: 350, y: 35051}
-  _minMaxCollisionDamage: {x: 45, y: 65}
-  _minMaxMoveSpeed: {x: 0.1, y: 0.5}
-  _minMaxRotatitonSpeed: {x: 15, y: 55}
-  _minMaxMoneyReward: {x: 45, y: 150}
-  _minMaxMoneySpend: {x: 65, y: 75}
+  <EnemyPrefab>k__BackingField: {fileID: 2456634996356521336, guid: 0c2c91f0fa1036f49a3470330d67fb84, type: 3}
+  _minMaxHealth: {x: 25, y: 35}
+  _minMaxCollisionDamage: {x: 5, y: 10}
+  _minMaxMoveSpeed: {x: 1.5, y: 2.5}
+  _minMaxRotatitonSpeed: {x: 65, y: 75}
+  _minMaxMoneyReward: {x: 25, y: 35}
+  _minMaxMoneySpend: {x: 15, y: 25}

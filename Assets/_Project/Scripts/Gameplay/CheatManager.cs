@@ -3,14 +3,13 @@ using System;
 using System.Collections.Generic;
 using _Project.Cor.Enemy;
 using _Project.Cor.Enemy.Mono;
+using _Project.Cor.Spawner;
 using _Project.Cor.Tower.Mono;
 using _Project.Infrastructure.Services;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
-using _Project.Meta.StatsLogic.Upgrade;
 using _Project.Scripts.UI.Shop;
 using DebugToolsPlus;
-using Infrastructure.Services;
 using JetBrains.Annotations;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -28,43 +27,37 @@ namespace _Project
         public static Wallet Wallet;
         public static StatsStorage StatsStorage;
         public static ShopPresenter ShopPresenter;
+        public static NewSpawnerWave WaveSpawner;
 
         private static readonly List<EnemyFacade> _enemiesInSpawned = new();
 
         public static void SpawnEnemy(EnemyType type)
         {
             Vector3 randomPosition = GetRandomSpawnPosition();
-            
+
             switch (type)
             {
                 case EnemyType.Default:
-                    CreateEnemyAndGetLog(randomPosition, "Create: Default-Enemy\n");
+                    CreateEnemyAndGetLog(randomPosition, "Create: Default-Enemy\n", EnemyType.Default);
                     break;
                 case EnemyType.Fast:
-                        D.LogWarning(CheathManager.ToUpper(), "Reference to prefab is null. Start playing",
-                            DColor.AQUAMARINE, true);
-                        return;
-                   // CreateEnemyAndGetLog(randomPosition, "Create: Fast-Enemy\n", EnemyFacadeFastPrefab);
+                    CreateEnemyAndGetLog(randomPosition, "Create: Fast-Enemy\n", EnemyType.Fast);
                     break;
                 case EnemyType.Slow:
-
-                        D.LogWarning(CheathManager.ToUpper(), "Reference to prefab is null. Start playing",
-                            DColor.AQUAMARINE, true);
-                        return;
-                   // CreateEnemyAndGetLog(randomPosition, "Create: Slow-Enemy\n", EnemyFacadeSlowPrefab);
+                    CreateEnemyAndGetLog(randomPosition, "Create: Slow-Enemy\n", EnemyType.Slow);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
 
-        private static void CreateEnemyAndGetLog(Vector3 randomPosition, string log)
+        private static void CreateEnemyAndGetLog(Vector3 randomPosition, string log, EnemyType type)
         {
-            EnemyFacade enemyFacade = GameFactory.CreateEnemy();
+            EnemyFacade enemyFacade = GameFactory.CreateEnemy(type);
             enemyFacade.transform.position = randomPosition;
             enemyFacade.OnDeath += DeleteFromList;
             _enemiesInSpawned.Add(enemyFacade);
-          
+
             // D.Log(CheathManager.ToUpper(), log + D.FormatText(enemyFacade.ShowStatsService.ToString(), DColor.RED),
             //     enemyFacade.gameObject, DColor.AQUAMARINE, true);
         }
@@ -138,7 +131,8 @@ namespace _Project
 
         public static void HealPlayer(int amount)
         {
-            Debug.Log($"Восстановлено {amount} здоровья");
+            D.Log(CheathManager.ToUpper(), $"Recover Tower: {amount}", DColor.AQUAMARINE, true);
+            TowerFacade.RecoverTower(amount);
         }
 
         private static Vector3 GetRandomSpawnPosition()

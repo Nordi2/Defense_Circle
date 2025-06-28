@@ -14,7 +14,8 @@ namespace _Project.Editor
         private bool _showEnemySection;
         private bool _showStatsSection;
         private bool _showUISection;
-
+        private bool _showOtherSection;
+        
         private readonly Dictionary<Type, bool> _foldoutStates = new();
 
         private GUIStyle _initialStyle;
@@ -97,6 +98,7 @@ namespace _Project.Editor
                     for (int i = 0; i < CheatManager.StatsStorage.StatsList.Count; i++)
                     {
                         Stats stats = CheatManager.StatsStorage.StatsList[i];
+                        GUILayout.Space(5);
                         RenderingStats(stats);
                     }
                 }
@@ -113,7 +115,7 @@ namespace _Project.Editor
             }
 
             GUI.color = _orangeColor;
-            GUILayout.BeginHorizontal(EditorStyles.helpBox);
+            GUILayout.BeginVertical(EditorStyles.helpBox);
             {
                 isOpen =
                     EditorGUILayout.BeginFoldoutHeaderGroup(isOpen, stats.GetType().Name);
@@ -126,7 +128,7 @@ namespace _Project.Editor
                 }
                 EditorGUILayout.EndFoldoutHeaderGroup();
             }
-            GUILayout.EndHorizontal();
+            GUILayout.EndVertical();
 
             void RenderingValueStats()
             {
@@ -339,6 +341,24 @@ namespace _Project.Editor
                     }
 
                     #endregion
+                    
+                    #region OtherSection
+
+                    _showOtherSection =
+                        EditorGUILayout.BeginFoldoutHeaderGroup(_showOtherSection, "Other Section", _foldoutStyle);
+                    EditorGUILayout.EndFoldoutHeaderGroup();
+
+                    if (_showOtherSection)
+                    {
+                        GUILayout.BeginVertical();
+                        {
+                            if (GUILayout.Button("StartWave"))
+                                CheatManager.WaveSpawner.StartWave();
+                        }
+                        GUILayout.EndVertical();
+                    }
+
+                    #endregion
                 }
                 EditorGUI.EndDisabledGroup();
             }
@@ -419,7 +439,9 @@ namespace _Project.Editor
             _showEnemySection = false;
             _showMoneySection = false;
             _showHealthSection = false;
-
+            _showUISection = false;
+            _showOtherSection = false;
+            
             _addMoney = 0;
             _spendMoney = 0;
             _addHealth = 0;

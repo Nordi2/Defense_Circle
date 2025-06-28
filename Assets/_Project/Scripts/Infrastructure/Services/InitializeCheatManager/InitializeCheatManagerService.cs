@@ -2,6 +2,7 @@
 
 using System;
 using _Project;
+using _Project.Cor.Spawner;
 using _Project.Cor.Tower.Mono;
 using _Project.Infrastructure.Services;
 using _Project.Meta.Money;
@@ -22,17 +23,20 @@ namespace Infrastructure.Services.Services.InitializeCheatManager
         private readonly StatsStorage _statsStorage;
         private readonly Wallet _wallet;
         private readonly IGameFactory _gameFactory;
-
+        private readonly NewSpawnerWave _spawnerWave;
+        
         public InitializeCheatManagerService(
             SignalBus signalBus,
             StatsStorage statsStorage,
             Wallet wallet,
-            IGameFactory gameFactory)
+            IGameFactory gameFactory,
+            NewSpawnerWave spawnerWave)
         {
             _signalBus = signalBus;
             _statsStorage = statsStorage;
             _wallet = wallet;
             _gameFactory = gameFactory;
+            _spawnerWave = spawnerWave;
         }
 
         void IInitializable.Initialize() =>
@@ -49,6 +53,7 @@ namespace Infrastructure.Services.Services.InitializeCheatManager
             CheatManager.StatsStorage = _statsStorage;
             CheatManager.Wallet = _wallet;
             CheatManager.GameFactory = _gameFactory;
+            CheatManager.WaveSpawner = _spawnerWave;
         }
 
         private void OnStartGame()

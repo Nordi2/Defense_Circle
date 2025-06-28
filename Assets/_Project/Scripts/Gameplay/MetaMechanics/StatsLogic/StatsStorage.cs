@@ -20,9 +20,7 @@ namespace _Project.Meta.StatsLogic
             _config = config;
             _dictionaryStats = new Dictionary<Type, Stats>(_config.Stats.Count);
         }
-
-        public int Lenght => _dictionaryStats.Count;
-
+        
         public void AddStatsList(Stats stats)
         {
             StatsList.Add(stats);

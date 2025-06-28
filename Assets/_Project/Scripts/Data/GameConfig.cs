@@ -8,6 +8,6 @@ namespace _Project.Data.Config
     public class GameConfig : ScriptableObject
     {
         [field: SerializeField] public TowerConfig TowerConfig { get; private set; }
-        [field: SerializeField] public int AmountUpgradeCart { get; private set; }
+        [field: SerializeField] public SpawnerConfig SpawnerConfig { get; private set; }
     }
 }

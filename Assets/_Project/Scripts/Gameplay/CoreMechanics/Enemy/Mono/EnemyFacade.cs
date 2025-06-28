@@ -69,16 +69,13 @@ namespace _Project.Cor.Enemy.Mono
         private void GiveDamageCallback()
         {
             OnDeath?.Invoke(this);
+            _enemyCallbacks.GiveDamageCallback();
         }
 
         private void DieCallback()
         {
             OnDeath?.Invoke(this);
-        }
-
-        private void TakeDamageCallback(int damageValue)
-        {
-           
+            _enemyCallbacks.DieCallback();
         }
     }
 }

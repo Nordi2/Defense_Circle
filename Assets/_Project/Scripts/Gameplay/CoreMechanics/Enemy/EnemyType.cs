@@ -2,8 +2,8 @@
 {
     public enum EnemyType
     {
-        Default,
-        Fast,
-        Slow
+        Default = 1,
+        Fast = 2,
+        Slow = 3,
     }
 }

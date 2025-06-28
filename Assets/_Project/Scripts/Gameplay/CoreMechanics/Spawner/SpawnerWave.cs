@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using _Project.Cor.Enemy.Mono;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -123,11 +123,4 @@ namespace _Project.Cor.Spawner
         }
 #endif
     }
-
-    [Serializable]
-    class WaveSettings
-    {
-        [SerializeField] public int[] _maxEnemyWave;
-        [SerializeField] public float[] _durationWave;
-    }
-}
+}*/

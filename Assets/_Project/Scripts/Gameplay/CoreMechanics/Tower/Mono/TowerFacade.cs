@@ -12,16 +12,19 @@ namespace _Project.Cor.Tower.Mono
     {
         private TowerCallbacks _towerCallbacks;
         private TakeDamageComponent _takeDamageComponent;
+        private RecoverComponent _recoverComponent;
         private ShowStatsService _showStatsService;
-
+        
         public void Init(
             TakeDamageComponent takeDamageComponent,
             TowerCallbacks towerCallbacks,
-            ShowStatsService showStatsService)
+            ShowStatsService showStatsService,
+            RecoverComponent recoverComponent)
         {
             _towerCallbacks = towerCallbacks;
             _takeDamageComponent = takeDamageComponent;
             _showStatsService = showStatsService;
+            _recoverComponent = recoverComponent;
         }
 
         public void OnGameStart()
@@ -30,6 +33,9 @@ namespace _Project.Cor.Tower.Mono
 
             D.Log("Tower Stats:", D.FormatText(_showStatsService.ToString(), DColor.RED), DColor.YELLOW);
         }
+
+        public void RecoverTower(int amount) => 
+            _recoverComponent.Recover(amount);
 
         public void TakeDamage(int damage)
         {
