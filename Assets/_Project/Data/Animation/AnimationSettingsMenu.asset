@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ac2eb4f84346a7b84f0049db440618, type: 3}
+  m_Name: AnimationSettingsMenu
+  m_EditorClassIdentifier: 
+  <AntiClickerAnimationDuration>k__BackingField: 0.5
+  <EaseAntiClicker>k__BackingField: 1
+  <EndValueAlpha>k__BackingField: 0.4
+  <AnimationPanelDuration>k__BackingField: 0.5
+  <EasePanel>k__BackingField: 27
+  <EaseButton>k__BackingField: 27
+  <ButtonAnimationDuration>k__BackingField: 0.5
+  <EndValueAlphaButton>k__BackingField: 1

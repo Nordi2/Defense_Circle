@@ -14,17 +14,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <SpawnMargin>k__BackingField: 1
   <InitialWave>k__BackingField: 0
-  <MaxWave>k__BackingField: 1
+  <MaxWave>k__BackingField: 3
   _waveSettings:
   - <MinMaxGroupEnemy>k__BackingField: {x: 1, y: 5}
-    <MaxEnemiesAtOnce>k__BackingField: 5
-    <DurationWave>k__BackingField: 25
-    <SpawnInterval>k__BackingField: 2
+    <MaxEnemiesAtOnce>k__BackingField: 6
+    <DurationWave>k__BackingField: 15
+    <SpawnInterval>k__BackingField: 1
     <EnemyInWaveInterest>k__BackingField:
       _serializedList:
       - Key: 1
-        Value: 25
+        Value: 35
       - Key: 2
-        Value: 25
+        Value: 30
       - Key: 3
-        Value: 25
+        Value: 35
+  - <MinMaxGroupEnemy>k__BackingField: {x: 2, y: 6}
+    <MaxEnemiesAtOnce>k__BackingField: 7
+    <DurationWave>k__BackingField: 20
+    <SpawnInterval>k__BackingField: 0.75
+    <EnemyInWaveInterest>k__BackingField:
+      _serializedList:
+      - Key: 2
+        Value: 100
+  - <MinMaxGroupEnemy>k__BackingField: {x: 2, y: 7}
+    <MaxEnemiesAtOnce>k__BackingField: 8
+    <DurationWave>k__BackingField: 25
+    <SpawnInterval>k__BackingField: 1.25
+    <EnemyInWaveInterest>k__BackingField:
+      _serializedList:
+      - Key: 3
+        Value: 100

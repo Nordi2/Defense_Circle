@@ -7,6 +7,7 @@ namespace _Project.Static
 
         public const string ShopUpgradePath = "UI/Shop";
         public const string InitialTextLoad = "UI/TextAfterLoading";
+        public const string MenuPath = "UI/Menu";
         
         public const string TowerPath = "GameEntities/Tower";
         public const string EnemyDefaultPath = "GameEntities/Enemy_Default";

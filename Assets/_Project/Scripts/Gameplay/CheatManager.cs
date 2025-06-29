@@ -8,6 +8,7 @@ using _Project.Cor.Tower.Mono;
 using _Project.Infrastructure.Services;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
+using _Project.Scripts.UI;
 using _Project.Scripts.UI.Shop;
 using DebugToolsPlus;
 using JetBrains.Annotations;
@@ -27,8 +28,9 @@ namespace _Project
         public static Wallet Wallet;
         public static StatsStorage StatsStorage;
         public static ShopPresenter ShopPresenter;
-        public static NewSpawnerWave WaveSpawner;
-
+        public static WaveSpawner WaveSpawner;
+        public static (MenuPresenter presenter, MenuView view) MainMenu;
+        
         private static readonly List<EnemyFacade> _enemiesInSpawned = new();
 
         public static void SpawnEnemy(EnemyType type)

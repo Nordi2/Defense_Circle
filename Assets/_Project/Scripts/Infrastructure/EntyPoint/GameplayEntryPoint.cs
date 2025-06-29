@@ -1,6 +1,7 @@
 ﻿using _Project.Cor.Tower.Mono;
 using _Project.Infrastructure.Services;
 using _Project.Meta.StatsLogic;
+using _Project.Scripts.UI;
 using _Project.Scripts.UI.Shop;
 using _Project.UI.Shop;
 using Infrastructure.Services.Services.InitializeCheatManager;
@@ -35,13 +36,12 @@ namespace _Project.Infrastructure.EntryPoint
         {
             _createStatsService.CreateStats();
 
-            (ShopPresenter presenter, ShopView view) shop = _uiFactory.CreateShop();
+            MenuPresenter menuPresenter = _uiFactory.CreateMenu();
+            (ShopPresenter presenter, ShopView view) shop = _uiFactory.CreateShop(menuPresenter);
             InitialTextLoadAfterLoading initialText = _uiFactory.CreateInitialTextLoadAfterLoading();
 
             TowerFacade tower = _gameFactory.CreateTower();
 
-            tower.gameObject.SetActive(false);
-            shop.view.gameObject.SetActive(false);
             initialText.StartAnimation();
 
 #if UNITY_EDITOR

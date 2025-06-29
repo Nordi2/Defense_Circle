@@ -33,7 +33,7 @@ namespace Infrastructure.Installers
             Container.Bind<ShowStatsService>().AsSingle();
 
             Container
-                .BindInterfacesTo<UIFactory>()
+                .BindInterfacesAndSelfTo<UIFactory>()
                 .AsSingle();
 
             Container
@@ -51,7 +51,7 @@ namespace Infrastructure.Installers
                 .WithArguments(_gameConfig.SpawnerConfig.SpawnMargin);
 
             Container
-                .Bind<NewSpawnerWave>()
+                .Bind<WaveSpawner>()
                 .AsSingle();
             
             Container

@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
-using _Project.Meta.StatsLogic.Upgrade;
 using _Project.UI.Shop;
-using Random = UnityEngine.Random;
+using Zenject;
 
 namespace _Project.Scripts.UI.Shop
 {
     public class ShopPresenter :
-        IDisposable
+        IDisposable,
+        IInitializable
     {
+        private readonly MenuPresenter _menuPresenter;
         private readonly StatsStorage _statsStorage;
         private readonly Wallet _wallet;
         private readonly ShopView _view;
@@ -19,13 +20,29 @@ namespace _Project.Scripts.UI.Shop
         public ShopPresenter(
             Wallet wallet,
             ShopView view,
-            StatsStorage statsStorage)
+            StatsStorage statsStorage,
+            MenuPresenter menuPresenter)
         {
             _wallet = wallet;
             _view = view;
             _statsStorage = statsStorage;
-
+            _menuPresenter = menuPresenter;
+            
             _upgradeCartPresenters = new List<UpgradeCartPresenter>(_statsStorage.StatsList.Count);
+        }
+
+        void IInitializable.Initialize() => 
+            _menuPresenter.OnOpenShop += OpenShop;
+
+        void IDisposable.Dispose()
+        {
+            _menuPresenter.OnOpenShop -= OpenShop;
+            
+            foreach (UpgradeCartPresenter cartPresenter in _upgradeCartPresenters)
+            {
+                cartPresenter.OnUpgrade -= HideShop;
+                cartPresenter.Unsubscribe();
+            }
         }
 
         public void OpenShop()
@@ -53,15 +70,6 @@ namespace _Project.Scripts.UI.Shop
                 cartPresenter.Subscribe();
                 
                 _upgradeCartPresenters.Add(cartPresenter);
-            }
-        }
-
-        void IDisposable.Dispose()
-        {
-            foreach (UpgradeCartPresenter cartPresenter in _upgradeCartPresenters)
-            {
-                cartPresenter.OnUpgrade -= HideShop;
-                cartPresenter.Unsubscribe();
             }
         }
     }

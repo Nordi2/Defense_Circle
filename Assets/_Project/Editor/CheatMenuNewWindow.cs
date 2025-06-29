@@ -15,7 +15,8 @@ namespace _Project.Editor
         private bool _showStatsSection;
         private bool _showUISection;
         private bool _showOtherSection;
-        
+        private bool _showAnimationSection;
+
         private readonly Dictionary<Type, bool> _foldoutStates = new();
 
         private GUIStyle _initialStyle;
@@ -316,7 +317,6 @@ namespace _Project.Editor
 
                     if (_showStatsSection)
                     {
-                    
                     }
 
                     #endregion
@@ -341,7 +341,28 @@ namespace _Project.Editor
                     }
 
                     #endregion
-                    
+
+                    #region AnimationSection
+
+                    _showAnimationSection =
+                        EditorGUILayout.BeginFoldoutHeaderGroup(_showAnimationSection, "Animation Section", _foldoutStyle);
+                    EditorGUILayout.EndFoldoutHeaderGroup();
+
+                    if (_showAnimationSection)
+                    {
+                        GUILayout.BeginVertical();
+                        {
+                            if (GUILayout.Button("Animation Show Menu"))
+                                CheatManager.MainMenu.view.Show();
+
+                            if (GUILayout.Button("Animation Hide Menu"))
+                                CheatManager.MainMenu.view.Hide();
+                        }
+                        GUILayout.EndVertical();
+                    }
+
+                    #endregion
+
                     #region OtherSection
 
                     _showOtherSection =
@@ -441,7 +462,7 @@ namespace _Project.Editor
             _showHealthSection = false;
             _showUISection = false;
             _showOtherSection = false;
-            
+
             _addMoney = 0;
             _spendMoney = 0;
             _addHealth = 0;

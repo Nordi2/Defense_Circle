@@ -14,7 +14,7 @@ using Random = UnityEngine.Random;
 namespace _Project.Cor.Spawner
 {
     [UsedImplicitly]
-    public class NewSpawnerWave
+    public class WaveSpawner
     {
         private readonly SpawnPositionEnemy _spawnPositionEnemy;
         private readonly SpawnerConfig _spawnerConfig;
@@ -30,7 +30,7 @@ namespace _Project.Cor.Spawner
         private float _totalChance;
         private Dictionary<EnemyType,float> _dictionarySpawnChance;
         
-        public NewSpawnerWave(
+        public WaveSpawner(
             SpawnPositionEnemy spawnPositionEnemy,
             SpawnerConfig spawnerConfig,
             IGameFactory gameFactory)

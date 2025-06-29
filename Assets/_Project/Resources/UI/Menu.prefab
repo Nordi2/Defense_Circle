@@ -143,8 +143,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 911604755823682977}
+  - component: {fileID: 6843163491097416004}
   m_Layer: 5
-  m_Name: MenuEndWave
+  m_Name: Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,6 +172,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6843163491097416004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561864871680226680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 834d9e8b2ef744ba9048bad5f1259f53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ContinueButton>k__BackingField: {fileID: 257965620346139690}
+  <ShopButton>k__BackingField: {fileID: 6571033410595625265}
+  _antiClickerImage: {fileID: 522966038236532561}
+  _rectTransform: {fileID: 3373700500657216567}
+  _buttons:
+  - {fileID: 257965620346139690}
+  - {fileID: 6571033410595625265}
+  _animationSettings: {fileID: 11400000, guid: 33e5822370d29b34b8c7e71134d334e6, type: 2}
 --- !u!1 &4264938796982415824
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +205,7 @@ GameObject:
   - component: {fileID: 2915339258881079587}
   - component: {fileID: 257965620346139690}
   - component: {fileID: 7990966373502251786}
+  - component: {fileID: 1100671551567544001}
   m_Layer: 5
   m_Name: StartNewWave_Button
   m_TagString: Untagged
@@ -308,6 +330,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 3, y: 3}
   m_UseGraphicAlpha: 1
+--- !u!225 &1100671551567544001
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4264938796982415824}
+  m_Enabled: 1
+  m_Alpha: 0.55
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5479176322860041016
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,6 +355,7 @@ GameObject:
   - component: {fileID: 9106053341742210748}
   - component: {fileID: 6571033410595625265}
   - component: {fileID: 8215764044827887964}
+  - component: {fileID: 3984541146984993248}
   m_Layer: 5
   m_Name: Shop_Button
   m_TagString: Untagged
@@ -445,6 +480,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 3, y: 3}
   m_UseGraphicAlpha: 1
+--- !u!225 &3984541146984993248
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5479176322860041016}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8756754223695670402
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,8 +664,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -47.63495, y: 0}
-  m_SizeDelta: {x: -1195.2701, y: -500}
+  m_AnchoredPosition: {x: -50, y: 0}
+  m_SizeDelta: {x: -1200, y: -500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5409807570247785660
 CanvasRenderer:
@@ -757,7 +804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.4}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

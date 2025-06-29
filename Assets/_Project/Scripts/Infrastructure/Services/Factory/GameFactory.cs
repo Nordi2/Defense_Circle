@@ -92,7 +92,9 @@ namespace _Project.Infrastructure.Services
 
             towerFacade.transform.position = _getTargetPosition.GetPosition();
             towerFacade.Init(takeDamageComponent, callbacks, _showStatsService, recoverComponent);
-
+            
+            view.gameObject.SetActive(false);
+            
             _gameLoopService.AddInitializable(
                 walletPresenter,
                 healthPresenter,

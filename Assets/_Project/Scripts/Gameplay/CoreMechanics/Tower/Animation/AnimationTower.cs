@@ -63,7 +63,8 @@ namespace _Project.Cor.Tower.Animation
                     .DOScale(Vector3.one, _initialSpawnSettings.DurationDoScale)
                     .From(Vector3.zero)
                     .SetEase(_initialSpawnSettings.Ease))
-                .Append(GetTextFadeSequence());
+                .Append(GetTextFadeSequence())
+                .Play();
         }
 
         public void PlayTakeDamage()

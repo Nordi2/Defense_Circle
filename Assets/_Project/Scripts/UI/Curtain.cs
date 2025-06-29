@@ -19,7 +19,8 @@ namespace _Project.Scripts.UI
             _canvasGroup
                 .DOFade(0, _animationDuration)
                 .From(1)
-                .OnComplete(() => gameObject.SetActive(false));
+                .OnComplete(() => gameObject.SetActive(false))
+                .Play();
         }
     }
 }

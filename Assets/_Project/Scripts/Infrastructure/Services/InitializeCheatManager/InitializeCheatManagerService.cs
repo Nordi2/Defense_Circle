@@ -23,20 +23,23 @@ namespace Infrastructure.Services.Services.InitializeCheatManager
         private readonly StatsStorage _statsStorage;
         private readonly Wallet _wallet;
         private readonly IGameFactory _gameFactory;
-        private readonly NewSpawnerWave _spawnerWave;
+        private readonly WaveSpawner _spawner;
+        private readonly UIFactory _uiFactory;
         
         public InitializeCheatManagerService(
             SignalBus signalBus,
             StatsStorage statsStorage,
             Wallet wallet,
             IGameFactory gameFactory,
-            NewSpawnerWave spawnerWave)
+            WaveSpawner spawner,
+            UIFactory uiFactory)
         {
             _signalBus = signalBus;
             _statsStorage = statsStorage;
             _wallet = wallet;
             _gameFactory = gameFactory;
-            _spawnerWave = spawnerWave;
+            _spawner = spawner;
+            _uiFactory = uiFactory;
         }
 
         void IInitializable.Initialize() =>
@@ -50,10 +53,11 @@ namespace Infrastructure.Services.Services.InitializeCheatManager
             CheatManager.TowerFacade = tower;
 
             CheatManager.ShopPresenter = presenter;
+            CheatManager.MainMenu = _uiFactory.Menu;
             CheatManager.StatsStorage = _statsStorage;
             CheatManager.Wallet = _wallet;
             CheatManager.GameFactory = _gameFactory;
-            CheatManager.WaveSpawner = _spawnerWave;
+            CheatManager.WaveSpawner = _spawner;
         }
 
         private void OnStartGame()

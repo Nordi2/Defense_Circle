@@ -8,6 +8,7 @@ using DebugToolsPlus;
 using Infrastructure.Services;
 using JetBrains.Annotations;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace _Project.Infrastructure.Services
 {
@@ -19,7 +20,9 @@ namespace _Project.Infrastructure.Services
         private readonly StatsStorage _statsStorage;
         private readonly Wallet _wallet;
         private readonly GameLoopService _gameLoopService;
-        
+
+        public (MenuPresenter presenter, MenuView view) Menu;
+
         public UIFactory(
             UIRoot uiRoot,
             Wallet wallet,
@@ -32,7 +35,26 @@ namespace _Project.Infrastructure.Services
             _gameLoopService = gameLoopService;
         }
 
-        public (ShopPresenter, ShopView) CreateShop()
+        public MenuPresenter CreateMenu()
+        {
+            D.Log(GetType().Name, "Create Menu", DColor.GREEN, true);
+
+            GameObject menuPrefab = Object.Instantiate(Resources.Load<GameObject>(AssetPath.MenuPath));
+
+            MenuView view = menuPrefab.GetComponent<MenuView>();
+            MenuPresenter presenter = new MenuPresenter(view);
+
+            _uiRoot.AddToContainer(view.GetComponent<RectTransform>());
+            
+            view.gameObject.SetActive(false);
+
+            Menu.presenter = presenter;
+            Menu.view = view;
+
+            return presenter;
+        }
+
+        public (ShopPresenter, ShopView) CreateShop(MenuPresenter menuPresenter)
         {
             D.Log(GetType().Name, "Create SHOP", DColor.GREEN, true);
 
@@ -40,12 +62,15 @@ namespace _Project.Infrastructure.Services
                 Object.Instantiate(Resources.Load<GameObject>(AssetPath.ShopUpgradePath));
 
             ShopView view = shopPrefab.GetComponent<ShopView>();
-            ShopPresenter shopPresenter = new ShopPresenter(_wallet, view, _statsStorage);
+            ShopPresenter shopPresenter = new ShopPresenter(_wallet, view, _statsStorage, menuPresenter);
 
             _uiRoot.AddToContainer(view.GetComponent<RectTransform>());
             shopPresenter.CreateUpgradeCarts();
 
             _gameLoopService.AddDisposable(shopPresenter);
+            _gameLoopService.AddInitializable(shopPresenter);
+
+            view.gameObject.SetActive(false);
 
             return (shopPresenter, view);
         }
