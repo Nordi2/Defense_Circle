@@ -33,18 +33,10 @@ namespace Infrastructure.Installers
             Container.Bind<ShowStatsService>().AsSingle();
 
             Container
-                .BindInterfacesAndSelfTo<UIFactory>()
-                .AsSingle();
-
-            Container
                 .BindInterfacesTo<GameplayEntryPoint>()
                 .AsSingle()
                 .NonLazy();
-
-            Container
-                .BindInterfacesTo<ScreenResolutionService>()
-                .AsSingle();
-
+            
             Container
                 .Bind<SpawnPositionEnemy>()
                 .AsSingle()
@@ -53,7 +45,7 @@ namespace Infrastructure.Installers
             Container
                 .Bind<WaveSpawner>()
                 .AsSingle();
-            
+
             Container
                 .BindInterfacesAndSelfTo<GameLoopService>()
                 .AsSingle()
@@ -63,10 +55,6 @@ namespace Infrastructure.Installers
                 .BindInterfacesTo<InputService>()
                 .AsSingle()
                 .NonLazy();
-
-            Container
-                .BindInterfacesTo<GameFactory>()
-                .AsSingle();
 
             Container
                 .Bind<Wallet>()
@@ -91,8 +79,19 @@ namespace Infrastructure.Installers
 
 #if UNITY_EDITOR
             Container
+                .BindInterfacesAndSelfTo<UIFactory>()
+                .AsSingle();
+
+            Container
+                .BindInterfacesAndSelfTo<GameFactory>()
+                .AsSingle();
+
+            Container
                 .BindInterfacesAndSelfTo<InitializeCheatManagerService>()
                 .AsSingle();
+#else
+            Container.BindInterfaces<UIFactory>().AsSingle();
+            Container.BindInterfaces<GameFactory>().AsSingle();
 #endif
         }
 

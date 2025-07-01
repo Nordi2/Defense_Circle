@@ -37,10 +37,16 @@ namespace _Project.Scripts.UI
         public void OpenMenu() => 
             _view.Show();
 
-        private void OpenShop() =>
+        public void CloseMenu() =>
+            _view.Hide();
+
+        private void OpenShop() => 
             OnOpenShop?.Invoke();
 
-        private void StartNextWave() =>
+        private void StartNextWave()
+        {
+            _view.Hide();
             OnStartNextWave?.Invoke();
+        }
     }
 }

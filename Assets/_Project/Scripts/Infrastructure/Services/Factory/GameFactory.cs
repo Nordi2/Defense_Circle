@@ -1,5 +1,4 @@
-﻿using System;
-using _Project.Cor;
+﻿using _Project.Cor;
 using _Project.Cor.Component;
 using _Project.Cor.Enemy;
 using _Project.Cor.Enemy.Mono;
@@ -18,6 +17,8 @@ using _Project.Static;
 using DebugToolsPlus;
 using Infrastructure.Services;
 using Infrastructure.Services.Services.LoadData;
+using System;
+using Infrastructure.Services.Services.ScreenResolution;
 using JetBrains.Annotations;
 using R3;
 using UnityEngine;
@@ -38,6 +39,9 @@ namespace _Project.Infrastructure.Services
         private readonly CompositeDisposable _disposables;
         private readonly ShowStatsService _showStatsService;
         private readonly Wallet _wallet;
+        private readonly IScreenResolutionService _screenResolutionService;
+        
+        public TowerFacade TowerFacade { get; private set; }
 
         public GameFactory(
             IInstantiator instantiator,
@@ -48,7 +52,8 @@ namespace _Project.Infrastructure.Services
             CompositeDisposable disposables,
             ShowStatsService showStatsService,
             Camera camera,
-            Wallet wallet)
+            Wallet wallet,
+            IScreenResolutionService screenResolutionService)
         {
             _instantiator = instantiator;
             _getTargetPosition = getTargetPosition;
@@ -58,7 +63,28 @@ namespace _Project.Infrastructure.Services
             _showStatsService = showStatsService;
             _camera = camera;
             _wallet = wallet;
+            _screenResolutionService = screenResolutionService;
             _gameLoadDataService = gameLoadDataService;
+        }
+
+        public void CreateBackground()
+        {
+            GameObject backPrefab = UnityEngine.Object.Instantiate(Resources.Load<GameObject>(AssetPath.BackgroundPath));
+            
+            backPrefab.transform.localScale = new Vector3(
+                _screenResolutionService.ScreenWidth,
+                _screenResolutionService.ScreenHeight,
+                1);
+        }
+
+        public void CreateBackgroundEffect()
+        {
+            GameObject effectPrefab = UnityEngine.Object.Instantiate(Resources.Load<GameObject>(AssetPath.BackgroundEffectPath));
+            
+            var particleSystem = effectPrefab.GetComponent<ParticleSystem>();
+
+            var shapeModule = particleSystem.shape;
+            shapeModule.scale = new Vector3(_screenResolutionService.ScreenWidth, _screenResolutionService.ScreenHeight, 1);
         }
 
         public TowerFacade CreateTower()
@@ -92,9 +118,9 @@ namespace _Project.Infrastructure.Services
 
             towerFacade.transform.position = _getTargetPosition.GetPosition();
             towerFacade.Init(takeDamageComponent, callbacks, _showStatsService, recoverComponent);
-            
+
             view.gameObject.SetActive(false);
-            
+
             _gameLoopService.AddInitializable(
                 walletPresenter,
                 healthPresenter,
@@ -112,6 +138,8 @@ namespace _Project.Infrastructure.Services
                 passiveHealthComponent);
 
             _gameLoopService.AddGameListener(towerFacade);
+
+            TowerFacade = towerFacade;
 
             return towerFacade;
         }

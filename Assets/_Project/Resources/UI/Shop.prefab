@@ -66,8 +66,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 25
-    m_Bottom: 25
+    m_Top: 50
+    m_Bottom: 50
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
@@ -690,4 +690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moneyText: {fileID: 5295248858961512104}
   _cartViewPrefab: {fileID: 4934927494123830381, guid: 7e95ddf5b01836e42b8dd52155d3bb29, type: 3}
-  _container: {fileID: 6891213240418741218}
+  _containerUpgradeCarts: {fileID: 6891213240418741218}
+  _moveContainer: {fileID: 8167431387184533964}
+  _animationSettings: {fileID: 11400000, guid: cfc750bdd456b3040be101de6f82fc43, type: 2}
+  _antiClicker: {fileID: 4706265375698198458}

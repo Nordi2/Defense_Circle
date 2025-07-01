@@ -18,7 +18,7 @@ namespace _Project.Cor.Enemy
         public void PlayTakeDamageAnimation()
         {
             //_transform.DOShakeScale(1f);
-            _transform.DOShakePosition(1,0.25f);
+            _transform.DOShakePosition(1,0.25f).Play();
         }
     }
 }

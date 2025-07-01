@@ -77,7 +77,8 @@ namespace _Project.Cor.Tower.Animation
             _sequence
                 .Append(_camera.DOShakePosition(_durationShake, _strengthShake))
                 .Join(AnimationSprites())
-                .OnKill(KillCallback);
+                .OnKill(KillCallback)
+                .Play();
         }
 
         public void PlayDeath()
@@ -85,7 +86,8 @@ namespace _Project.Cor.Tower.Animation
             _mainTransform
                 .DOScale(Vector3.zero, _deathSettings.DurationDoScale)
                 .From(Vector3.one)
-                .SetEase(_deathSettings.EaseType);
+                .SetEase(_deathSettings.EaseType)
+                .Play();
         }
 
         private Sequence GetTextFadeSequence()
@@ -114,7 +116,8 @@ namespace _Project.Cor.Tower.Animation
                 spriteSequence
                     .Join(_takeDamageSettings.AnimationSpriteRenderers[i]
                         .DOColor(_takeDamageColor,_durationSwitchColor)
-                        .SetLoops(_countLoops, LoopType.Yoyo));
+                        .SetLoops(_countLoops, LoopType.Yoyo))
+                    .Play();
             }
 
             return spriteSequence;

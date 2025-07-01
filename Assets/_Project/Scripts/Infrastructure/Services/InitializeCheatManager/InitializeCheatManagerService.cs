@@ -22,15 +22,15 @@ namespace Infrastructure.Services.Services.InitializeCheatManager
         private readonly SignalBus _signalBus;
         private readonly StatsStorage _statsStorage;
         private readonly Wallet _wallet;
-        private readonly IGameFactory _gameFactory;
         private readonly WaveSpawner _spawner;
         private readonly UIFactory _uiFactory;
-        
+        private readonly GameFactory _gameFactory;
+
         public InitializeCheatManagerService(
             SignalBus signalBus,
             StatsStorage statsStorage,
             Wallet wallet,
-            IGameFactory gameFactory,
+            GameFactory gameFactory,
             WaveSpawner spawner,
             UIFactory uiFactory)
         {
@@ -48,12 +48,11 @@ namespace Infrastructure.Services.Services.InitializeCheatManager
         void IDisposable.Dispose() =>
             _signalBus.Unsubscribe<StartGameSignal>(OnStartGame);
 
-        public void Init(TowerFacade tower, ShopPresenter presenter)
+        public void Init()
         {
-            CheatManager.TowerFacade = tower;
-
-            CheatManager.ShopPresenter = presenter;
-            CheatManager.MainMenu = _uiFactory.Menu;
+            CheatManager.TowerFacade = _gameFactory.TowerFacade;
+            CheatManager.ShopPresenter = _uiFactory.ShopPresenter;
+            CheatManager.PresenterMainMenu = _uiFactory.MenuPresenter;
             CheatManager.StatsStorage = _statsStorage;
             CheatManager.Wallet = _wallet;
             CheatManager.GameFactory = _gameFactory;

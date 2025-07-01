@@ -15,7 +15,6 @@ namespace _Project.Editor
         private bool _showStatsSection;
         private bool _showUISection;
         private bool _showOtherSection;
-        private bool _showAnimationSection;
 
         private readonly Dictionary<Type, bool> _foldoutStates = new();
 
@@ -199,7 +198,7 @@ namespace _Project.Editor
 
                     if (_showMoneySection)
                     {
-                        EditorGUILayout.BeginVertical("box");
+                        EditorGUILayout.BeginVertical(EditorStyles.helpBox);
                         {
                             GUILayout.BeginHorizontal(EditorStyles.toolbar);
                             {
@@ -242,7 +241,7 @@ namespace _Project.Editor
 
                     if (_showHealthSection)
                     {
-                        EditorGUILayout.BeginVertical("box");
+                        EditorGUILayout.BeginVertical(EditorStyles.helpBox);
                         {
                             GUILayout.BeginHorizontal(EditorStyles.toolbar);
                             {
@@ -285,21 +284,26 @@ namespace _Project.Editor
 
                     if (_showEnemySection)
                     {
-                        EditorGUILayout.BeginVertical("box");
+                        EditorGUILayout.BeginVertical(EditorStyles.helpBox);
                         {
-                            if (GUILayout.Button("Create Fast Enemy", EditorStyles.miniButton))
+                            if (GUILayout.Button("Create Fast Enemy", EditorStyles.toolbarButton))
                                 CheatManager.SpawnEnemy(EnemyType.Fast);
-                            if (GUILayout.Button("Create Default Enemy", EditorStyles.miniButton))
+                            GUILayout.Space(5);
+                            if (GUILayout.Button("Create Default Enemy", EditorStyles.toolbarButton))
                                 CheatManager.SpawnEnemy(EnemyType.Default);
-                            if (GUILayout.Button("Create Slow Enemy", EditorStyles.miniButton))
+                            GUILayout.Space(5);
+                            if (GUILayout.Button("Create Slow Enemy", EditorStyles.toolbarButton))
                                 CheatManager.SpawnEnemy(EnemyType.Slow);
+                            GUILayout.Space(5);
 
                             EditorGUILayout.BeginHorizontal();
                             {
-                                if (GUILayout.Button("Kill Random Enemy", EditorStyles.miniButton))
+                                if (GUILayout.Button("Kill Random Enemy", EditorStyles.toolbarButton))
                                     CheatManager.KillRandomSpawnedEnemies();
-
-                                if (GUILayout.Button("Kill All Enemy", EditorStyles.miniButton))
+                                
+                                GUILayout.Space(5);
+                                
+                                if (GUILayout.Button("Kill All Enemy", EditorStyles.toolbarButton))
                                     CheatManager.KillAllSpawnedEnemies();
                             }
                             EditorGUILayout.EndHorizontal();
@@ -329,34 +333,17 @@ namespace _Project.Editor
 
                     if (_showUISection)
                     {
-                        GUILayout.BeginVertical();
+                        GUILayout.BeginVertical(EditorStyles.helpBox);
                         {
-                            if (GUILayout.Button("OpenShop"))
-                                CheatManager.OpenShop();
-
-                            if (GUILayout.Button("CloseShop"))
-                                CheatManager.CloseShop();
-                        }
-                        GUILayout.EndVertical();
-                    }
-
-                    #endregion
-
-                    #region AnimationSection
-
-                    _showAnimationSection =
-                        EditorGUILayout.BeginFoldoutHeaderGroup(_showAnimationSection, "Animation Section", _foldoutStyle);
-                    EditorGUILayout.EndFoldoutHeaderGroup();
-
-                    if (_showAnimationSection)
-                    {
-                        GUILayout.BeginVertical();
-                        {
-                            if (GUILayout.Button("Animation Show Menu"))
-                                CheatManager.MainMenu.view.Show();
-
-                            if (GUILayout.Button("Animation Hide Menu"))
-                                CheatManager.MainMenu.view.Hide();
+                            GUILayout.Label("Shop",_initialStyle);
+                            CreationButton("Open",CheatManager.OpenShop,EditorStyles.toolbarButton);
+                            GUILayout.Space(5);
+                            CreationButton("Close",CheatManager.CloseShop,EditorStyles.toolbarButton);
+                            GUILayout.Space(10);
+                            GUILayout.Label("Menu",_initialStyle);
+                            CreationButton("Open",CheatManager.OpenMenu,EditorStyles.toolbarButton);                            
+                            GUILayout.Space(5);
+                            CreationButton("Close",CheatManager.CloseMenu,EditorStyles.toolbarButton);
                         }
                         GUILayout.EndVertical();
                     }
@@ -371,9 +358,9 @@ namespace _Project.Editor
 
                     if (_showOtherSection)
                     {
-                        GUILayout.BeginVertical();
+                        GUILayout.BeginVertical(EditorStyles.helpBox);
                         {
-                            if (GUILayout.Button("StartWave"))
+                            if (GUILayout.Button("StartWave", EditorStyles.toolbarButton))
                                 CheatManager.WaveSpawner.StartWave();
                         }
                         GUILayout.EndVertical();
@@ -407,6 +394,12 @@ namespace _Project.Editor
                 GUILayout.FlexibleSpace();
             }
             GUILayout.EndHorizontal();
+        }
+
+        private void CreationButton(string nameButton , Action actionOnClick, GUIStyle styles = null)
+        {
+            if (GUILayout.Button(nameButton, styles))
+                actionOnClick?.Invoke();
         }
 
         private void CreateStyles()

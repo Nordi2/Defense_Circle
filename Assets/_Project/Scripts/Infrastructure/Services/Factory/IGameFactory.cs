@@ -10,5 +10,7 @@ namespace _Project.Infrastructure.Services
     {
         TowerFacade CreateTower();
         EnemyFacade CreateEnemy(EnemyType type);
+        void CreateBackground();
+        void CreateBackgroundEffect();
     }
 }

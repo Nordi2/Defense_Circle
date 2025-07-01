@@ -3,6 +3,7 @@ using _Project.Scripts.UI;
 using _Project.Static;
 using Infrastructure.Services;
 using Infrastructure.Services.Services.LoadData;
+using Infrastructure.Services.Services.ScreenResolution;
 using R3;
 using Zenject;
 
@@ -16,6 +17,10 @@ namespace Infrastructure.Installer
                 .BindInterfacesTo<EntryPoint>()
                 .AsSingle()
                 .NonLazy();
+            
+            Container
+                .BindInterfacesTo<ScreenResolutionService>()
+                .AsSingle();
             
             Container
                 .Bind<SceneLoader>()

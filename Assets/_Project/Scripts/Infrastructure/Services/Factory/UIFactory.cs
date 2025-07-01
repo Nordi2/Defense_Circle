@@ -20,9 +20,10 @@ namespace _Project.Infrastructure.Services
         private readonly StatsStorage _statsStorage;
         private readonly Wallet _wallet;
         private readonly GameLoopService _gameLoopService;
-
-        public (MenuPresenter presenter, MenuView view) Menu;
-
+        
+        public MenuPresenter MenuPresenter { get; private set; }
+        public ShopPresenter ShopPresenter { get; private set; }
+        
         public UIFactory(
             UIRoot uiRoot,
             Wallet wallet,
@@ -47,14 +48,16 @@ namespace _Project.Infrastructure.Services
             _uiRoot.AddToContainer(view.GetComponent<RectTransform>());
             
             view.gameObject.SetActive(false);
+            
+            _gameLoopService.AddInitializable(presenter);
+            _gameLoopService.AddDisposable(presenter);
 
-            Menu.presenter = presenter;
-            Menu.view = view;
-
+            MenuPresenter = presenter;
+            
             return presenter;
         }
 
-        public (ShopPresenter, ShopView) CreateShop(MenuPresenter menuPresenter)
+        public ShopPresenter CreateShop()
         {
             D.Log(GetType().Name, "Create SHOP", DColor.GREEN, true);
 
@@ -62,7 +65,7 @@ namespace _Project.Infrastructure.Services
                 Object.Instantiate(Resources.Load<GameObject>(AssetPath.ShopUpgradePath));
 
             ShopView view = shopPrefab.GetComponent<ShopView>();
-            ShopPresenter shopPresenter = new ShopPresenter(_wallet, view, _statsStorage, menuPresenter);
+            ShopPresenter shopPresenter = new ShopPresenter(_wallet, view, _statsStorage, MenuPresenter);
 
             _uiRoot.AddToContainer(view.GetComponent<RectTransform>());
             shopPresenter.CreateUpgradeCarts();
@@ -71,8 +74,10 @@ namespace _Project.Infrastructure.Services
             _gameLoopService.AddInitializable(shopPresenter);
 
             view.gameObject.SetActive(false);
+            
+            ShopPresenter = shopPresenter;
 
-            return (shopPresenter, view);
+            return shopPresenter;
         }
 
         public InitialTextLoadAfterLoading CreateInitialTextLoadAfterLoading()
@@ -85,7 +90,7 @@ namespace _Project.Infrastructure.Services
 
             _uiRoot.AddToContainer(view.GetComponent<RectTransform>());
             _gameLoopService.AddGameListener(view);
-
+        
             return view;
         }
     }

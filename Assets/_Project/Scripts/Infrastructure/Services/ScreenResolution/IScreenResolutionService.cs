@@ -6,5 +6,7 @@ namespace Infrastructure.Services.Services.ScreenResolution
     {
         Vector2 MinMaxAxisX { get; }
         Vector2 MinMaxAxisY { get; }
+        float ScreenHeight { get; }
+        float ScreenWidth { get; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using DG.Tweening;
 using UnityEngine;
 
@@ -23,7 +24,8 @@ namespace _Project.Cor.Enemy
                 .Append(_textDamage.transform.DOMoveY(_textDamage.transform.position.y + _offsetYPosition, _animationDuration)
                     .SetEase(_ease))
                 .Join(_textDamage.DOFade(0f, _animationDuration))
-                .OnComplete(() => gameObject.SetActive(false));
+                .OnComplete(() => gameObject.SetActive(false))
+                .Play();
         }
     }
 }

@@ -31,7 +31,8 @@ namespace _Project.Meta.Money
 
             _tween = _moneyText
                 .DOCounter(oldValue, newValue, _animationDuration)
-                .SetEase(_ease);
+                .SetEase(_ease)
+                .Play();
         }
     }
 }

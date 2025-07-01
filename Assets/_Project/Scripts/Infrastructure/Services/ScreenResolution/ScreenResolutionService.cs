@@ -5,22 +5,22 @@ using Zenject;
 namespace Infrastructure.Services.Services.ScreenResolution
 {
     [UsedImplicitly]
-    public class ScreenResolutionService : 
+    public class ScreenResolutionService :
         IInitializable,
         IScreenResolutionService
     {
-        private readonly Camera _camera;
+        private Camera _camera;
 
         public Vector2 MinMaxAxisX { get; private set; }
         public Vector2 MinMaxAxisY { get; private set; }
         
-        public ScreenResolutionService(Camera camera)
-        {
-            _camera = camera;
-        }
+        public float ScreenHeight { get; private set; }
+        public float ScreenWidth { get; private set; }
 
         void IInitializable.Initialize()
         {
+            _camera = Camera.main;
+
             float screenAspect = (float)Screen.width / Screen.height;
             float cameraHeight = _camera.orthographicSize;
 
@@ -31,9 +31,12 @@ namespace Infrastructure.Services.Services.ScreenResolution
             float maxX = cameraCenter.x + cameraWidth;
             float minY = cameraCenter.y - cameraHeight;
             float maxY = cameraCenter.y + cameraHeight;
-            
+
             MinMaxAxisX = new Vector2(minX, maxX);
             MinMaxAxisY = new Vector2(minY, maxY);
+
+            ScreenHeight = _camera.orthographicSize * 2f;
+            ScreenWidth = ScreenHeight * _camera.aspect;
         }
     }
 }

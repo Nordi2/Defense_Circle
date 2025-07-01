@@ -54,10 +54,8 @@ namespace _Project.Scripts.UI.Shop
             _view.OpenShop();
         }
 
-        public void HideShop()
-        {
+        public void HideShop() => 
             _view.CloseShop();
-        }
 
         public void CreateUpgradeCarts()
         {

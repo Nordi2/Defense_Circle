@@ -43,7 +43,8 @@ namespace _Project.Scripts.Gameplay.Component
             
             _tween = _currentHealthText
                 .DOCounter(oldValue, newValue, _animationDuration)
-                .SetEase(_ease);
+                .SetEase(_ease)
+                .Play();
         }
     }
 }

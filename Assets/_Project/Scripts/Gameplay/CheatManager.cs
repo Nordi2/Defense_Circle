@@ -29,8 +29,8 @@ namespace _Project
         public static StatsStorage StatsStorage;
         public static ShopPresenter ShopPresenter;
         public static WaveSpawner WaveSpawner;
-        public static (MenuPresenter presenter, MenuView view) MainMenu;
-        
+        public static MenuPresenter PresenterMainMenu;
+
         private static readonly List<EnemyFacade> _enemiesInSpawned = new();
 
         public static void SpawnEnemy(EnemyType type)
@@ -100,11 +100,29 @@ namespace _Project
             }
         }
 
-        public static void OpenShop() =>
-            ShopPresenter.OpenShop();
+        public static void OpenMenu()
+        {
+            D.Log(CheathManager.ToUpper(), "Open Menu", DColor.AQUAMARINE, true);
+            PresenterMainMenu.OpenMenu();
+        }
 
-        public static void CloseShop() =>
+        public static void CloseMenu()
+        {
+            D.Log(CheathManager.ToUpper(), "Close Menu", DColor.AQUAMARINE, true);
+            PresenterMainMenu.CloseMenu();
+        }
+
+        public static void OpenShop()
+        {
+            D.Log(CheathManager.ToUpper(), "Open Shop", DColor.AQUAMARINE, true);
+            ShopPresenter.OpenShop();
+        }
+
+        public static void CloseShop()
+        {
+            D.Log(CheathManager.ToUpper(), "Close Shop", DColor.AQUAMARINE, true);
             ShopPresenter.HideShop();
+        }
 
         public static void AddMoney(int amount)
         {
@@ -156,6 +174,8 @@ namespace _Project
             Wallet = null;
             StatsStorage = null;
             ShopPresenter = null;
+            PresenterMainMenu = null;
+            GameFactory = null;
         }
     }
 }
