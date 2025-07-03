@@ -13,15 +13,17 @@ using _Project.Meta.StatsLogic;
 using _Project.Meta.StatsLogic.NoneUpgrade;
 using _Project.Meta.StatsLogic.Upgrade;
 using _Project.Scripts.Gameplay.Component;
-using _Project.Static;
-using DebugToolsPlus;
 using Infrastructure.Services;
 using Infrastructure.Services.Services.LoadData;
-using System;
 using Infrastructure.Services.Services.ScreenResolution;
+using DebugToolsPlus;
+using System;
+using _Project.Infrastructure.AssetManagement;
+using _Project.Infrastructure.Services.AssetManagement;
 using JetBrains.Annotations;
 using R3;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using Zenject;
 
 namespace _Project.Infrastructure.Services
@@ -30,30 +32,34 @@ namespace _Project.Infrastructure.Services
     public class GameFactory :
         IGameFactory
     {
+        private const float Padding = 10;
+        
         private readonly IInstantiator _instantiator;
         private readonly IGetTargetPosition _getTargetPosition;
         private readonly IGameLoadDataService _gameLoadDataService;
+        private readonly IScreenResolutionService _screenResolutionService;
+        private readonly IAssetProvider _assetProvider;
         private readonly GameLoopService _gameLoopService;
         private readonly Camera _camera;
         private readonly StatsStorage _statsStorage;
         private readonly CompositeDisposable _disposables;
         private readonly ShowStatsService _showStatsService;
         private readonly Wallet _wallet;
-        private readonly IScreenResolutionService _screenResolutionService;
-        
+
         public TowerFacade TowerFacade { get; private set; }
 
         public GameFactory(
             IInstantiator instantiator,
             IGameLoadDataService gameLoadDataService,
             IGetTargetPosition getTargetPosition,
+            IScreenResolutionService screenResolutionService,
+            IAssetProvider assetProvider,
             GameLoopService gameLoopService,
             StatsStorage statsStorage,
             CompositeDisposable disposables,
             ShowStatsService showStatsService,
             Camera camera,
-            Wallet wallet,
-            IScreenResolutionService screenResolutionService)
+            Wallet wallet)
         {
             _instantiator = instantiator;
             _getTargetPosition = getTargetPosition;
@@ -63,35 +69,45 @@ namespace _Project.Infrastructure.Services
             _showStatsService = showStatsService;
             _camera = camera;
             _wallet = wallet;
+            _assetProvider = assetProvider;
             _screenResolutionService = screenResolutionService;
             _gameLoadDataService = gameLoadDataService;
         }
 
+        public void CreateGameplayVolume()
+        {
+            GameObject gameplayVolume =
+                UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.GameplayVolume));
+        }
+        
         public void CreateBackground()
         {
-            GameObject backPrefab = UnityEngine.Object.Instantiate(Resources.Load<GameObject>(AssetPath.BackgroundPath));
-            
+            GameObject backPrefab =
+                UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.BackgroundPath));
+
             backPrefab.transform.localScale = new Vector3(
-                _screenResolutionService.ScreenWidth,
-                _screenResolutionService.ScreenHeight,
+                _screenResolutionService.ScreenWidth + Padding,
+                _screenResolutionService.ScreenHeight + Padding,
                 1);
         }
 
         public void CreateBackgroundEffect()
         {
-            GameObject effectPrefab = UnityEngine.Object.Instantiate(Resources.Load<GameObject>(AssetPath.BackgroundEffectPath));
-            
-            var particleSystem = effectPrefab.GetComponent<ParticleSystem>();
+            GameObject effectPrefab =
+                UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.BackgroundEffectPath));
 
-            var shapeModule = particleSystem.shape;
-            shapeModule.scale = new Vector3(_screenResolutionService.ScreenWidth, _screenResolutionService.ScreenHeight, 1);
+            ParticleSystem particleSystem = effectPrefab.GetComponent<ParticleSystem>();
+
+            ParticleSystem.ShapeModule shapeModule = particleSystem.shape;
+            shapeModule.scale = new Vector3(_screenResolutionService.ScreenWidth, _screenResolutionService.ScreenHeight,
+                1);
         }
 
         public TowerFacade CreateTower()
         {
             D.Log(GetType().Name, "Create TOWER", DColor.GREEN, true);
 
-            GameObject towerPrefab = _instantiator.InstantiatePrefab(Resources.Load(AssetPath.TowerPath));
+            GameObject towerPrefab = _instantiator.InstantiatePrefab(_assetProvider.LoadAsset(AssetPath.TowerPath));
 
             TowerFacade towerFacade = towerPrefab.GetComponent<TowerFacade>();
             TowerView view = towerFacade.GetComponent<TowerView>();
@@ -155,6 +171,14 @@ namespace _Project.Infrastructure.Services
             };
         }
 
+        private EnemyFacade LoadConfigAndCreateEnemy(EnemyType type)
+        {
+            D.Log(GetType().Name, $"Create Enemy {type}", DColor.GREEN, true);
+
+            EnemyConfig enemyConfig = _gameLoadDataService.GetEnemyConfig(type);
+            return CreateConcreteEnemy(enemyConfig);
+        }
+
         private EnemyFacade CreateConcreteEnemy(EnemyConfig config)
         {
             GameObject enemyPrefab = _instantiator.InstantiatePrefab(config.EnemyPrefab);
@@ -187,14 +211,6 @@ namespace _Project.Infrastructure.Services
                 movement);
 
             return facade;
-        }
-
-        private EnemyFacade LoadConfigAndCreateEnemy(EnemyType type)
-        {
-            D.Log(GetType().Name, $"Create Enemy {type}", DColor.GREEN, true);
-
-            EnemyConfig enemyConfig = _gameLoadDataService.GetEnemyConfig(type);
-            return CreateConcreteEnemy(enemyConfig);
         }
     }
 }

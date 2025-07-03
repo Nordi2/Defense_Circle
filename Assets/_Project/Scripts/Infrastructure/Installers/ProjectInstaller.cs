@@ -1,10 +1,11 @@
 using _Project.Infrastructure.EntryPoint;
+using _Project.Infrastructure.Services.AssetManagement;
 using _Project.Scripts.UI;
-using _Project.Static;
 using Infrastructure.Services;
 using Infrastructure.Services.Services.LoadData;
 using Infrastructure.Services.Services.ScreenResolution;
 using R3;
+using UnityEngine;
 using Zenject;
 
 namespace Infrastructure.Installer
@@ -42,6 +43,11 @@ namespace Infrastructure.Installer
             Container
                 .Bind<Curtain>()
                 .FromComponentInNewPrefabResource(AssetPath.CurtainPath)
+                .AsSingle();
+
+            Container
+                .Bind<Camera>()
+                .FromComponentInNewPrefabResource(AssetPath.GameplayCameraPath)
                 .AsSingle();
         }
     }

@@ -1,23 +1,19 @@
 ﻿#if UNITY_EDITOR
-
 using System;
 using _Project;
 using _Project.Cor.Spawner;
-using _Project.Cor.Tower.Mono;
 using _Project.Infrastructure.Services;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
-using _Project.Scripts.UI.Shop;
 using Infrastructure.Signals;
 using JetBrains.Annotations;
 using Zenject;
 
-namespace Infrastructure.Services.Services.InitializeCheatManager
-{
     [UsedImplicitly]
-    public class InitializeCheatManagerService :
+    public class InitializerEditorCheatManager :
         IInitializable,
-        IDisposable
+        IDisposable, 
+        ICheatManagerService
     {
         private readonly SignalBus _signalBus;
         private readonly StatsStorage _statsStorage;
@@ -26,7 +22,7 @@ namespace Infrastructure.Services.Services.InitializeCheatManager
         private readonly UIFactory _uiFactory;
         private readonly GameFactory _gameFactory;
 
-        public InitializeCheatManagerService(
+        public InitializerEditorCheatManager(
             SignalBus signalBus,
             StatsStorage statsStorage,
             Wallet wallet,
@@ -64,5 +60,5 @@ namespace Infrastructure.Services.Services.InitializeCheatManager
             CheatManager.ActivateCheats = true;
         }
     }
-}
+
 #endif

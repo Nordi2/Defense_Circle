@@ -1,6 +1,4 @@
-﻿
-using System;
-using _Project.Cor.Enemy;
+﻿using _Project.Cor.Enemy;
 using _Project.Cor.Enemy.Mono;
 using _Project.Cor.Tower.Mono;
 
@@ -12,5 +10,6 @@ namespace _Project.Infrastructure.Services
         EnemyFacade CreateEnemy(EnemyType type);
         void CreateBackground();
         void CreateBackgroundEffect();
+        void CreateGameplayVolume();
     }
 }

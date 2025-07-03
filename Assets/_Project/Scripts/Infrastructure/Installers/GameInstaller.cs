@@ -4,12 +4,11 @@ using _Project.Cor.Spawner;
 using _Project.Data.Config;
 using _Project.Infrastructure.EntryPoint;
 using _Project.Infrastructure.Services;
+using _Project.Infrastructure.Services.AssetManagement;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
-using _Project.Static;
 using Infrastructure.Services;
 using Infrastructure.Services.Services.InitializeCheatManager;
-using Infrastructure.Services.Services.ScreenResolution;
 using Infrastructure.Signals;
 using UnityEngine;
 using Zenject;
@@ -36,7 +35,7 @@ namespace Infrastructure.Installers
                 .BindInterfacesTo<GameplayEntryPoint>()
                 .AsSingle()
                 .NonLazy();
-            
+
             Container
                 .Bind<SpawnPositionEnemy>()
                 .AsSingle()
@@ -52,6 +51,10 @@ namespace Infrastructure.Installers
                 .NonLazy();
 
             Container
+                .BindInterfacesTo<AssetProvider>()
+                .AsSingle();
+
+            Container
                 .BindInterfacesTo<InputService>()
                 .AsSingle()
                 .NonLazy();
@@ -64,11 +67,6 @@ namespace Infrastructure.Installers
             Container
                 .BindInterfacesTo<TargetPoint>()
                 .FromComponentInNewPrefabResource(AssetPath.SpawnPointPath)
-                .AsSingle();
-
-            Container
-                .Bind<Camera>()
-                .FromComponentInHierarchy()
                 .AsSingle();
 
             Container.BindMemoryPool<EnemyFacade, EnemyPool>()
@@ -87,11 +85,13 @@ namespace Infrastructure.Installers
                 .AsSingle();
 
             Container
-                .BindInterfacesAndSelfTo<InitializeCheatManagerService>()
+                .BindInterfacesAndSelfTo<InitializerEditorCheatManager>()
                 .AsSingle();
+
 #else
-            Container.BindInterfaces<UIFactory>().AsSingle();
-            Container.BindInterfaces<GameFactory>().AsSingle();
+            Container.BindInterfacesTo<GameFactory>().AsSingle();
+            Container.BindInterfacesTo<InitializerEmptyCheatManager>().AsSingle();
+            Container.BindInterfacesTo<UIFactory>().AsSingle();
 #endif
         }
 

@@ -32,6 +32,8 @@ namespace _Project.Infrastructure.EntryPoint
             Debug.unityLogger.logEnabled = Debug.isDebugBuild;
             Application.targetFrameRate = 120;
             DOTween.Init();
+            
+            _curtain.Show();
             _gameLoadDataService.LoadData();
             
             _ = _sceneLoader.LoadScene(Scenes.Gameplay, _curtain.Hide);

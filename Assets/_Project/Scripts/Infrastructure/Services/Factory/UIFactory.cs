@@ -1,8 +1,8 @@
-﻿using _Project.Meta.Money;
+﻿using _Project.Infrastructure.Services.AssetManagement;
+using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
 using _Project.Scripts.UI;
 using _Project.Scripts.UI.Shop;
-using _Project.Static;
 using _Project.UI.Shop;
 using DebugToolsPlus;
 using Infrastructure.Services;
