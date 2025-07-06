@@ -32,8 +32,6 @@ namespace _Project.Cor.BulletLogic.Installer
             Container
                 .Bind<GiveDamageComponent>()
                 .AsSingle();
-
-            Container.Bind<ShowStatsService>().AsSingle();
         }
     }
 }

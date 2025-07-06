@@ -16,18 +16,15 @@ namespace _Project.Cor.BulletLogic.Mono
         
         private BulletMovement _movement;
         private GiveDamageComponent _giveDamageComponent;
-        private ShowStatsService _showStatsService;
         private readonly CompositeDisposable _disposable = new();
 
         [Inject]
         private void Construct(
             BulletMovement movement,
-            GiveDamageComponent giveDamageComponent,
-            ShowStatsService showStatsService)
+            GiveDamageComponent giveDamageComponent)
         {
             _giveDamageComponent = giveDamageComponent;
             _movement = movement;
-            _showStatsService = showStatsService;
         }
 
         private void OnEnable()
@@ -47,7 +44,6 @@ namespace _Project.Cor.BulletLogic.Mono
             Transform spawnPoint,
             Vector3 targetPosition)
         {
-            D.Log(GetType().Name, D.FormatText($"\n{_showStatsService}", DColor.RED), gameObject, DColor.YELLOW);
             transform.position = spawnPoint.position;
             _movement.Initialize(targetPosition);
         }

@@ -7,14 +7,20 @@ using _Project.Cor.Enemy.Mono;
 using _Project.Data.Config;
 using _Project.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
+using DebugToolsPlus;
+using Infrastructure.Services;
 using JetBrains.Annotations;
+using R3;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace _Project.Cor.Spawner
 {
     [UsedImplicitly]
-    public class WaveSpawner
+    public class WaveSpawner :
+        IGameStartListener,
+        IStartWaveEvent,
+        IEndWaveEvent
     {
         private readonly SpawnPositionEnemy _spawnPositionEnemy;
         private readonly SpawnerConfig _spawnerConfig;
@@ -28,8 +34,8 @@ namespace _Project.Cor.Spawner
         private CancellationTokenSource _waveCts;
 
         private float _totalChance;
-        private Dictionary<EnemyType,float> _dictionarySpawnChance;
-        
+        private Dictionary<EnemyType, float> _dictionarySpawnChance;
+
         public WaveSpawner(
             SpawnPositionEnemy spawnPositionEnemy,
             SpawnerConfig spawnerConfig,
@@ -41,13 +47,27 @@ namespace _Project.Cor.Spawner
 
             _currentWave = spawnerConfig.InitialWave;
         }
+        
+        private bool _isMaxWave => _currentWave >= _spawnerConfig.MaxWave;
+        public Subject<Unit> OnEndWave { get; private set; } = new();
+        public Subject<Unit> OnStartWave { get; private set; } = new();
+
+        void IGameStartListener.OnGameStart()
+        {
+            StartWave();
+        }
 
         public void StartWave()
         {
-            if (_isWaveActive || _currentWave >= _spawnerConfig.MaxWave)
+            if (_isWaveActive || _isMaxWave)
                 return;
 
             StartWaveAsync().Forget();
+
+            OnStartWave?.OnNext(Unit.Default);
+
+            D.Log(GetType().Name, $"Start Wave: currentWave: {_currentWave}, maxWave: {_spawnerConfig.MaxWave}",
+                DColor.PINK, true);
         }
 
         private async UniTaskVoid StartWaveAsync()
@@ -56,6 +76,11 @@ namespace _Project.Cor.Spawner
             _waveCts = new CancellationTokenSource();
 
             await WaveAsync(_spawnerConfig.GetWaveSettings(_currentWave), _waveCts.Token);
+
+            OnEndWave?.OnNext(Unit.Default);
+
+            D.Log(GetType().Name, $"End Wave: NexWave: {_currentWave}, maxWave: {_spawnerConfig.MaxWave}",
+                DColor.PINK, true);
         }
 
         private async UniTask WaveAsync(WaveSettings waveSettings, CancellationToken token)
@@ -66,7 +91,7 @@ namespace _Project.Cor.Spawner
             UniTask spawnEnemiesTask = SpawnEnemiesAsync(waveSettings, token);
 
             await UniTask.WhenAll(spawnEnemiesTask, waveTimerTask);
-            
+
             _currentWave++;
         }
 
@@ -79,6 +104,7 @@ namespace _Project.Cor.Spawner
                 {
                     await UniTask.Delay(TimeSpan.FromSeconds(waveSettings.SpawnInterval), false,
                         PlayerLoopTiming.Update, token);
+
                     SpawnEnemy(waveSettings);
                 }
                 else
@@ -107,10 +133,10 @@ namespace _Project.Cor.Spawner
         private void SpawnEnemy(WaveSettings waveSettings)
         {
             EnemyType typeSpawn = GetRandomEnemyByChance(waveSettings);
-            
+
             int groupEnemy = Random.Range(waveSettings.MinMaxGroupEnemy.x, waveSettings.MinMaxGroupEnemy.y);
             int difference = Mathf.Abs(_enemiesAlive - waveSettings.MaxEnemiesAtOnce);
-            
+
             groupEnemy = Mathf.Clamp(groupEnemy, 1, difference);
 
             for (int i = 0; i < groupEnemy; i++)
@@ -128,10 +154,10 @@ namespace _Project.Cor.Spawner
             float randomPoint = Random.Range(0f, _totalChance);
             float current = 0f;
 
-            foreach (KeyValuePair<EnemyType,float> kvp in _dictionarySpawnChance)
+            foreach (KeyValuePair<EnemyType, float> kvp in _dictionarySpawnChance)
             {
                 current += kvp.Value;
-                if(randomPoint <= current)
+                if (randomPoint <= current)
                     return kvp.Key;
             }
 

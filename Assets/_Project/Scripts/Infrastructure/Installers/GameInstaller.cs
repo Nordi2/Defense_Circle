@@ -1,5 +1,4 @@
-﻿using _Project.Cor;
-using _Project.Cor.Enemy.Mono;
+﻿using _Project.Cor.Enemy.Mono;
 using _Project.Cor.Spawner;
 using _Project.Data.Config;
 using _Project.Infrastructure.EntryPoint;
@@ -8,7 +7,6 @@ using _Project.Infrastructure.Services.AssetManagement;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
 using Infrastructure.Services;
-using Infrastructure.Services.Services.InitializeCheatManager;
 using Infrastructure.Signals;
 using UnityEngine;
 using Zenject;
@@ -22,29 +20,16 @@ namespace Infrastructure.Installers
         public override void InstallBindings()
         {
             BindSignals();
-
-            Container.Bind<GameConfig>().FromInstance(_gameConfig).AsSingle();
-            Container.Bind<TowerConfig>().FromInstance(_gameConfig.TowerConfig).AsSingle();
-            Container.Bind<SpawnerConfig>().FromInstance(_gameConfig.SpawnerConfig).AsSingle();
-            Container.Bind<StatsBuilder>().AsSingle();
-            Container.BindInterfacesTo<CreateStatsService>().AsSingle();
-            Container.Bind<StatsStorage>().AsSingle();
-            Container.Bind<ShowStatsService>().AsSingle();
+            
+            Container
+                .Bind<StatsStorage>()
+                .AsSingle();
 
             Container
                 .BindInterfacesTo<GameplayEntryPoint>()
                 .AsSingle()
                 .NonLazy();
-
-            Container
-                .Bind<SpawnPositionEnemy>()
-                .AsSingle()
-                .WithArguments(_gameConfig.SpawnerConfig.SpawnMargin);
-
-            Container
-                .Bind<WaveSpawner>()
-                .AsSingle();
-
+            
             Container
                 .BindInterfacesAndSelfTo<GameLoopService>()
                 .AsSingle()

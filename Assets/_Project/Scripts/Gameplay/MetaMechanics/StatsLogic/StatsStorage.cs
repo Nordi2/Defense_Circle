@@ -11,16 +11,8 @@ namespace _Project.Meta.StatsLogic
     public class StatsStorage
     {
         public readonly List<Stats> StatsList = new();
+        private readonly Dictionary<Type, Stats> _dictionaryStats = new();
 
-        private readonly TowerConfig _config;
-        private readonly Dictionary<Type, Stats> _dictionaryStats;
-
-        public StatsStorage(TowerConfig config)
-        {
-            _config = config;
-            _dictionaryStats = new Dictionary<Type, Stats>(_config.Stats.Count);
-        }
-        
         public void AddStatsList(Stats stats)
         {
             StatsList.Add(stats);

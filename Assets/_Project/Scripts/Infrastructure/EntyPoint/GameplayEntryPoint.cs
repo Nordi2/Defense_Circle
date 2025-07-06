@@ -1,5 +1,5 @@
-﻿using _Project.Infrastructure.Services;
-using _Project.Meta.StatsLogic;
+﻿using _Project.Cor.Spawner;
+using _Project.Infrastructure.Services;
 using JetBrains.Annotations;
 using Zenject;
 
@@ -11,38 +11,35 @@ namespace _Project.Infrastructure.EntryPoint
     {
         private readonly IGameFactory _gameFactory;
         private readonly IUIFactory _uiFactory;
-        private readonly ICreateStatsService _createStatsService;
         private readonly ICheatManagerService _initializerCheatManager;
-        
+
         public GameplayEntryPoint(
             IGameFactory gameFactory,
             IUIFactory uiFactory,
-            ICreateStatsService createStatsService,
             ICheatManagerService initializerCheatManager)
         {
             _gameFactory = gameFactory;
             _uiFactory = uiFactory;
-            _createStatsService = createStatsService;
             _initializerCheatManager = initializerCheatManager;
         }
 
         void IInitializable.Initialize()
         {
-            _createStatsService.CreateStats();
-
             InitialTextLoadAfterLoading initialText = _uiFactory.CreateInitialTextLoadAfterLoading();
 
+            _gameFactory.CreateStats();
             _gameFactory.CreateGameplayVolume();
             _gameFactory.CreateBackground();
             _gameFactory.CreateBackgroundEffect();
 
-            _uiFactory.CreateMenu();
-            _uiFactory.CreateShop();
-
+            WaveSpawner spawner = _gameFactory.CreateSpawner();
             _gameFactory.CreateTower();
 
-            initialText.StartAnimation();
+            _uiFactory.CreateMenu();
+            _uiFactory.CreateShop(spawner);
             
+            initialText.StartAnimation();
+
             _initializerCheatManager.Init();
         }
     }

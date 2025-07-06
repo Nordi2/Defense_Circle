@@ -18,7 +18,6 @@ using Zenject;
         private readonly SignalBus _signalBus;
         private readonly StatsStorage _statsStorage;
         private readonly Wallet _wallet;
-        private readonly WaveSpawner _spawner;
         private readonly UIFactory _uiFactory;
         private readonly GameFactory _gameFactory;
 
@@ -27,14 +26,12 @@ using Zenject;
             StatsStorage statsStorage,
             Wallet wallet,
             GameFactory gameFactory,
-            WaveSpawner spawner,
             UIFactory uiFactory)
         {
             _signalBus = signalBus;
             _statsStorage = statsStorage;
             _wallet = wallet;
             _gameFactory = gameFactory;
-            _spawner = spawner;
             _uiFactory = uiFactory;
         }
 
@@ -47,12 +44,12 @@ using Zenject;
         public void Init()
         {
             CheatManager.TowerFacade = _gameFactory.TowerFacade;
+            CheatManager.WaveSpawner = _gameFactory.WaveSpawner;
             CheatManager.ShopPresenter = _uiFactory.ShopPresenter;
             CheatManager.PresenterMainMenu = _uiFactory.MenuPresenter;
             CheatManager.StatsStorage = _statsStorage;
             CheatManager.Wallet = _wallet;
             CheatManager.GameFactory = _gameFactory;
-            CheatManager.WaveSpawner = _spawner;
         }
 
         private void OnStartGame()

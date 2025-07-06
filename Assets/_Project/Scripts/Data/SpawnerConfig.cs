@@ -19,7 +19,10 @@ namespace _Project.Data.Config
                 _waveSettings = new WaveSettings[MaxWave];
         }
 
-        public WaveSettings GetWaveSettings(int waveNumber) =>
-            _waveSettings[waveNumber];
+        public WaveSettings GetWaveSettings(int waveNumber)
+        {
+            waveNumber--;
+            return _waveSettings[waveNumber];
+        }
     }
 }

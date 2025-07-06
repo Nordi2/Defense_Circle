@@ -7,5 +7,7 @@ namespace Infrastructure.Services.Services.LoadData
     {
         void LoadData();
         EnemyConfig GetEnemyConfig(EnemyType type);
+        TowerConfig TowerConfig { get; }
+        SpawnerConfig SpawnerConfig { get; }
     }
 }

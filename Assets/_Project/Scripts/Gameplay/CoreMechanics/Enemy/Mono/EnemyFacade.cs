@@ -31,8 +31,6 @@ namespace _Project.Cor.Enemy.Mono
             _giveDamageComponent = giveDamageComponent;
         }
         
-        public ShowStatsService ShowStatsService { get; private set; }
-
         private void OnEnable()
         {
             _disposable = _takeDamageObserver

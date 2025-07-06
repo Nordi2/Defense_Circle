@@ -1,5 +1,4 @@
-﻿using _Project.Cor;
-using _Project.Cor.Component;
+﻿using _Project.Cor.Component;
 using _Project.Cor.Enemy;
 using _Project.Cor.Enemy.Mono;
 using _Project.Cor.Interfaces;
@@ -18,12 +17,13 @@ using Infrastructure.Services.Services.LoadData;
 using Infrastructure.Services.Services.ScreenResolution;
 using DebugToolsPlus;
 using System;
+using _Project.Cor.Spawner;
+using _Project.Data.Config.Stats;
 using _Project.Infrastructure.AssetManagement;
 using _Project.Infrastructure.Services.AssetManagement;
 using JetBrains.Annotations;
 using R3;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using Zenject;
 
 namespace _Project.Infrastructure.Services
@@ -33,7 +33,7 @@ namespace _Project.Infrastructure.Services
         IGameFactory
     {
         private const float Padding = 10;
-        
+
         private readonly IInstantiator _instantiator;
         private readonly IGetTargetPosition _getTargetPosition;
         private readonly IGameLoadDataService _gameLoadDataService;
@@ -43,11 +43,10 @@ namespace _Project.Infrastructure.Services
         private readonly Camera _camera;
         private readonly StatsStorage _statsStorage;
         private readonly CompositeDisposable _disposables;
-        private readonly ShowStatsService _showStatsService;
         private readonly Wallet _wallet;
-
-        public TowerFacade TowerFacade { get; private set; }
-
+        
+        private StatsBuilder _statsBuilder;
+        
         public GameFactory(
             IInstantiator instantiator,
             IGameLoadDataService gameLoadDataService,
@@ -57,7 +56,6 @@ namespace _Project.Infrastructure.Services
             GameLoopService gameLoopService,
             StatsStorage statsStorage,
             CompositeDisposable disposables,
-            ShowStatsService showStatsService,
             Camera camera,
             Wallet wallet)
         {
@@ -66,7 +64,6 @@ namespace _Project.Infrastructure.Services
             _gameLoopService = gameLoopService;
             _statsStorage = statsStorage;
             _disposables = disposables;
-            _showStatsService = showStatsService;
             _camera = camera;
             _wallet = wallet;
             _assetProvider = assetProvider;
@@ -74,12 +71,55 @@ namespace _Project.Infrastructure.Services
             _gameLoadDataService = gameLoadDataService;
         }
 
+        public TowerFacade TowerFacade { get; private set; }
+        public WaveSpawner WaveSpawner { get; private set; }
+
+        public WaveSpawner CreateSpawner()
+        {
+            SpawnPositionEnemy spawnPositionEnemy = new SpawnPositionEnemy(_gameLoadDataService.SpawnerConfig.SpawnMargin,_screenResolutionService);
+            WaveSpawner waveSpawner = new WaveSpawner(spawnPositionEnemy,_gameLoadDataService.SpawnerConfig,this);
+            
+            WaveSpawner = waveSpawner;
+            
+            _gameLoopService.AddGameListener(waveSpawner);
+
+            return waveSpawner;
+        }
+
+        public void CreateStats()
+        {
+            _statsBuilder = new StatsBuilder();
+            
+            foreach (StatsConfig current in _gameLoadDataService.TowerConfig.Stats)
+            {
+                switch (current.Type)
+                {
+                    case StatsType.None:
+                        throw new Exception("Invalid Stats Type");
+                    case StatsType.Health:
+                        break;
+                    case StatsType.PassiveHealing:
+                        PassiveHealthStats passiveHealthStats = CreateCurrentStats<PassiveHealthStats>(current);
+                        _statsStorage.AddStatsList(passiveHealthStats);
+                        break;
+                    case StatsType.AmountTargets:
+                        AmountTargetsStats amountStats = CreateCurrentStats<AmountTargetsStats>(current);
+                        _statsStorage.AddStatsList(amountStats);
+                        break;
+                    case StatsType.Damage:
+                        DamageStats damageStats = CreateCurrentStats<DamageStats>(current);
+                        _statsStorage.AddStatsList(damageStats);
+                        break;
+                }
+            }
+        }
+
         public void CreateGameplayVolume()
         {
             GameObject gameplayVolume =
                 UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.GameplayVolume));
         }
-        
+
         public void CreateBackground()
         {
             GameObject backPrefab =
@@ -133,7 +173,7 @@ namespace _Project.Infrastructure.Services
             SpawnBullet spawnBullet = new SpawnBullet(shootComponent, view, _instantiator);
 
             towerFacade.transform.position = _getTargetPosition.GetPosition();
-            towerFacade.Init(takeDamageComponent, callbacks, _showStatsService, recoverComponent);
+            towerFacade.Init(takeDamageComponent, callbacks, recoverComponent);
 
             view.gameObject.SetActive(false);
 
@@ -211,6 +251,22 @@ namespace _Project.Infrastructure.Services
                 movement);
 
             return facade;
+        }
+
+        private TStats CreateCurrentStats<TStats>(StatsConfig config) where TStats : Stats, new()
+        {
+            TStats currentStats = _statsBuilder
+                .Reset()
+                .WithCurrentLevel(config.InitialLevel)
+                .WithMaxLevel(config.MaxLevel)
+                .WithPrice(config.PriceTables.GetPrice(config.InitialLevel))
+                .WithValueStats(config.ValueTables.GetValue(config.InitialLevel))
+                .WithViewStats(config.View)
+                .WithPriceTables(config.PriceTables)
+                .WithValueTables(config.ValueTables)
+                .Build<TStats>();
+
+            return currentStats;
         }
     }
 }
