@@ -46,7 +46,6 @@ using Zenject;
             CheatManager.TowerFacade = _gameFactory.TowerFacade;
             CheatManager.WaveSpawner = _gameFactory.WaveSpawner;
             CheatManager.ShopPresenter = _uiFactory.ShopPresenter;
-            CheatManager.PresenterMainMenu = _uiFactory.MenuPresenter;
             CheatManager.StatsStorage = _statsStorage;
             CheatManager.Wallet = _wallet;
             CheatManager.GameFactory = _gameFactory;

@@ -4,7 +4,6 @@ using _Project.Cor.Tower.Mono;
 using _Project.Scripts.Gameplay.Component;
 using DG.Tweening;
 using JetBrains.Annotations;
-using TMPro;
 using UnityEngine;
 
 namespace _Project.Cor.Tower.Animation
@@ -63,11 +62,11 @@ namespace _Project.Cor.Tower.Animation
                     .DOScale(Vector3.one, _initialSpawnSettings.DurationDoScale)
                     .From(Vector3.zero)
                     .SetEase(_initialSpawnSettings.Ease))
-                .Append(GetTextFadeSequence())
+                //.Append(GetTextFadeSequence())
                 .Play();
         }
 
-        public void PlayTakeDamage()
+        public void PlayTakeDamage(float amountStrength)
         {
             if (_sequence.IsActive())
                 _sequence.Kill();
@@ -75,7 +74,7 @@ namespace _Project.Cor.Tower.Animation
             _sequence = DOTween.Sequence();
             
             _sequence
-                .Append(_camera.DOShakePosition(_durationShake, _strengthShake))
+                .Append(_camera.DOShakePosition(_durationShake, amountStrength))
                 .Join(AnimationSprites())
                 .OnKill(KillCallback)
                 .Play();
@@ -90,7 +89,7 @@ namespace _Project.Cor.Tower.Animation
                 .Play();
         }
 
-        private Sequence GetTextFadeSequence()
+        /*private Sequence GetTextFadeSequence()
         {
             Sequence textSequence = DOTween.Sequence();
             
@@ -105,7 +104,7 @@ namespace _Project.Cor.Tower.Animation
             }
     
             return textSequence;
-        }
+        }*/
 
         private Sequence AnimationSprites()
         {

@@ -6,45 +6,31 @@ namespace _Project.Scripts.Gameplay.Component
 {
     public class HealthView : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI _maxHealthText;
-        [SerializeField] private TextMeshProUGUI _currentHealthText;
-        [SerializeField] private TextMeshProUGUI _labelText;
-        [SerializeField] private TextMeshProUGUI _separatorText;
+        [SerializeField] private TextMeshProUGUI _currentAmountText;
+        [SerializeField] private TextMeshProUGUI _maxAmountText;
         
         [Header("Animation-Settings")] 
         [SerializeField] private float _animationDuration = 0.2f;
         [SerializeField] private Ease _ease = Ease.Linear;
     
         private Tween _tween;
-
-        public TextMeshProUGUI[] AllHealthText
-        {
-            get
-            {
-                return new[]
-                {
-                    _maxHealthText,
-                    _currentHealthText,
-                    _labelText,
-                    _separatorText
-                };
-            }
-        }
         
-        public void UpdateMaxHealthText(int newValueText)
+        public void UpdateCurrentHealthText(int oldValue, int newValue, bool isCache = false)
         {
-            _maxHealthText.text = newValueText.ToString();
-        }
+            _tween?.Kill();
 
-        public void UpdateCurrentHealthText(int oldValue, int newValue)
-        {
-            if (_tween.IsActive())
-                _tween.Kill();
-            
-            _tween = _currentHealthText
-                .DOCounter(oldValue, newValue, _animationDuration)
-                .SetEase(_ease)
-                .Play();
+            if (isCache)
+            {
+                _tween.Restart();
+            }
+            else
+            {
+                _currentAmountText
+                    .DOCounter(oldValue,newValue,_animationDuration)
+                    .SetEase(_ease)
+                    .SetAutoKill(false)
+                    .Play();
+            }
         }
     }
 }

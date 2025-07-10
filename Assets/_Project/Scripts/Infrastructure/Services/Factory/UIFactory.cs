@@ -23,8 +23,8 @@ namespace _Project.Infrastructure.Services
         private readonly Wallet _wallet;
         private readonly GameLoopService _gameLoopService;
         private readonly CompositeDisposable _disposable;
+        private readonly IGameFactory _gameFactory;
         
-        public MenuPresenter MenuPresenter { get; private set; }
         public ShopPresenter ShopPresenter { get; private set; }
         
         public UIFactory(
@@ -32,52 +32,31 @@ namespace _Project.Infrastructure.Services
             Wallet wallet,
             StatsStorage statsStorage,
             GameLoopService gameLoopService,
-            CompositeDisposable disposable)
+            CompositeDisposable disposable,
+            IGameFactory gameFactory)
         {
             _uiRoot = uiRoot;
             _wallet = wallet;
             _statsStorage = statsStorage;
             _gameLoopService = gameLoopService;
             _disposable = disposable;
+            _gameFactory = gameFactory;
         }
-
-        public MenuPresenter CreateMenu()
+        
+        public ShopPresenter CreateShop(WaveSpawner spawner)
         {
-            D.Log(GetType().Name, "Create Menu", DColor.GREEN, true);
-
-            GameObject menuPrefab = Object.Instantiate(Resources.Load<GameObject>(AssetPath.MenuPath));
-
-            MenuView view = menuPrefab.GetComponent<MenuView>();
-            MenuPresenter presenter = new MenuPresenter(view);
-
-            _uiRoot.AddToContainer(view.GetComponent<RectTransform>());
-            
-            view.gameObject.SetActive(false);
-            
-            _gameLoopService.AddInitializable(presenter);
-            _gameLoopService.AddDisposable(presenter);
-
-            MenuPresenter = presenter;
-            
-            return presenter;
-        }
-
-        public ShopPresenter CreateShop(IEndWaveEvent spawner)
-        {
-            D.Log(GetType().Name, "Create SHOP", DColor.GREEN, true);
-
             GameObject shopPrefab =
                 Object.Instantiate(Resources.Load<GameObject>(AssetPath.ShopUpgradePath));
 
             ShopView view = shopPrefab.GetComponent<ShopView>();
-            ShopPresenter shopPresenter = new ShopPresenter(_wallet, view, _statsStorage, MenuPresenter);
+            ShopPresenter shopPresenter = new ShopPresenter(_wallet, view, _statsStorage,_gameFactory.WavePresenter);
             ShopController shopController = new ShopController(shopPresenter,spawner,_disposable);
             
             _uiRoot.AddToContainer(view.GetComponent<RectTransform>());
             shopPresenter.CreateUpgradeCarts();
 
             _gameLoopService.AddDisposable(shopPresenter,shopController);
-            _gameLoopService.AddInitializable(shopPresenter,shopController);
+            _gameLoopService.AddInitializable(shopController);
 
             view.gameObject.SetActive(false);
             
@@ -88,8 +67,6 @@ namespace _Project.Infrastructure.Services
 
         public InitialTextLoadAfterLoading CreateInitialTextLoadAfterLoading()
         {
-            D.Log(GetType().Name, "Create INITIAL-TEXT", DColor.GREEN, true);
-
             GameObject textPrefab = Object.Instantiate(Resources.Load<GameObject>(AssetPath.InitialTextLoad));
 
             InitialTextLoadAfterLoading view = textPrefab.GetComponent<InitialTextLoadAfterLoading>();

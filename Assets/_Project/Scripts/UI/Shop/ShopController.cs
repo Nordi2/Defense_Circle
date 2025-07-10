@@ -27,6 +27,7 @@ namespace _Project.Scripts.UI.Shop
         {
             _endWaveEvent
                 .OnEndWave
+                .Delay(TimeSpan.FromSeconds(2))
                 .Subscribe(OpenShop)
                 .AddTo(_disposable);
         }

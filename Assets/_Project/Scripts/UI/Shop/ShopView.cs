@@ -27,9 +27,11 @@ namespace _Project.UI.Shop
             CreateHiddenAndOriginalPosition();
             AnimationShopCache();
         }
-
-        public void OpenShop() =>
+        
+        public void OpenShop()
+        {
             _openSequence.Restart();
+        }
 
         public void CloseShop() =>
             _closeSequence.Restart();

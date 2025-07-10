@@ -32,9 +32,7 @@ namespace _Project.Meta.Money
         void IDisposable.Dispose() => 
             _disposable.Dispose();
 
-        private void UpdateCurrentMoneyText(int oldValue, int newValue)
-        {
-            _view.UpdateCurrentMoneyText(oldValue, newValue);
-        }
+        private void UpdateCurrentMoneyText(int oldValue, int newValue) => 
+            _view.UpdateCurrentMoneyAmount(oldValue,newValue);
     }
 }

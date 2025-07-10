@@ -6,8 +6,7 @@ namespace _Project.Infrastructure.Services
 {
     public interface IUIFactory
     {
-        ShopPresenter CreateShop(IEndWaveEvent spawner);
+        ShopPresenter CreateShop(WaveSpawner spawner);
         InitialTextLoadAfterLoading CreateInitialTextLoadAfterLoading();
-        MenuPresenter CreateMenu();
     }
 }

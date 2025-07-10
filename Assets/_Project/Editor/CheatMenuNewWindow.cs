@@ -29,6 +29,8 @@ namespace _Project.Editor
         private int _addHealth;
         private int _spendHealth;
 
+        private float _timeScale = 1f;
+
         private readonly Color _orangeColor = new(0.9f, 0.5f, 0.2f);
 
         private bool _gameStarted => EditorApplication.isPlaying;
@@ -300,9 +302,9 @@ namespace _Project.Editor
                             {
                                 if (GUILayout.Button("Kill Random Enemy", EditorStyles.toolbarButton))
                                     CheatManager.KillRandomSpawnedEnemies();
-                                
+
                                 GUILayout.Space(5);
-                                
+
                                 if (GUILayout.Button("Kill All Enemy", EditorStyles.toolbarButton))
                                     CheatManager.KillAllSpawnedEnemies();
                             }
@@ -335,15 +337,11 @@ namespace _Project.Editor
                     {
                         GUILayout.BeginVertical(EditorStyles.helpBox);
                         {
-                            GUILayout.Label("Shop",_initialStyle);
-                            CreationButton("Open",CheatManager.OpenShop,EditorStyles.toolbarButton);
+                            GUILayout.Label("Shop", _initialStyle);
+                            CreationButton("Open", CheatManager.OpenShop, EditorStyles.toolbarButton);
                             GUILayout.Space(5);
-                            CreationButton("Close",CheatManager.CloseShop,EditorStyles.toolbarButton);
+                            CreationButton("Close", CheatManager.CloseShop, EditorStyles.toolbarButton);
                             GUILayout.Space(10);
-                            GUILayout.Label("Menu",_initialStyle);
-                            CreationButton("Open",CheatManager.OpenMenu,EditorStyles.toolbarButton);                            
-                            GUILayout.Space(5);
-                            CreationButton("Close",CheatManager.CloseMenu,EditorStyles.toolbarButton);
                         }
                         GUILayout.EndVertical();
                     }
@@ -361,7 +359,7 @@ namespace _Project.Editor
                         GUILayout.BeginVertical(EditorStyles.helpBox);
                         {
                             if (GUILayout.Button("StartWave", EditorStyles.toolbarButton))
-                                CheatManager.WaveSpawner.StartWave();
+                                CheatManager.WaveSpawner.StartSpawn();
                         }
                         GUILayout.EndVertical();
                     }
@@ -391,12 +389,18 @@ namespace _Project.Editor
                     EditorApplication.isPlaying = false;
 
                 GUI.color = originalColor;
+                GUILayout.Space(10);
+                _timeScale = EditorGUILayout.Slider("", _timeScale, 0f, 3f, GUILayout.Width(150));
+
+                if (!Mathf.Approximately(Time.timeScale, _timeScale))
+                    Time.timeScale = _timeScale;
+
                 GUILayout.FlexibleSpace();
             }
             GUILayout.EndHorizontal();
         }
 
-        private void CreationButton(string nameButton , Action actionOnClick, GUIStyle styles = null)
+        private void CreationButton(string nameButton, Action actionOnClick, GUIStyle styles = null)
         {
             if (GUILayout.Button(nameButton, styles))
                 actionOnClick?.Invoke();
@@ -460,6 +464,8 @@ namespace _Project.Editor
             _spendMoney = 0;
             _addHealth = 0;
             _spendHealth = 0;
+
+            _timeScale = 1;
         }
     }
 }

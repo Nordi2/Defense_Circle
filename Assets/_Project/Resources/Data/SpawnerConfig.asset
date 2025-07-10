@@ -24,12 +24,18 @@ MonoBehaviour:
       _serializedList:
       - Key: 1
         Value: 100
-  - <MinMaxGroupEnemy>k__BackingField: {x: 0, y: 0}
-    <MaxEnemiesAtOnce>k__BackingField: 0
-    <DurationWave>k__BackingField: 0
-    <SpawnInterval>k__BackingField: 0
+  - <MinMaxGroupEnemy>k__BackingField: {x: 3, y: 7}
+    <MaxEnemiesAtOnce>k__BackingField: 8
+    <DurationWave>k__BackingField: 10
+    <SpawnInterval>k__BackingField: 0.3
     <EnemyInWaveInterest>k__BackingField:
-      _serializedList: []
+      _serializedList:
+      - Key: 1
+        Value: 20
+      - Key: 2
+        Value: 45
+      - Key: 3
+        Value: 15
   - <MinMaxGroupEnemy>k__BackingField: {x: 0, y: 0}
     <MaxEnemiesAtOnce>k__BackingField: 0
     <DurationWave>k__BackingField: 0

@@ -1,6 +1,8 @@
 ﻿using System;
+using _Project.Cor.Spawner;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic.Upgrade;
+using _Project.Scripts.Gameplay.Component;
 using DebugToolsPlus;
 
 namespace _Project.Scripts.UI.Shop
@@ -13,13 +15,16 @@ namespace _Project.Scripts.UI.Shop
         
         private readonly UpgradeCartView _view;
         private readonly Wallet _wallet;
-
+        private readonly WavePresenter _wavePresenter;
+        
         public UpgradeCartPresenter(
             UpgradeCartView view,
-            Wallet wallet)
+            Wallet wallet,
+            WavePresenter wavePresenter)
         {
             _view = view;
             _wallet = wallet;
+            _wavePresenter = wavePresenter;
         }
 
         public void UpdateViewCart(Stats stats)
@@ -39,6 +44,8 @@ namespace _Project.Scripts.UI.Shop
 
         private void BuyUpgrade()
         {
+            _wavePresenter.StartWave();
+            
             if (!_wallet.IsHaveMoney(_stats.Price))
             {
                 D.Log("Shop", $"Have no money. Have to: {_stats.Price}, has a: {_wallet.CurrentMoney}", DColor.YELLOW,

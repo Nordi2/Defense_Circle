@@ -38,13 +38,8 @@ namespace _Project.Scripts.Gameplay.Component
 
         void IDisposable.Dispose() =>
             _disposable.Dispose();
-
-        private void UpdateMaxHealthText(int newMaxValue) =>
-            _view.UpdateMaxHealthText(newMaxValue);
-
-        private void UpdateCurrentHealthText(int oldValue, int newValue)
-        {
+        
+        private void UpdateCurrentHealthText(int oldValue, int newValue) => 
             _view.UpdateCurrentHealthText(oldValue, newValue);
-        }
     }
 }

@@ -74,9 +74,17 @@ namespace Infrastructure.Installers
                 .AsSingle();
 
 #else
-            Container.BindInterfacesTo<GameFactory>().AsSingle();
-            Container.BindInterfacesTo<InitializerEmptyCheatManager>().AsSingle();
-            Container.BindInterfacesTo<UIFactory>().AsSingle();
+            Container
+                .BindInterfacesTo<GameFactory>()
+                .AsSingle();
+
+            Container
+                .BindInterfacesTo<InitializerEmptyCheatManager>()
+                .AsSingle();
+
+            Container
+                .BindInterfacesTo<UIFactory>()
+                .AsSingle();
 #endif
         }
 

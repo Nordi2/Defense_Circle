@@ -32,10 +32,9 @@ namespace _Project.Infrastructure.EntryPoint
             _gameFactory.CreateBackground();
             _gameFactory.CreateBackgroundEffect();
 
-            WaveSpawner spawner = _gameFactory.CreateSpawner();
             _gameFactory.CreateTower();
+            WaveSpawner spawner = _gameFactory.CreateSpawner();
 
-            _uiFactory.CreateMenu();
             _uiFactory.CreateShop(spawner);
             
             initialText.StartAnimation();

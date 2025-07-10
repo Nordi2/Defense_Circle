@@ -2,6 +2,7 @@
 using _Project.Cor.Enemy.Mono;
 using _Project.Cor.Spawner;
 using _Project.Cor.Tower.Mono;
+using _Project.Scripts.Gameplay.Component;
 
 namespace _Project.Infrastructure.Services
 {
@@ -14,5 +15,6 @@ namespace _Project.Infrastructure.Services
         void CreateGameplayVolume();
         void CreateStats();
         WaveSpawner CreateSpawner();
+        WavePresenter WavePresenter { get; }
     }
 }

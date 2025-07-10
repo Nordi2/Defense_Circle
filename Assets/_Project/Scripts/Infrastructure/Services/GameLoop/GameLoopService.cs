@@ -141,8 +141,7 @@ namespace Infrastructure.Services
 
             foreach (IGameResumeListener resumeListener in _gameResumeListeners)
                 resumeListener.OnGameResume();
-
-
+            
             D.Log(GetType().Name, "Game resume", DColor.PURPLE, true);
         }
 

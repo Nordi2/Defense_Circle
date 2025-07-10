@@ -4,7 +4,6 @@ using _Project.Cor.Interfaces;
 using _Project.Cor.Observers;
 using R3;
 using UnityEngine;
-using Zenject;
 
 namespace _Project.Cor.Enemy.Mono
 {
@@ -19,8 +18,7 @@ namespace _Project.Cor.Enemy.Mono
         private GiveDamageComponent _giveDamageComponent;
         private EnemyCallbacks _enemyCallbacks;
         private IDisposable _disposable;
-
-
+        
         public void Init(
             TakeDamageComponent takeDamageComponent,
             GiveDamageComponent giveDamageComponent,

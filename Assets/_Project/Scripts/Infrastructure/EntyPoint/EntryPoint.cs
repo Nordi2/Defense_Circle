@@ -30,7 +30,7 @@ namespace _Project.Infrastructure.EntryPoint
         void IInitializable.Initialize()
         {
             Debug.unityLogger.logEnabled = Debug.isDebugBuild;
-            Application.targetFrameRate = 120;
+            Application.targetFrameRate = 70;
             DOTween.Init();
             
             _curtain.Show();

@@ -29,7 +29,6 @@ namespace _Project
         public static StatsStorage StatsStorage;
         public static ShopPresenter ShopPresenter;
         public static WaveSpawner WaveSpawner;
-        public static MenuPresenter PresenterMainMenu;
 
         private static readonly List<EnemyFacade> _enemiesInSpawned = new();
 
@@ -99,19 +98,7 @@ namespace _Project
                     enemy.TakeDamage(int.MaxValue);
             }
         }
-
-        public static void OpenMenu()
-        {
-            D.Log(CheathManager.ToUpper(), "Open Menu", DColor.AQUAMARINE, true);
-            PresenterMainMenu.OpenMenu();
-        }
-
-        public static void CloseMenu()
-        {
-            D.Log(CheathManager.ToUpper(), "Close Menu", DColor.AQUAMARINE, true);
-            PresenterMainMenu.CloseMenu();
-        }
-
+        
         public static void OpenShop()
         {
             D.Log(CheathManager.ToUpper(), "Open Shop", DColor.AQUAMARINE, true);
@@ -174,7 +161,6 @@ namespace _Project
             Wallet = null;
             StatsStorage = null;
             ShopPresenter = null;
-            PresenterMainMenu = null;
             GameFactory = null;
         }
     }

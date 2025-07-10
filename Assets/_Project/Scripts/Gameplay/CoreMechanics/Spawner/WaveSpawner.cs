@@ -18,7 +18,6 @@ namespace _Project.Cor.Spawner
 {
     [UsedImplicitly]
     public class WaveSpawner :
-        IGameStartListener,
         IStartWaveEvent,
         IEndWaveEvent
     {
@@ -26,11 +25,10 @@ namespace _Project.Cor.Spawner
         private readonly SpawnerConfig _spawnerConfig;
         private readonly IGameFactory _gameFactory;
 
-        private int _currentWave;
         private int _enemiesAlive;
+        private float _waveTimer;
         private bool _isWaveActive;
         private bool _isSpawning;
-        private float _waveTimer;
         private CancellationTokenSource _waveCts;
 
         private float _totalChance;
@@ -45,42 +43,34 @@ namespace _Project.Cor.Spawner
             _spawnerConfig = spawnerConfig;
             _gameFactory = gameFactory;
 
-            _currentWave = spawnerConfig.InitialWave;
+            CurrentWave = spawnerConfig.InitialWave;
         }
         
-        private bool _isMaxWave => _currentWave >= _spawnerConfig.MaxWave;
-        public Subject<Unit> OnEndWave { get; private set; } = new();
-        public Subject<Unit> OnStartWave { get; private set; } = new();
+        private bool _isMaxWave => CurrentWave >= _spawnerConfig.MaxWave;
 
-        void IGameStartListener.OnGameStart()
-        {
-            StartWave();
-        }
-
-        public void StartWave()
+        public int MaxWave => _spawnerConfig.MaxWave;
+        public Subject<Unit> OnEndWave { get; } = new();
+        public Subject<Unit> OnStartWave { get; } = new();
+        public int CurrentWave { get; private set; }
+        
+        public void StartSpawn()
         {
             if (_isWaveActive || _isMaxWave)
                 return;
-
-            StartWaveAsync().Forget();
+            
+            StartSpawnAsync().Forget();
 
             OnStartWave?.OnNext(Unit.Default);
-
-            D.Log(GetType().Name, $"Start Wave: currentWave: {_currentWave}, maxWave: {_spawnerConfig.MaxWave}",
-                DColor.PINK, true);
         }
 
-        private async UniTaskVoid StartWaveAsync()
+        private async UniTaskVoid StartSpawnAsync()
         {
             _waveCts?.Cancel();
             _waveCts = new CancellationTokenSource();
 
-            await WaveAsync(_spawnerConfig.GetWaveSettings(_currentWave), _waveCts.Token);
+            await WaveAsync(_spawnerConfig.GetWaveSettings(CurrentWave), _waveCts.Token);
 
             OnEndWave?.OnNext(Unit.Default);
-
-            D.Log(GetType().Name, $"End Wave: NexWave: {_currentWave}, maxWave: {_spawnerConfig.MaxWave}",
-                DColor.PINK, true);
         }
 
         private async UniTask WaveAsync(WaveSettings waveSettings, CancellationToken token)
@@ -92,7 +82,7 @@ namespace _Project.Cor.Spawner
 
             await UniTask.WhenAll(spawnEnemiesTask, waveTimerTask);
 
-            _currentWave++;
+            CurrentWave++;
         }
 
         private async UniTask SpawnEnemiesAsync(WaveSettings waveSettings, CancellationToken token)

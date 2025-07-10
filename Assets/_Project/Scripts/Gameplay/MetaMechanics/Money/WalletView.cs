@@ -6,32 +6,30 @@ namespace _Project.Meta.Money
 {
     public class WalletView : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI[] _allText;
-        [SerializeField] private TextMeshProUGUI _moneyText;
+        [SerializeField] private TextMeshProUGUI _currentAmountText;
 
+        [Header("Animation Settings")] 
         [SerializeField] private float _animationDuration;
         [SerializeField] private Ease _ease;
 
-        private Tween _tween;
+        private Tween _tweenCurrentAmount;
 
-        public void StartAnimation()
+        public void UpdateCurrentMoneyAmount(int oldValue, int newValue, bool isCache = false)
         {
-            for (int i = 0; i < _allText.Length; i++)
-            {
-                _allText[i]
-                    .DOFade(1, 0)
-                    .From(0);
-            }
+            _tweenCurrentAmount?.Kill();
+
+            if (isCache)
+                _tweenCurrentAmount.Restart();
+            else
+                _tweenCurrentAmount = AnimationText(_currentAmountText, oldValue, newValue);
         }
 
-        public void UpdateCurrentMoneyText(int oldValue, int newValue)
+        private Tween AnimationText(TextMeshProUGUI text, int oldValue, int newValue)
         {
-            if (_tween.IsActive())
-                _tween.Kill();
-
-            _tween = _moneyText
+            return text
                 .DOCounter(oldValue, newValue, _animationDuration)
                 .SetEase(_ease)
+                .SetAutoKill(false)
                 .Play();
         }
     }
