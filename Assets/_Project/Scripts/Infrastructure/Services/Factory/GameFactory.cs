@@ -94,13 +94,14 @@ namespace _Project.Infrastructure.Services
 
         public WaveSpawner CreateSpawner()
         {
-            SpawnPositionEnemy spawnPositionEnemy =
+            SpawnPositionEnemy spawnPositionEnemy = 
                 new SpawnPositionEnemy(_gameLoadDataService.SpawnerConfig.SpawnMargin, _screenResolutionService);
-            WaveSpawner waveSpawner = new WaveSpawner(spawnPositionEnemy, _gameLoadDataService.SpawnerConfig, this);
+            WaveSpawner waveSpawner = _instantiator.Instantiate<WaveSpawner>();
             WaveView view = TowerFacade.GetComponentInChildren<WaveView>();
+            
             WavePresenter = new WavePresenter(view, waveSpawner);
-
             WaveSpawner = waveSpawner;
+            waveSpawner.Init(spawnPositionEnemy,_gameLoadDataService.SpawnerConfig);
 
             _gameLoopService.AddGameListener(WavePresenter);
 

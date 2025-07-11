@@ -14,7 +14,6 @@ namespace _Project.Editor
         private bool _showEnemySection;
         private bool _showStatsSection;
         private bool _showUISection;
-        private bool _showOtherSection;
 
         private readonly Dictionary<Type, bool> _foldoutStates = new();
 
@@ -148,6 +147,20 @@ namespace _Project.Editor
             {
                 EditorGUI.DrawRect(verticalGroupGameInfo, Color.black);
                 GUILayout.Label("Game Info", _headerGroupStyle, GUILayout.ExpandWidth(true));
+
+                GUILayout.Space(25);
+
+                GUILayout.BeginHorizontal();
+                if (CheatManager.WaveSpawner is not null)
+                {
+                    GUILayout.FlexibleSpace();
+                    GUILayout.Label(
+                        $"Current Wave: {CheatManager.WaveSpawner.CurrentWave} Max Wave: {CheatManager.WaveSpawner.MaxWave}",
+                        _initialStyle);
+                    GUILayout.FlexibleSpace();
+                }
+
+                GUILayout.EndHorizontal();
             }
             EditorGUILayout.EndVertical();
         }
@@ -347,24 +360,6 @@ namespace _Project.Editor
                     }
 
                     #endregion
-
-                    #region OtherSection
-
-                    _showOtherSection =
-                        EditorGUILayout.BeginFoldoutHeaderGroup(_showOtherSection, "Other Section", _foldoutStyle);
-                    EditorGUILayout.EndFoldoutHeaderGroup();
-
-                    if (_showOtherSection)
-                    {
-                        GUILayout.BeginVertical(EditorStyles.helpBox);
-                        {
-                            if (GUILayout.Button("StartWave", EditorStyles.toolbarButton))
-                                CheatManager.WaveSpawner.StartSpawn();
-                        }
-                        GUILayout.EndVertical();
-                    }
-
-                    #endregion
                 }
                 EditorGUI.EndDisabledGroup();
             }
@@ -458,7 +453,6 @@ namespace _Project.Editor
             _showMoneySection = false;
             _showHealthSection = false;
             _showUISection = false;
-            _showOtherSection = false;
 
             _addMoney = 0;
             _spendMoney = 0;

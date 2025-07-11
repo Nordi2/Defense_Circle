@@ -27,9 +27,9 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue enemy)
         {
-            item.gameObject.SetActive(true);
+            enemy.gameObject.SetActive(true);
         }
 
         protected override void OnDespawned(TValue item)
@@ -68,9 +68,9 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue enemy)
         {
-            item.gameObject.SetActive(true);
+            enemy.gameObject.SetActive(true);
         }
 
         protected override void OnDespawned(TValue item)
@@ -110,9 +110,9 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue enemy)
         {
-            item.gameObject.SetActive(true);
+            enemy.gameObject.SetActive(true);
         }
 
         protected override void OnDespawned(TValue item)
@@ -152,9 +152,9 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue enemy)
         {
-            item.gameObject.SetActive(true);
+            enemy.gameObject.SetActive(true);
         }
 
         protected override void OnDespawned(TValue item)
@@ -194,9 +194,9 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue enemy)
         {
-            item.gameObject.SetActive(true);
+            enemy.gameObject.SetActive(true);
         }
 
         protected override void OnDespawned(TValue item)
@@ -236,9 +236,9 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue enemy)
         {
-            item.gameObject.SetActive(true);
+            enemy.gameObject.SetActive(true);
         }
 
         protected override void OnDespawned(TValue item)

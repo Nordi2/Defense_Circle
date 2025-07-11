@@ -32,7 +32,7 @@ namespace _Project.Cor.BulletLogic.Installer
             
             Container
                 .BindMemoryPool<EnemyFacade, EnemyPool>()
-                .WithId(EnemyType.Fast)
+                .WithId(EnemyType.Slow)
                 .WithInitialSize(_objectPoolConfig.PoolSizeEnemySlow)
                 .ExpandByOneAtATime()
                 .FromMethod(_ => _gameFactory.CreateEnemy(EnemyType.Slow))

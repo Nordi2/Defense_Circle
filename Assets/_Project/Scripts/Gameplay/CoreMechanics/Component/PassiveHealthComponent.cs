@@ -33,7 +33,7 @@ namespace _Project.Cor.Component
 
         private void AccumulationPassiveHealth()
         {
-            _accumulationHealth += _statsStorage.GetStats<PassiveHealthStats>().CurrentValue;
+            _accumulationHealth += _statsStorage.GetStatsValue<PassiveHealthStats>();
 
             if (!(_accumulationHealth >= 1)) 
                 return;

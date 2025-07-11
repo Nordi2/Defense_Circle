@@ -162,6 +162,7 @@ namespace _Project
             StatsStorage = null;
             ShopPresenter = null;
             GameFactory = null;
+            WaveSpawner = null;
         }
     }
 }

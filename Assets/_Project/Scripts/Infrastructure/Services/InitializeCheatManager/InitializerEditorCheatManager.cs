@@ -1,9 +1,11 @@
 ﻿#if UNITY_EDITOR
 using System;
 using _Project;
+using _Project.Cor.Enemy;
 using _Project.Infrastructure.Services;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
+using Infrastructure.Services;
 using Infrastructure.Signals;
 using JetBrains.Annotations;
 using Zenject;
@@ -19,7 +21,7 @@ using Zenject;
         private readonly Wallet _wallet;
         private readonly UIFactory _uiFactory;
         private readonly GameFactory _gameFactory;
-
+        
         public InitializerEditorCheatManager(
             SignalBus signalBus,
             StatsStorage statsStorage,

@@ -384,6 +384,7 @@ MonoBehaviour:
   _rotationTransform: {fileID: 7799512440050455160}
   _damageTextPrefab: {fileID: 7256836597920289074, guid: b1305964de290b94287a95df251e3211, type: 3}
   _dieEffect: {fileID: 1836332440348695690, guid: 730112a03b0ac614da22d764c7481d8a, type: 3}
+  _trailRenderer: {fileID: 6819340241274420443}
 --- !u!1 &8853742381318423907
 GameObject:
   m_ObjectHideFlags: 0

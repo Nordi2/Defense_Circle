@@ -5,13 +5,12 @@ using System.Threading;
 using _Project.Cor.Enemy;
 using _Project.Cor.Enemy.Mono;
 using _Project.Data.Config;
-using _Project.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
-using DebugToolsPlus;
 using Infrastructure.Services;
 using JetBrains.Annotations;
 using R3;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace _Project.Cor.Spawner
@@ -21,9 +20,12 @@ namespace _Project.Cor.Spawner
         IStartWaveEvent,
         IEndWaveEvent
     {
-        private readonly SpawnPositionEnemy _spawnPositionEnemy;
-        private readonly SpawnerConfig _spawnerConfig;
-        private readonly IGameFactory _gameFactory;
+        private SpawnPositionEnemy _spawnPositionEnemy;
+        private SpawnerConfig _spawnerConfig;
+
+        [Inject(Id = EnemyType.Default)] private EnemyPool _enemyDefaultPool;
+        [Inject(Id = EnemyType.Fast)] private EnemyPool _enemyFastPool;
+        [Inject(Id = EnemyType.Slow)] private EnemyPool _enemySlowPool;
 
         private int _enemiesAlive;
         private float _waveTimer;
@@ -33,31 +35,29 @@ namespace _Project.Cor.Spawner
 
         private float _totalChance;
         private Dictionary<EnemyType, float> _dictionarySpawnChance;
-
-        public WaveSpawner(
+        
+        public void Init(
             SpawnPositionEnemy spawnPositionEnemy,
-            SpawnerConfig spawnerConfig,
-            IGameFactory gameFactory)
+            SpawnerConfig spawnerConfig)
         {
             _spawnPositionEnemy = spawnPositionEnemy;
             _spawnerConfig = spawnerConfig;
-            _gameFactory = gameFactory;
 
             CurrentWave = spawnerConfig.InitialWave;
         }
-        
+
         private bool _isMaxWave => CurrentWave >= _spawnerConfig.MaxWave;
 
         public int MaxWave => _spawnerConfig.MaxWave;
         public Subject<Unit> OnEndWave { get; } = new();
         public Subject<Unit> OnStartWave { get; } = new();
         public int CurrentWave { get; private set; }
-        
+
         public void StartSpawn()
         {
             if (_isWaveActive || _isMaxWave)
                 return;
-            
+
             StartSpawnAsync().Forget();
 
             OnStartWave?.OnNext(Unit.Default);
@@ -131,8 +131,7 @@ namespace _Project.Cor.Spawner
 
             for (int i = 0; i < groupEnemy; i++)
             {
-                EnemyFacade enemy = _gameFactory.CreateEnemy(typeSpawn);
-                enemy.transform.position = _spawnPositionEnemy.GetSpawnPosition();
+                EnemyFacade enemy = _enemyDefaultPool.Spawn(_spawnPositionEnemy.GetSpawnPosition());
                 enemy.OnDeath += EnemyDeath;
             }
 
@@ -156,6 +155,7 @@ namespace _Project.Cor.Spawner
 
         private void EnemyDeath(EnemyFacade enemy)
         {
+            _enemyDefaultPool.Despawn(enemy);
             enemy.OnDeath -= EnemyDeath;
             _enemiesAlive--;
         }

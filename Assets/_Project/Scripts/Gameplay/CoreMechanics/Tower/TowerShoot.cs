@@ -47,7 +47,7 @@ namespace _Project.Cor.Tower
         {
             for (int i = 0; i < _enemysVault.Enemies.Count; i++)
             {
-                if (i >= _statsStorage.GetStats<AmountTargetsStats>().CurrentValue)
+                if (i >= _statsStorage.GetStatsValue<AmountTargetsStats>())
                     break;
 
                 Vector3 positionEnemy = _enemysVault.Enemies[i].transform.position;
