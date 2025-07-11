@@ -52,13 +52,8 @@ namespace Infrastructure.Installers
             Container
                 .BindInterfacesTo<TargetPoint>()
                 .FromComponentInNewPrefabResource(AssetPath.SpawnPointPath)
-                .AsSingle();
-
-            Container.BindMemoryPool<EnemyFacade, EnemyPool>()
-                .WithInitialSize(5)
-                .ExpandByOneAtATime()
-                .FromComponentInNewPrefabResource(AssetPath.EnemyDefaultPath)
-                .UnderTransformGroup("EnemyPool");
+                .AsSingle()
+                .WithArguments(_gameConfig.SpawnPosition);
 
 #if UNITY_EDITOR
             Container

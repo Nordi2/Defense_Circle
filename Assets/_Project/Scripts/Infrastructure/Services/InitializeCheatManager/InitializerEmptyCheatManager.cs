@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Services.Services.InitializeCheatManager
+﻿namespace Infrastructure.Services.InitializeCheatManager
 {
     public class InitializerEmptyCheatManager : 
         ICheatManagerService

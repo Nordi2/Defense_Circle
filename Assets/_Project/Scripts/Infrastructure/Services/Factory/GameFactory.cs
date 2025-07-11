@@ -32,6 +32,9 @@ namespace _Project.Infrastructure.Services
         IGameFactory
     {
         private const float Padding = 10;
+        private const string GameplayObjectParent = "[GameplayObject]";
+        private const string PoolsObject = "[PoolsObject]";
+        private const string EnemiesPool = "[EnemiesPool]";
 
         private readonly IInstantiator _instantiator;
         private readonly IGetTargetPosition _getTargetPosition;
@@ -44,8 +47,12 @@ namespace _Project.Infrastructure.Services
         private readonly CompositeDisposable _disposables;
         private readonly Wallet _wallet;
         private readonly SignalBus _signalBus;
-        
+
         private StatsBuilder _statsBuilder;
+        
+        private readonly Transform _gameParent;
+        private readonly Transform _poolsParent;
+        private readonly Transform _enemyPoolParent;
         
         public GameFactory(
             IInstantiator instantiator,
@@ -57,7 +64,7 @@ namespace _Project.Infrastructure.Services
             StatsStorage statsStorage,
             CompositeDisposable disposables,
             Camera camera,
-            Wallet wallet, 
+            Wallet wallet,
             SignalBus signalBus)
         {
             _instantiator = instantiator;
@@ -71,30 +78,39 @@ namespace _Project.Infrastructure.Services
             _assetProvider = assetProvider;
             _screenResolutionService = screenResolutionService;
             _gameLoadDataService = gameLoadDataService;
+            
+            _gameParent = CreateParentObject(GameplayObjectParent);
+            _poolsParent = CreateParentObject(PoolsObject);
+            _enemyPoolParent = CreateParentObject(EnemiesPool);
+
+            _poolsParent.SetParent(_gameParent);
+            _enemyPoolParent.SetParent(_poolsParent);
         }
 
         public TowerFacade TowerFacade { get; private set; }
         public WaveSpawner WaveSpawner { get; private set; }
+
         public WavePresenter WavePresenter { get; private set; }
-        
+
         public WaveSpawner CreateSpawner()
         {
-            SpawnPositionEnemy spawnPositionEnemy = new SpawnPositionEnemy(_gameLoadDataService.SpawnerConfig.SpawnMargin,_screenResolutionService);
-            WaveSpawner waveSpawner = new WaveSpawner(spawnPositionEnemy,_gameLoadDataService.SpawnerConfig,this);
+            SpawnPositionEnemy spawnPositionEnemy =
+                new SpawnPositionEnemy(_gameLoadDataService.SpawnerConfig.SpawnMargin, _screenResolutionService);
+            WaveSpawner waveSpawner = new WaveSpawner(spawnPositionEnemy, _gameLoadDataService.SpawnerConfig, this);
             WaveView view = TowerFacade.GetComponentInChildren<WaveView>();
             WavePresenter = new WavePresenter(view, waveSpawner);
-            
+
             WaveSpawner = waveSpawner;
-            
+
             _gameLoopService.AddGameListener(WavePresenter);
-            
+
             return waveSpawner;
         }
 
         public void CreateStats()
         {
             _statsBuilder = new StatsBuilder();
-            
+
             foreach (StatsConfig current in _gameLoadDataService.TowerConfig.Stats)
             {
                 switch (current.Type)
@@ -122,13 +138,13 @@ namespace _Project.Infrastructure.Services
         public void CreateGameplayVolume()
         {
             GameObject gameplayVolume =
-                UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.GameplayVolume));
+                UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.GameplayVolume),_gameParent);
         }
 
         public void CreateBackground()
         {
             GameObject backPrefab =
-                UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.BackgroundPath));
+                UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.BackgroundPath),_gameParent);
 
             backPrefab.transform.localScale = new Vector3(
                 _screenResolutionService.ScreenWidth + Padding,
@@ -139,7 +155,7 @@ namespace _Project.Infrastructure.Services
         public void CreateBackgroundEffect()
         {
             GameObject effectPrefab =
-                UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.BackgroundEffectPath));
+                UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.BackgroundEffectPath),_gameParent);
 
             ParticleSystem particleSystem = effectPrefab.GetComponent<ParticleSystem>();
 
@@ -150,14 +166,14 @@ namespace _Project.Infrastructure.Services
 
         public TowerFacade CreateTower()
         {
-            GameObject towerPrefab = _instantiator.InstantiatePrefab(_assetProvider.LoadAsset(AssetPath.TowerPath));
+            GameObject towerPrefab = _instantiator.InstantiatePrefab(_assetProvider.LoadAsset(AssetPath.TowerPath),_gameParent);
 
             TowerFacade towerFacade = towerPrefab.GetComponent<TowerFacade>();
             TowerView view = towerFacade.GetComponent<TowerView>();
             HealthView healthView = towerFacade.GetComponentInChildren<HealthView>();
             WalletView walletView = towerFacade.GetComponentInChildren<WalletView>();
             TimeScaleView timeScaleView = towerFacade.GetComponentInChildren<TimeScaleView>();
-            
+
             EnemyObserver enemyObserver = towerPrefab.GetComponentInChildren<EnemyObserver>();
 
             AnimationTower animation = new AnimationTower(view, _camera);
@@ -169,8 +185,8 @@ namespace _Project.Infrastructure.Services
             HealthStats healthStats = new HealthStats(100);
             HealthPresenter healthPresenter = new HealthPresenter(healthView, healthStats, _disposables);
             WalletPresenter walletPresenter = new WalletPresenter(walletView, _wallet, _disposables);
-            TimeScalePresenter timeScalePresenter = new TimeScalePresenter(timeScaleView,_signalBus);
-            
+            TimeScalePresenter timeScalePresenter = new TimeScalePresenter(timeScaleView, _signalBus);
+
             TakeDamageComponent takeDamageComponent = new TakeDamageComponent(healthStats);
             PassiveHealthComponent passiveHealthComponent = new PassiveHealthComponent(healthStats, _statsStorage);
             RecoverComponent recoverComponent = new RecoverComponent(healthStats);
@@ -209,19 +225,12 @@ namespace _Project.Infrastructure.Services
 
         public EnemyFacade CreateEnemy(EnemyType type)
         {
-            return type switch
-            {
-                EnemyType.Default => LoadConfigAndCreateEnemy(EnemyType.Default),
-                EnemyType.Fast => LoadConfigAndCreateEnemy(EnemyType.Fast),
-                EnemyType.Slow => LoadConfigAndCreateEnemy(EnemyType.Slow),
-                _ => throw new NotImplementedException()
-            };
-        }
+            EnemyConfig config = _gameLoadDataService.GetEnemyConfig(type);
+            EnemyFacade enemy = CreateConcreteEnemy(config);
+            
+            enemy.transform.SetParent(_enemyPoolParent);
 
-        private EnemyFacade LoadConfigAndCreateEnemy(EnemyType type)
-        {
-            EnemyConfig enemyConfig = _gameLoadDataService.GetEnemyConfig(type);
-            return CreateConcreteEnemy(enemyConfig);
+            return enemy;
         }
 
         private EnemyFacade CreateConcreteEnemy(EnemyConfig config)
@@ -272,6 +281,19 @@ namespace _Project.Infrastructure.Services
                 .Build<TStats>();
 
             return currentStats;
+        }
+
+        private Transform CreateParentObject(string name)
+        {
+            GameObject parenGo = new GameObject(name)
+            {
+                transform =
+                {
+                    position = Vector3.zero
+                }
+            };
+            
+            return parenGo.transform;
         }
     }
 }

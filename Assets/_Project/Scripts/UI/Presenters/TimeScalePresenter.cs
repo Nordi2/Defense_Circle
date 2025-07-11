@@ -44,6 +44,7 @@ namespace _Project.Scripts.Gameplay.Component
 
         private void ClickPauseButton()
         {
+            Time.timeScale = 0;
             _signalBus.Fire(_pauseGameSignal);
         }
 

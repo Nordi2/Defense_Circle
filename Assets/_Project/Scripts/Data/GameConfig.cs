@@ -9,5 +9,6 @@ namespace _Project.Data.Config
     {
         [field: SerializeField] public TowerConfig TowerConfig { get; private set; }
         [field: SerializeField] public SpawnerConfig SpawnerConfig { get; private set; }
+        [field: SerializeField] public Vector2 SpawnPosition { get; private set; }
     }
 }
