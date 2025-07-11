@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65e6c52b038f4d0f9fc1295b308794c0, type: 3}
+  m_Name: AnimationSettingsShop
+  m_EditorClassIdentifier: 
+  _durationOpen: 0.5
+  _easeOpen: 1
+  _durationClose: 0.5
+  _easeClose: 1
+  _endValueAlphaShowHide: {x: 0.4, y: 0}
+  _antiClickerDurationShowHide: {x: 0.5, y: 0.5}
+  _easeAntiClicker: 1

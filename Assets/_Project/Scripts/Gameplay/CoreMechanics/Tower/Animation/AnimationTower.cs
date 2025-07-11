@@ -1,0 +1,131 @@
+﻿using System;
+using _Project.Cor.Tower.Animation.AnimationSettings;
+using _Project.Cor.Tower.Mono;
+using _Project.Scripts.Gameplay.Component;
+using DG.Tweening;
+using JetBrains.Annotations;
+using UnityEngine;
+
+namespace _Project.Cor.Tower.Animation
+{
+    [UsedImplicitly]
+    public class AnimationTower
+    {
+        private Sequence _sequence;
+
+        private readonly HealthView _healthView;
+        private readonly Transform _mainTransform;
+        private readonly Camera _camera;
+        
+        private readonly TowerInitialSpawnSettings _initialSpawnSettings;
+        private readonly TowerTakeDamageSettings _takeDamageSettings;
+        private readonly TowerDeathSettings _deathSettings;
+        
+        public AnimationTower(
+            TowerView view,
+            Camera camera)
+        {
+            _camera = camera;
+            _healthView = view.HealthView;
+            _mainTransform = view.transform;
+            
+            _initialSpawnSettings = view.AnimationSpawnSettings;
+            _takeDamageSettings = view.AnimationTakeDamageSettings;
+            _deathSettings = view.AnimationDeathSettings;
+        }
+
+        private float _durationShake =>
+            _takeDamageSettings.DurationShakeCamera;
+
+        private float _strengthShake =>
+            _takeDamageSettings.StrengthShakeCamera;
+
+        private float _durationSwitchColor =>
+            _takeDamageSettings.DurationSwitchColor;
+
+        private int _countLoops =>
+            _takeDamageSettings.CountLoops;
+
+        private Color _takeDamageColor =>
+            _takeDamageSettings.TakeDamageColor;
+
+        private Color _normalColor =>
+            _takeDamageSettings.NormalColor;
+
+        public void PlayInitialSpawn(Action initialSpawnAction = null)
+        {
+            _sequence = DOTween.Sequence();
+
+            _sequence
+                .AppendCallback(() => initialSpawnAction?.Invoke())
+                .Append(_mainTransform
+                    .DOScale(Vector3.one, _initialSpawnSettings.DurationDoScale)
+                    .From(Vector3.zero)
+                    .SetEase(_initialSpawnSettings.Ease))
+                //.Append(GetTextFadeSequence())
+                .Play();
+        }
+
+        public void PlayTakeDamage(float amountStrength)
+        {
+            if (_sequence.IsActive())
+                _sequence.Kill();
+
+            _sequence = DOTween.Sequence();
+            
+            _sequence
+                .Append(_camera.DOShakePosition(_durationShake, amountStrength))
+                .Join(AnimationSprites())
+                .OnKill(KillCallback)
+                .Play();
+        }
+
+        public void PlayDeath()
+        {
+            _mainTransform
+                .DOScale(Vector3.zero, _deathSettings.DurationDoScale)
+                .From(Vector3.one)
+                .SetEase(_deathSettings.EaseType)
+                .Play();
+        }
+
+        /*private Sequence GetTextFadeSequence()
+        {
+            Sequence textSequence = DOTween.Sequence();
+            
+            foreach (TextMeshProUGUI text in _healthView.AllHealthText)
+            {
+                Color originalColor = text.color;
+                text.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+                
+                textSequence.Join(
+                    text.DOFade(1f, _initialSpawnSettings.DurationDoFade)
+                );
+            }
+    
+            return textSequence;
+        }*/
+
+        private Sequence AnimationSprites()
+        {
+            Sequence spriteSequence = DOTween.Sequence();
+            
+            for (int i = 0; i < _takeDamageSettings.AnimationSpriteRenderers.Length; i++)
+            {
+                spriteSequence
+                    .Join(_takeDamageSettings.AnimationSpriteRenderers[i]
+                        .DOColor(_takeDamageColor,_durationSwitchColor)
+                        .SetLoops(_countLoops, LoopType.Yoyo))
+                    .Play();
+            }
+
+            return spriteSequence;
+        }
+
+        private void KillCallback()
+        {
+            for (int i = 0; i < _takeDamageSettings.AnimationSpriteRenderers.Length; i++)
+                _takeDamageSettings.AnimationSpriteRenderers[i].color = _normalColor;
+        }
+    }
+}
