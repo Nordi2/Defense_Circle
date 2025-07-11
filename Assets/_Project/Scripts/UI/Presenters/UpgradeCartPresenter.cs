@@ -1,5 +1,4 @@
 ﻿using System;
-using _Project.Cor.Spawner;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic.Upgrade;
 using _Project.Scripts.Gameplay.Component;

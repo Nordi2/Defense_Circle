@@ -12,8 +12,7 @@ namespace _Project.Cor.Tower.Animation
     public class AnimationTower
     {
         private Sequence _sequence;
-
-        private readonly HealthView _healthView;
+        
         private readonly Transform _mainTransform;
         private readonly Camera _camera;
         
@@ -26,7 +25,6 @@ namespace _Project.Cor.Tower.Animation
             Camera camera)
         {
             _camera = camera;
-            _healthView = view.HealthView;
             _mainTransform = view.transform;
             
             _initialSpawnSettings = view.AnimationSpawnSettings;
@@ -62,7 +60,6 @@ namespace _Project.Cor.Tower.Animation
                     .DOScale(Vector3.one, _initialSpawnSettings.DurationDoScale)
                     .From(Vector3.zero)
                     .SetEase(_initialSpawnSettings.Ease))
-                //.Append(GetTextFadeSequence())
                 .Play();
         }
 
@@ -88,24 +85,7 @@ namespace _Project.Cor.Tower.Animation
                 .SetEase(_deathSettings.EaseType)
                 .Play();
         }
-
-        /*private Sequence GetTextFadeSequence()
-        {
-            Sequence textSequence = DOTween.Sequence();
-            
-            foreach (TextMeshProUGUI text in _healthView.AllHealthText)
-            {
-                Color originalColor = text.color;
-                text.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
-                
-                textSequence.Join(
-                    text.DOFade(1f, _initialSpawnSettings.DurationDoFade)
-                );
-            }
-    
-            return textSequence;
-        }*/
-
+        
         private Sequence AnimationSprites()
         {
             Sequence spriteSequence = DOTween.Sequence();

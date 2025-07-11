@@ -26,7 +26,6 @@ namespace _Project.Extensions
         public static Stats SetMaxLevel(this Stats stats, int maxLevel)
         {
             stats.MaxLevel = maxLevel;
-
             return stats;
         }
 

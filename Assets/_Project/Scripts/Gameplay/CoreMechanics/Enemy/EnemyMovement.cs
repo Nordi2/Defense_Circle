@@ -1,6 +1,5 @@
 using _Project.Cor.Interfaces;
 using _Project.Meta.StatsLogic.NoneUpgrade;
-using Infrastructure.Services;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;

@@ -1,6 +1,4 @@
-﻿using _Project.Cor.Enemy.Mono;
-using _Project.Cor.Spawner;
-using _Project.Data.Config;
+﻿using _Project.Data.Config;
 using _Project.Infrastructure.EntryPoint;
 using _Project.Infrastructure.Services;
 using _Project.Infrastructure.Services.AssetManagement;

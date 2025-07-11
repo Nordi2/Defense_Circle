@@ -15,14 +15,10 @@ namespace _Project.Data.Config
         private void OnValidate()
         {
             if (_minMaxDamage.x >= _minMaxDamage.y)
-            {
                 _minMaxDamage.y = _minMaxDamage.x + 1;
-            }
         }
 
-        public int GetRandomDamage()
-        {
-            return Random.Range(_minMaxDamage.x, _minMaxDamage.y);
-        }
+        public int GetRandomDamage() => 
+            Random.Range(_minMaxDamage.x, _minMaxDamage.y);
     }
 }

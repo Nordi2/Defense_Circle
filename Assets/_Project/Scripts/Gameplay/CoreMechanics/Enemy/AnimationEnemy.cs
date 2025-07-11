@@ -15,10 +15,7 @@ namespace _Project.Cor.Enemy
             _transform = view.RotationTransform;
         }
 
-        public void PlayTakeDamageAnimation()
-        {
-            //_transform.DOShakeScale(1f);
+        public void PlayTakeDamageAnimation() => 
             _transform.DOShakePosition(1,0.25f).Play();
-        }
     }
 }

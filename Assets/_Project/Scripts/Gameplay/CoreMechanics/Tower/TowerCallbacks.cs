@@ -1,7 +1,6 @@
 ﻿using _Project.Cor.Tower.Animation;
 using JetBrains.Annotations;
 using UnityEngine;
-using Zenject;
 
 namespace _Project.Cor.Tower
 {

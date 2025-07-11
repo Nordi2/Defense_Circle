@@ -180,8 +180,8 @@ namespace _Project.Infrastructure.Services
             AnimationTower animation = new AnimationTower(view, _camera);
             TowerCallbacks callbacks = new TowerCallbacks(animation);
 
-            EnemysVault enemysVault = new EnemysVault(enemyObserver, _disposables);
-            TowerShoot shootComponent = new TowerShoot(enemysVault, view, _statsStorage);
+            EnemiesVault enemiesVault = new EnemiesVault(enemyObserver, _disposables);
+            TowerShoot shootComponent = new TowerShoot(enemiesVault, view, _statsStorage);
 
             HealthStats healthStats = new HealthStats(100);
             HealthPresenter healthPresenter = new HealthPresenter(healthView, healthStats, _disposables);
@@ -204,13 +204,13 @@ namespace _Project.Infrastructure.Services
                 walletPresenter,
                 healthPresenter,
                 spawnBullet,
-                enemysVault);
+                enemiesVault);
 
             _gameLoopService.AddDisposable(
                 walletPresenter,
                 healthPresenter,
                 spawnBullet,
-                enemysVault,
+                enemiesVault,
                 timeScalePresenter);
 
             _gameLoopService.AddTickable(

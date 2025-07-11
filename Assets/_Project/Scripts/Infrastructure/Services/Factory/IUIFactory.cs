@@ -1,5 +1,4 @@
 using _Project.Cor.Spawner;
-using _Project.Scripts.UI;
 using _Project.Scripts.UI.Shop;
 
 namespace _Project.Infrastructure.Services

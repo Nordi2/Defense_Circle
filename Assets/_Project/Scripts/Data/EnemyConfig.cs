@@ -17,7 +17,7 @@ namespace _Project.Data.Config
         [SerializeField, Min(10)] private Vector2Int _minMaxHealth;
         [SerializeField, Min(1)] private Vector2Int _minMaxCollisionDamage;
         [SerializeField, Min(0.1f)] private Vector2 _minMaxMoveSpeed;
-        [SerializeField] private Vector2 _minMaxRotatitonSpeed;
+        [SerializeField] private Vector2 _minMaxRotationSpeed;
         [SerializeField] private Vector2Int _minMaxMoneyReward;
         [SerializeField] private Vector2Int _minMaxMoneySpend;
 
@@ -25,19 +25,13 @@ namespace _Project.Data.Config
         private void OnValidate()
         {
             if (_minMaxHealth.x > _minMaxHealth.y)
-            {
                 _minMaxHealth.y = _minMaxHealth.x + 1;
-            }
 
             if (_minMaxCollisionDamage.x > _minMaxCollisionDamage.y)
-            {
                 _minMaxCollisionDamage.y = _minMaxCollisionDamage.x + 1;
-            }
 
             if (_minMaxMoveSpeed.x > _minMaxMoveSpeed.y)
-            {
                 _minMaxMoveSpeed.y = _minMaxMoveSpeed.x + 1;
-            }
         }
 
         public int GetRandomMoneySpend() =>
@@ -47,7 +41,7 @@ namespace _Project.Data.Config
             Random.Range(_minMaxMoneyReward.x, _minMaxMoneyReward.y);
 
         public float GetRandomRotationSpeed() =>
-            Random.Range(_minMaxRotatitonSpeed.x, _minMaxRotatitonSpeed.y);
+            Random.Range(_minMaxRotationSpeed.x, _minMaxRotationSpeed.y);
 
         public int GetRandomValueHealth() =>
             Random.Range(_minMaxHealth.x, _minMaxHealth.y);

@@ -9,7 +9,7 @@ using Zenject;
 namespace _Project.Cor.Tower
 {
     [UsedImplicitly]
-    public class EnemysVault : 
+    public class EnemiesVault : 
         IInitializable,
         IDisposable
     {
@@ -18,7 +18,7 @@ namespace _Project.Cor.Tower
         private readonly List<EnemyFacade> _enemies = new();
         private readonly CompositeDisposable _disposable;
 
-        public EnemysVault(
+        public EnemiesVault(
             EnemyObserver enemyObserver,
             CompositeDisposable disposable)
         {

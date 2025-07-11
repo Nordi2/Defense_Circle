@@ -15,25 +15,25 @@ namespace _Project.Cor.Tower
         public Action<Vector3, Transform> OnShoot;
 
         private readonly StatsStorage _statsStorage;
-        private readonly EnemysVault _enemysVault;
+        private readonly EnemiesVault _enemiesVault;
         private readonly Transform _shootPoint;
         
         private readonly float _shootRate = 0.5f;
         private float _nextShootTime;
 
         public TowerShoot(
-            EnemysVault enemysVault,
+            EnemiesVault enemiesVault,
             TowerView view,
             StatsStorage statsStorage)
         {
-            _enemysVault = enemysVault;
+            _enemiesVault = enemiesVault;
             _statsStorage = statsStorage;
             _shootPoint = view.ShootPoint;
         }
 
         void ITickable.Tick()
         {
-            if (_enemysVault.Enemies.Count <= 0)
+            if (_enemiesVault.Enemies.Count <= 0)
                 return;
 
             if (Time.time >= _nextShootTime)
@@ -45,12 +45,12 @@ namespace _Project.Cor.Tower
 
         private void Shoot()
         {
-            for (int i = 0; i < _enemysVault.Enemies.Count; i++)
+            for (int i = 0; i < _enemiesVault.Enemies.Count; i++)
             {
                 if (i >= _statsStorage.GetStatsValue<AmountTargetsStats>())
                     break;
 
-                Vector3 positionEnemy = _enemysVault.Enemies[i].transform.position;
+                Vector3 positionEnemy = _enemiesVault.Enemies[i].transform.position;
                 Vector3 direction = positionEnemy - _shootPoint.position;
                 direction.z = 0;
                 direction.Normalize();

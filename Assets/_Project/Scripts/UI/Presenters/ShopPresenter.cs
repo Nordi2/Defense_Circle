@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Project.Cor.Spawner;
 using _Project.Meta.Money;
 using _Project.Meta.StatsLogic;
 using _Project.Scripts.Gameplay.Component;
 using _Project.UI.Shop;
-using Zenject;
 
 namespace _Project.Scripts.UI.Shop
 {

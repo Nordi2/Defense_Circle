@@ -6,7 +6,8 @@ using Zenject;
 namespace _Project.Cor.Component
 {
     [UsedImplicitly]
-    public class RotationComponent : ITickable
+    public class RotationComponent :
+        ITickable
     {
         private readonly float _rotationSpeed;
         private readonly Transform _rotateTransform;

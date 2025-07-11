@@ -1,6 +1,5 @@
 ﻿using _Project.Data.Config.Stats;
 using DebugToolsPlus;
-using UnityEngine;
 
 namespace _Project.Meta.StatsLogic.Upgrade
 {

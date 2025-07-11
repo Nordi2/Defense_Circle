@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Project.Data.Config;
 using _Project.Meta.StatsLogic.Upgrade;
 using _Project.Static;
 using JetBrains.Annotations;
-using UnityEngine;
 
 namespace _Project.Meta.StatsLogic
 {
