@@ -20,12 +20,12 @@ namespace _Project.Cor.BulletLogic.Installer
                 .WithArguments(_bulletTransform);
 
             Container
-                .BindInterfacesAndSelfTo<MoveSpeedStats>()
+                .BindInterfacesAndSelfTo<MoveSpeedStat>()
                 .AsSingle()
                 .WithArguments(_config.MoveSpeed);
             
             Container
-                .BindInterfacesAndSelfTo<CollisionDamageStats>()
+                .BindInterfacesAndSelfTo<CollisionDamageStat>()
                 .AsSingle()
                 .WithArguments(_config.GetRandomDamage());
 

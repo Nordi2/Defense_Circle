@@ -11,12 +11,12 @@ namespace _Project.Infrastructure.EntryPoint
     {
         private readonly IGameFactory _gameFactory;
         private readonly IUIFactory _uiFactory;
-        private readonly ICheatManagerService _initializerCheatManager;
+        private readonly InitializerEditorCheatManager _initializerCheatManager;
 
         public GameplayEntryPoint(
             IGameFactory gameFactory,
             IUIFactory uiFactory,
-            ICheatManagerService initializerCheatManager)
+            [InjectOptional] InitializerEditorCheatManager initializerCheatManager)
         {
             _gameFactory = gameFactory;
             _uiFactory = uiFactory;
@@ -36,10 +36,10 @@ namespace _Project.Infrastructure.EntryPoint
             WaveSpawner spawner = _gameFactory.CreateSpawner();
 
             _uiFactory.CreateShop(spawner);
-            
+
             initialText.StartAnimation();
 
-            _initializerCheatManager.Init();
+            _initializerCheatManager?.Init();
         }
     }
 }

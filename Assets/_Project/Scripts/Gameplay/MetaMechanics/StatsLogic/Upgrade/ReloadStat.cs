@@ -1,6 +1,7 @@
 ﻿namespace _Project.Meta.StatsLogic.Upgrade
 {
-    public class AmountTargetsStats : Stats
+    public class ReloadStat : Stat
     {
+        
     }
 }

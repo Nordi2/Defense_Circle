@@ -18,7 +18,7 @@ namespace _Project.Infrastructure.Services
         IUIFactory
     {
         private readonly UIRoot _uiRoot;
-        private readonly StatsStorage _statsStorage;
+        private readonly StatStorage _statStorage;
         private readonly Wallet _wallet;
         private readonly GameLoopService _gameLoopService;
         private readonly CompositeDisposable _disposable;
@@ -29,14 +29,14 @@ namespace _Project.Infrastructure.Services
         public UIFactory(
             UIRoot uiRoot,
             Wallet wallet,
-            StatsStorage statsStorage,
+            StatStorage statStorage,
             GameLoopService gameLoopService,
             CompositeDisposable disposable,
             IGameFactory gameFactory)
         {
             _uiRoot = uiRoot;
             _wallet = wallet;
-            _statsStorage = statsStorage;
+            _statStorage = statStorage;
             _gameLoopService = gameLoopService;
             _disposable = disposable;
             _gameFactory = gameFactory;
@@ -47,9 +47,9 @@ namespace _Project.Infrastructure.Services
             GameObject shopPrefab =
                 Object.Instantiate(Resources.Load<GameObject>(AssetPath.ShopUpgradePath));
 
-            ShopView view = shopPrefab.GetComponent<ShopView>();
-            ShopPresenter shopPresenter = new ShopPresenter(_wallet, view, _statsStorage,_gameFactory.WavePresenter);
-            ShopController shopController = new ShopController(shopPresenter,spawner,_disposable);
+            var view = shopPrefab.GetComponent<ShopView>();
+            var shopPresenter = new ShopPresenter(_wallet, view, _statStorage,_gameFactory.WavePresenter);
+            var shopController = new ShopController(shopPresenter,spawner,_disposable);
             
             _uiRoot.AddToContainer(view.GetComponent<RectTransform>());
             shopPresenter.CreateUpgradeCarts();
@@ -68,7 +68,7 @@ namespace _Project.Infrastructure.Services
         {
             GameObject textPrefab = Object.Instantiate(Resources.Load<GameObject>(AssetPath.InitialTextLoad));
 
-            InitialTextLoadAfterLoading view = textPrefab.GetComponent<InitialTextLoadAfterLoading>();
+            var view = textPrefab.GetComponent<InitialTextLoadAfterLoading>();
 
             _uiRoot.AddToContainer(view.GetComponent<RectTransform>());
             _gameLoopService.AddGameListener(view);

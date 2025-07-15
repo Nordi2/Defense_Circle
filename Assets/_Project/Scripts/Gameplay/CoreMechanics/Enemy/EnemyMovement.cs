@@ -17,11 +17,11 @@ namespace _Project.Cor.Enemy
         public EnemyMovement(
             IGetTargetPosition getTarget,
             Transform objectTransform,
-            MoveSpeedStats moveSpeedStats)
+            MoveSpeedStat moveSpeedStat)
         {
             _targetPosition = getTarget.GetPosition();
             _objectTransform = objectTransform;
-            _moveSpeed = moveSpeedStats.Speed;
+            _moveSpeed = moveSpeedStat.Speed;
         }
 
         void ITickable.Tick()

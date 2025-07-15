@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace _Project.Meta.StatsLogic
 {
     [UsedImplicitly]
-    public class StatsBuilder
+    public class StatBuilder
     {
         private int _currentLevel;
         private int _maxLevel;
@@ -15,49 +15,49 @@ namespace _Project.Meta.StatsLogic
         private PriceTables _priceTables;
         private ValueTables _valueTables;
         
-        public StatsBuilder WithValueTables(ValueTables valueTables)
+        public StatBuilder WithValueTables(ValueTables valueTables)
         {
             _valueTables = valueTables;
             return this;
         }
 
-        public StatsBuilder WithPriceTables(PriceTables priceTables)
+        public StatBuilder WithPriceTables(PriceTables priceTables)
         {
             _priceTables = priceTables;
             return this;
         }
 
-        public StatsBuilder WithViewStats(StatsView view)
+        public StatBuilder WithViewStats(StatsView view)
         {
             _view = view;
             return this;
         }
 
-        public StatsBuilder WithValueStats(float value)
+        public StatBuilder WithValueStats(float value)
         {
             _valueStats = value;
             return this;
         }
 
-        public StatsBuilder WithMaxLevel(int maxLevel)
+        public StatBuilder WithMaxLevel(int maxLevel)
         {
             _maxLevel = maxLevel;
             return this;
         }
 
-        public StatsBuilder WithPrice(int price)
+        public StatBuilder WithPrice(int price)
         {
             _price = price;
             return this;
         }
 
-        public StatsBuilder WithCurrentLevel(int initialLevel)
+        public StatBuilder WithCurrentLevel(int initialLevel)
         {
             _currentLevel = initialLevel;
             return this;
         }
 
-        public T Build<T>() where T : Upgrade.Stats, new()
+        public T Build<T>() where T : Upgrade.Stat, new()
         {
             T createdStats = new T();
 
@@ -73,7 +73,7 @@ namespace _Project.Meta.StatsLogic
             return createdStats;
         }
 
-        public StatsBuilder Reset()
+        public StatBuilder Reset()
         {
             _currentLevel = 0;
             _maxLevel = 0;

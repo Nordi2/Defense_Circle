@@ -96,31 +96,31 @@ namespace _Project.Editor
 
                     GUILayout.Label("Stats", _headerStyle, GUILayout.ExpandWidth(true));
 
-                    for (int i = 0; i < CheatManager.StatsStorage.StatsList.Count; i++)
+                    for (int i = 0; i < CheatManager.StatStorage.StatsList.Count; i++)
                     {
-                        Stats stats = CheatManager.StatsStorage.StatsList[i];
+                        Stat stat = CheatManager.StatStorage.StatsList[i];
                         GUILayout.Space(5);
-                        RenderingStats(stats);
+                        RenderingStats(stat);
                     }
                 }
             }
             EditorGUILayout.EndVertical();
         }
 
-        private void RenderingStats(Stats stats)
+        private void RenderingStats(Stat stat)
         {
-            if (!_foldoutStates.TryGetValue(stats.GetType(), out bool isOpen))
+            if (!_foldoutStates.TryGetValue(stat.GetType(), out bool isOpen))
             {
                 isOpen = false;
-                _foldoutStates[stats.GetType()] = isOpen;
+                _foldoutStates[stat.GetType()] = isOpen;
             }
 
             GUI.color = _orangeColor;
             GUILayout.BeginVertical(EditorStyles.helpBox);
             {
                 isOpen =
-                    EditorGUILayout.BeginFoldoutHeaderGroup(isOpen, stats.GetType().Name);
-                _foldoutStates[stats.GetType()] = isOpen;
+                    EditorGUILayout.BeginFoldoutHeaderGroup(isOpen, stat.GetType().Name);
+                _foldoutStates[stat.GetType()] = isOpen;
                 {
                     if (isOpen)
                     {
@@ -133,9 +133,9 @@ namespace _Project.Editor
 
             void RenderingValueStats()
             {
-                GUILayout.Label($"Current Level: {stats.CurrentLevel}\n" +
-                                $"Max Level: {stats.MaxLevel}\n" +
-                                $"Value: {stats.CurrentValue}",
+                GUILayout.Label($"Current Level: {stat.CurrentLevel}\n" +
+                                $"Max Level: {stat.MaxLevel}\n" +
+                                $"Value: {stat.CurrentValue}",
                     EditorStyles.boldLabel);
             }
         }

@@ -4,7 +4,7 @@ using _Project.Meta.StatsLogic.Upgrade;
 
 namespace _Project.Static
 {
-    public static class Constants
+    public static class DefaultValueStat
     {
         private const float PassiveHealthDefaultValue = 0.001f;
         private const float DamageStatsDefaultValue = 25;
@@ -12,12 +12,12 @@ namespace _Project.Static
         
         private static readonly Dictionary<Type, float> _defaultValueStats = new()
         {
-            {typeof(PassiveHealthStats),PassiveHealthDefaultValue},
-            {typeof(DamageStats),DamageStatsDefaultValue},
-            {typeof(AmountTargetsStats),AmountTargetsDefaultValue}
+            {typeof(PassiveHealthStat),PassiveHealthDefaultValue},
+            {typeof(DamageStat),DamageStatsDefaultValue},
+            {typeof(AmountTargetsStat),AmountTargetsDefaultValue}
         };
 
-        public static float GetStatsValue<TStats>() where TStats : Stats
+        public static float GetDefaultStatsValue<TStats>() where TStats : Stat
         {
             if (_defaultValueStats.TryGetValue(typeof(TStats), out float value))
                 return value;

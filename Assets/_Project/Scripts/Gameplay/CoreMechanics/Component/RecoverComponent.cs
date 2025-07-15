@@ -4,14 +4,14 @@ namespace _Project.Cor.Component
 {
     public class RecoverComponent
     {
-        private readonly HealthStats _healthStats;
+        private readonly HealthStat _healthStat;
 
-        public RecoverComponent(HealthStats healthStats)
+        public RecoverComponent(HealthStat healthStat)
         {
-            _healthStats = healthStats;
+            _healthStat = healthStat;
         }
 
         public void Recover(int amountRecovered) => 
-            _healthStats.AddHealth(amountRecovered);
+            _healthStat.AddHealth(amountRecovered);
     }
 }

@@ -8,16 +8,16 @@ namespace _Project.Cor.Component
     [UsedImplicitly]
     public class GiveDamageComponent
     {
-        private readonly CollisionDamageStats _collisionDamageStatsShow;
+        private readonly CollisionDamageStat _collisionDamageStatShow;
         
-        public GiveDamageComponent(CollisionDamageStats collisionDamageStatsShow)
+        public GiveDamageComponent(CollisionDamageStat collisionDamageStatShow)
         {
-            _collisionDamageStatsShow = collisionDamageStatsShow;
+            _collisionDamageStatShow = collisionDamageStatShow;
         }
         
         public void GiveDamage(ITakeDamagble takeDamageObject,Action giveDamageCallback = null)
         {
-            takeDamageObject.TakeDamage(_collisionDamageStatsShow.Damage);
+            takeDamageObject.TakeDamage(_collisionDamageStatShow.Damage);
             giveDamageCallback?.Invoke();
         }
     }

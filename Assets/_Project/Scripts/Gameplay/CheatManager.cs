@@ -26,11 +26,27 @@ namespace _Project
         public static IGameFactory GameFactory;
         public static TowerFacade TowerFacade;
         public static Wallet Wallet;
-        public static StatsStorage StatsStorage;
+        public static StatStorage StatStorage;
         public static ShopPresenter ShopPresenter;
         public static WaveSpawner WaveSpawner;
 
         private static readonly List<EnemyFacade> _enemiesInSpawned = new();
+
+        public static void Initialize(
+            WaveSpawner waveSpawner,
+            TowerFacade towerFacade,
+            Wallet wallet,
+            StatStorage statStorage,
+            ShopPresenter shopPresenter,
+            GameFactory factory)
+        {
+            GameFactory  = factory;
+            TowerFacade = towerFacade;
+            Wallet = wallet;
+            StatStorage = statStorage;
+            ShopPresenter = shopPresenter;
+            WaveSpawner = waveSpawner;
+        }
 
         public static void SpawnEnemy(EnemyType type)
         {
@@ -159,7 +175,7 @@ namespace _Project
             ActivateCheats = false;
             TowerFacade = null;
             Wallet = null;
-            StatsStorage = null;
+            StatStorage = null;
             ShopPresenter = null;
             GameFactory = null;
             WaveSpawner = null;

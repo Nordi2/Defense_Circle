@@ -5,46 +5,46 @@ namespace _Project.Extensions
 {
     public static class StatsExtension
     {
-        public static Stats SetStatsView(this Stats stats, StatsView view)
+        public static Stat SetStatsView(this Stat stat, StatsView view)
         {
-            stats.StatsView = view;
-            return stats;
+            stat.StatsView = view;
+            return stat;
         }
 
-        public static Stats SetValueStats(this Stats stats, float value)
+        public static Stat SetValueStats(this Stat stat, float value)
         {
-            stats.CurrentValue = value;
-            return stats;
+            stat.CurrentValue = value;
+            return stat;
         }
 
-        public static Stats SetCurrentLevel(this Stats stats, int initialLevel)
+        public static Stat SetCurrentLevel(this Stat stat, int initialLevel)
         {
-            stats.CurrentLevel = initialLevel;
-            return stats;
+            stat.CurrentLevel = initialLevel;
+            return stat;
         }
 
-        public static Stats SetMaxLevel(this Stats stats, int maxLevel)
+        public static Stat SetMaxLevel(this Stat stat, int maxLevel)
         {
-            stats.MaxLevel = maxLevel;
-            return stats;
+            stat.MaxLevel = maxLevel;
+            return stat;
         }
 
-        public static Stats SetPrice(this Stats stats, int price)
+        public static Stat SetPrice(this Stat stat, int price)
         {
-            stats.Price = price;
-            return stats;
+            stat.Price = price;
+            return stat;
         }
 
-        public static Stats SetPriceTables(this Stats stats, PriceTables priceTables)
+        public static Stat SetPriceTables(this Stat stat, PriceTables priceTables)
         {
-            stats.PriceTables = priceTables;
-            return stats;
+            stat.PriceTables = priceTables;
+            return stat;
         }
 
-        public static Stats SetValueTables(this Stats stats, ValueTables valueTables)
+        public static Stat SetValueTables(this Stat stat, ValueTables valueTables)
         {
-            stats.ValueTables = valueTables;
-            return stats;
+            stat.ValueTables = valueTables;
+            return stat;
         }
     }
 }

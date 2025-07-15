@@ -9,7 +9,7 @@ using Zenject;
 namespace _Project.Cor.Tower
 {
     [UsedImplicitly]
-    public class EnemiesVault : 
+    public class EnemiesInCircle : 
         IInitializable,
         IDisposable
     {
@@ -18,7 +18,7 @@ namespace _Project.Cor.Tower
         private readonly List<EnemyFacade> _enemies = new();
         private readonly CompositeDisposable _disposable;
 
-        public EnemiesVault(
+        public EnemiesInCircle(
             EnemyObserver enemyObserver,
             CompositeDisposable disposable)
         {
@@ -47,11 +47,11 @@ namespace _Project.Cor.Tower
 
         private void DeleteEnemyFromList(EnemyFacade concreteEnemyFacade)
         {
-            if (_enemies.Contains(concreteEnemyFacade))
-            {
-                _enemies.Remove(concreteEnemyFacade);
-                concreteEnemyFacade.OnDeath -= DeleteEnemyFromList;
-            }
+            if (!_enemies.Contains(concreteEnemyFacade)) 
+                return;
+            
+            _enemies.Remove(concreteEnemyFacade);
+            concreteEnemyFacade.OnDeath -= DeleteEnemyFromList;
         }
     }
 }

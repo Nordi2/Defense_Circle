@@ -4,7 +4,7 @@ using R3;
 namespace _Project.Meta.StatsLogic.Upgrade
 {
     [UsedImplicitly]
-    public class HealthStats : Stats
+    public class HealthStat : Stat
     {
         private readonly ReactiveProperty<int> _maxHealth;
         private readonly ReactiveProperty<int> _currentHealth;
@@ -12,7 +12,7 @@ namespace _Project.Meta.StatsLogic.Upgrade
         public ReadOnlyReactiveProperty<int> MaxHealth => _maxHealth;
         public ReadOnlyReactiveProperty<int> CurrentHealth => _currentHealth;
 
-        public HealthStats(int maxHealth)
+        public HealthStat(int maxHealth)
         {
             _maxHealth = new ReactiveProperty<int>(maxHealth);
             _currentHealth = new ReactiveProperty<int>(maxHealth);

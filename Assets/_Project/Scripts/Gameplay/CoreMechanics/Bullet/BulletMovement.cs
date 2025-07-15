@@ -16,10 +16,10 @@ namespace _Project.Cor.BulletLogic
 
         public BulletMovement(
             Transform bulletTransform,
-            MoveSpeedStats moveSpeedStats)
+            MoveSpeedStat moveSpeedStat)
         {
             _bulletTransform = bulletTransform;
-            _moveSpeed = moveSpeedStats.Speed;
+            _moveSpeed = moveSpeedStat.Speed;
         }
 
         public void Initialize(Vector3 direction)

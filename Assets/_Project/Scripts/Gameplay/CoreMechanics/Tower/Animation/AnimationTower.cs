@@ -11,6 +11,8 @@ namespace _Project.Cor.Tower.Animation
     [UsedImplicitly]
     public class AnimationTower
     {
+        private const float _multiplier = 0.02f;
+        
         private Sequence _sequence;
         
         private readonly Transform _mainTransform;
@@ -31,25 +33,7 @@ namespace _Project.Cor.Tower.Animation
             _takeDamageSettings = view.AnimationTakeDamageSettings;
             _deathSettings = view.AnimationDeathSettings;
         }
-
-        private float _durationShake =>
-            _takeDamageSettings.DurationShakeCamera;
-
-        private float _strengthShake =>
-            _takeDamageSettings.StrengthShakeCamera;
-
-        private float _durationSwitchColor =>
-            _takeDamageSettings.DurationSwitchColor;
-
-        private int _countLoops =>
-            _takeDamageSettings.CountLoops;
-
-        private Color _takeDamageColor =>
-            _takeDamageSettings.TakeDamageColor;
-
-        private Color _normalColor =>
-            _takeDamageSettings.NormalColor;
-
+        
         public void PlayInitialSpawn(Action initialSpawnAction = null)
         {
             _sequence = DOTween.Sequence();
@@ -63,15 +47,15 @@ namespace _Project.Cor.Tower.Animation
                 .Play();
         }
 
-        public void PlayTakeDamage(float amountStrength)
+        public void PlayTakeDamage(float damage)
         {
             if (_sequence.IsActive())
                 _sequence.Kill();
-
+            
             _sequence = DOTween.Sequence();
             
             _sequence
-                .Append(_camera.DOShakePosition(_durationShake, amountStrength))
+                .Append(_camera.DOShakePosition( _takeDamageSettings.DurationShakeCamera, damage * _multiplier))
                 .Join(AnimationSprites())
                 .OnKill(KillCallback)
                 .Play();
@@ -94,8 +78,8 @@ namespace _Project.Cor.Tower.Animation
             {
                 spriteSequence
                     .Join(_takeDamageSettings.AnimationSpriteRenderers[i]
-                        .DOColor(_takeDamageColor,_durationSwitchColor)
-                        .SetLoops(_countLoops, LoopType.Yoyo))
+                        .DOColor(_takeDamageSettings.TakeDamageColor,_takeDamageSettings.DurationSwitchColor)
+                        .SetLoops(_takeDamageSettings.CountLoops, LoopType.Yoyo))
                     .Play();
             }
 
@@ -105,7 +89,7 @@ namespace _Project.Cor.Tower.Animation
         private void KillCallback()
         {
             for (int i = 0; i < _takeDamageSettings.AnimationSpriteRenderers.Length; i++)
-                _takeDamageSettings.AnimationSpriteRenderers[i].color = _normalColor;
+                _takeDamageSettings.AnimationSpriteRenderers[i].color = _takeDamageSettings.NormalColor;
         }
     }
 }

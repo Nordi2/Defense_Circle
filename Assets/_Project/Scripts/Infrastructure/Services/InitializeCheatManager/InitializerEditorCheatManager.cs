@@ -13,24 +13,23 @@ using Zenject;
     [UsedImplicitly]
     public class InitializerEditorCheatManager :
         IInitializable,
-        IDisposable, 
-        ICheatManagerService
+        IDisposable
     {
         private readonly SignalBus _signalBus;
-        private readonly StatsStorage _statsStorage;
+        private readonly StatStorage _statStorage;
         private readonly Wallet _wallet;
         private readonly UIFactory _uiFactory;
         private readonly GameFactory _gameFactory;
         
         public InitializerEditorCheatManager(
             SignalBus signalBus,
-            StatsStorage statsStorage,
+            StatStorage statStorage,
             Wallet wallet,
             GameFactory gameFactory,
             UIFactory uiFactory)
         {
             _signalBus = signalBus;
-            _statsStorage = statsStorage;
+            _statStorage = statStorage;
             _wallet = wallet;
             _gameFactory = gameFactory;
             _uiFactory = uiFactory;
@@ -44,12 +43,13 @@ using Zenject;
 
         public void Init()
         {
-            CheatManager.TowerFacade = _gameFactory.TowerFacade;
-            CheatManager.WaveSpawner = _gameFactory.WaveSpawner;
-            CheatManager.ShopPresenter = _uiFactory.ShopPresenter;
-            CheatManager.StatsStorage = _statsStorage;
-            CheatManager.Wallet = _wallet;
-            CheatManager.GameFactory = _gameFactory;
+            CheatManager.Initialize(
+                _gameFactory.WaveSpawner,
+                _gameFactory.TowerFacade,
+                _wallet,
+                _statStorage,
+                _uiFactory.ShopPresenter,
+                _gameFactory);
         }
 
         private void OnStartGame()

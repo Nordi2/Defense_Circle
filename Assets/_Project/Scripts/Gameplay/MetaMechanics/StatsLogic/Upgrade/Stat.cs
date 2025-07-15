@@ -3,8 +3,7 @@ using DebugToolsPlus;
 
 namespace _Project.Meta.StatsLogic.Upgrade
 {
-    public abstract class Stats :
-        IShowStatsInfo
+    public abstract class Stat
     {
         public int MaxLevel { get; set; }
         public int CurrentLevel { get; set; }
@@ -32,15 +31,6 @@ namespace _Project.Meta.StatsLogic.Upgrade
 
             CurrentValue = ValueTables.GetValue(CurrentLevel);
             Price = PriceTables.GetPrice(CurrentLevel);
-        }
-
-        public virtual string ShowInfo()
-        {
-            return $"Type: {GetType().Name}\n " +
-                   $"Max Level: {MaxLevel} " +
-                   $"CurrentLevel: {CurrentLevel} " +
-                   $"CurrentValue: {CurrentValue} " +
-                   $"Price: {Price} ";
         }
     }
 }

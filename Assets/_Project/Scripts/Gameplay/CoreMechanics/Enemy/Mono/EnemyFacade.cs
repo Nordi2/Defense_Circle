@@ -67,11 +67,5 @@ namespace _Project.Cor.Enemy.Mono
             OnDeath?.Invoke(this);
             _enemyCallbacks.GiveDamageCallback();
         }
-
-        private void DieCallback()
-        {
-            OnDeath?.Invoke(this);
-            _enemyCallbacks.DieCallback();
-        }
     }
 }

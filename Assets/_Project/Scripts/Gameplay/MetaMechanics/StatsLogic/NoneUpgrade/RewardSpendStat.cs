@@ -1,9 +1,8 @@
 ﻿namespace _Project.Meta.StatsLogic.NoneUpgrade
 {
-    public readonly struct RewardSpendStats :
-        IShowStatsInfo
+    public readonly struct RewardSpendStat
     {
-        public RewardSpendStats(
+        public RewardSpendStat(
             int rewardMoney,
             int spendMoney)
         {
@@ -13,11 +12,5 @@
 
         public int SpendMoney { get; }
         public int RewardMoney { get; }
-
-        public string ShowInfo()
-        {
-            return $"Reward: {RewardMoney}. " +
-                   $"Spend: {SpendMoney}. ";
-        }
     }
 }

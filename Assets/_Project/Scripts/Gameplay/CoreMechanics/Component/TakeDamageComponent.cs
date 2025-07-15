@@ -9,11 +9,11 @@ namespace _Project.Cor.Component
     [UsedImplicitly]
     public class TakeDamageComponent
     {
-        private readonly HealthStats _healthStats;
+        private readonly HealthStat _healthStat;
 
-        public TakeDamageComponent(HealthStats healthStats)
+        public TakeDamageComponent(HealthStat healthStat)
         {
-            _healthStats = healthStats;
+            _healthStat = healthStat;
         }
 
         public void TakeDamage(
@@ -24,11 +24,11 @@ namespace _Project.Cor.Component
             GameObject contextInfo = null)
         {
             int newValue = Math.Clamp(
-                _healthStats.CurrentHealth.CurrentValue - damage,
+                _healthStat.CurrentHealth.CurrentValue - damage,
                 0,
-                _healthStats.MaxHealth.CurrentValue);
+                _healthStat.MaxHealth.CurrentValue);
 
-            _healthStats.SetCurrentHealthValue(newValue);
+            _healthStat.SetCurrentHealthValue(newValue);
 
             isDie = newValue <= 0;
 
@@ -39,8 +39,8 @@ namespace _Project.Cor.Component
             D.Log($"{GetType().Name}({type?.Name})",
                 D.FormatText(
                     $"\nTakeDamage: {damage}," +
-                    $"MaxHealth: {_healthStats.MaxHealth.CurrentValue}," +
-                    $"OldHealth: {Math.Clamp(_healthStats.CurrentHealth.CurrentValue + damage, 0, _healthStats.MaxHealth.CurrentValue)}," +
+                    $"MaxHealth: {_healthStat.MaxHealth.CurrentValue}," +
+                    $"OldHealth: {Math.Clamp(_healthStat.CurrentHealth.CurrentValue + damage, 0, _healthStat.MaxHealth.CurrentValue)}," +
                     $"CurrentHealth: {newValue}", DColor.RED),
                 contextInfo,
                 DColor.YELLOW);

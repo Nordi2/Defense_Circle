@@ -12,25 +12,25 @@ namespace _Project.Scripts.Gameplay.Component
         IDisposable
     {
         private readonly HealthView _view;
-        private readonly HealthStats _healthStats;
+        private readonly HealthStat _healthStat;
 
         private readonly CompositeDisposable _disposable;
 
         public HealthPresenter(
             HealthView view,
-            HealthStats healthStats,
+            HealthStat healthStat,
             CompositeDisposable disposable)
         {
             _view = view;
-            _healthStats = healthStats;
+            _healthStat = healthStat;
             _disposable = disposable;
         }
 
         void IInitializable.Initialize()
         {
-            _healthStats
+            _healthStat
                 .CurrentHealth
-                .Prepend(_healthStats.MaxHealth.CurrentValue)
+                .Prepend(_healthStat.MaxHealth.CurrentValue)
                 .Pairwise()
                 .Subscribe(pair => UpdateCurrentHealthText(pair.Previous, pair.Current))
                 .AddTo(_disposable);

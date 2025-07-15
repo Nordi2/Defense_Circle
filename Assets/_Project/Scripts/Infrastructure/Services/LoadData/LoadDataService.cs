@@ -19,7 +19,7 @@ namespace Infrastructure.Services.Services.LoadData
         {
             TowerConfig = Resources.Load<TowerConfig>("Data/TowerConfig");
             SpawnerConfig = Resources.Load<SpawnerConfig>("Data/SpawnerConfig");
-            EnemyConfig[] enemyConfig = Resources.LoadAll<EnemyConfig>("Data/Enemys");
+            EnemyConfig[] enemyConfig = Resources.LoadAll<EnemyConfig>("Data/Enemies");
 
             _enemyConfigs = new Dictionary<EnemyType, EnemyConfig>(enemyConfig.Length);
 

@@ -7,7 +7,7 @@ namespace _Project.Cor.Tower
     [UsedImplicitly]
     public class TowerCallbacks
     {
-        private const float _multiplier = 0.02f;
+       
 
         private readonly AnimationTower _animationTower;
 
@@ -21,8 +21,7 @@ namespace _Project.Cor.Tower
 
         public void TakeDamageCallback(int damage)
         {
-            float amountStrength = damage * _multiplier;
-            _animationTower.PlayTakeDamage(amountStrength);
+            _animationTower.PlayTakeDamage(damage);
         }
 
         public void DeathCallback() =>

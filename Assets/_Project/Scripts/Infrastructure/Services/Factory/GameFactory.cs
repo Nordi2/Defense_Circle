@@ -43,17 +43,17 @@ namespace _Project.Infrastructure.Services
         private readonly IAssetProvider _assetProvider;
         private readonly GameLoopService _gameLoopService;
         private readonly Camera _camera;
-        private readonly StatsStorage _statsStorage;
+        private readonly StatStorage _statStorage;
         private readonly CompositeDisposable _disposables;
         private readonly Wallet _wallet;
         private readonly SignalBus _signalBus;
 
-        private StatsBuilder _statsBuilder;
-        
+        private StatBuilder _statBuilder;
+
         private readonly Transform _gameParent;
         private readonly Transform _poolsParent;
         private readonly Transform _enemyPoolParent;
-        
+
         public GameFactory(
             IInstantiator instantiator,
             IGameLoadDataService gameLoadDataService,
@@ -61,7 +61,7 @@ namespace _Project.Infrastructure.Services
             IScreenResolutionService screenResolutionService,
             IAssetProvider assetProvider,
             GameLoopService gameLoopService,
-            StatsStorage statsStorage,
+            StatStorage statStorage,
             CompositeDisposable disposables,
             Camera camera,
             Wallet wallet,
@@ -70,7 +70,7 @@ namespace _Project.Infrastructure.Services
             _instantiator = instantiator;
             _getTargetPosition = getTargetPosition;
             _gameLoopService = gameLoopService;
-            _statsStorage = statsStorage;
+            _statStorage = statStorage;
             _disposables = disposables;
             _camera = camera;
             _wallet = wallet;
@@ -78,7 +78,7 @@ namespace _Project.Infrastructure.Services
             _assetProvider = assetProvider;
             _screenResolutionService = screenResolutionService;
             _gameLoadDataService = gameLoadDataService;
-            
+
             _gameParent = CreateParentObject(GameplayObjectParent);
             _poolsParent = CreateParentObject(PoolsObject);
             _enemyPoolParent = CreateParentObject(EnemiesPool);
@@ -94,14 +94,13 @@ namespace _Project.Infrastructure.Services
 
         public WaveSpawner CreateSpawner()
         {
-            SpawnPositionEnemy spawnPositionEnemy = 
-                new SpawnPositionEnemy(_gameLoadDataService.SpawnerConfig.SpawnMargin, _screenResolutionService);
-            WaveSpawner waveSpawner = _instantiator.Instantiate<WaveSpawner>();
-            WaveView view = TowerFacade.GetComponentInChildren<WaveView>();
-            
+            var spawnPositionEnemy = new SpawnPositionEnemy(_gameLoadDataService.SpawnerConfig.SpawnMargin, _screenResolutionService);
+            var waveSpawner = _instantiator.Instantiate<WaveSpawner>();
+            var view = TowerFacade.GetComponentInChildren<WaveView>();
+
             WavePresenter = new WavePresenter(view, waveSpawner);
             WaveSpawner = waveSpawner;
-            waveSpawner.Init(spawnPositionEnemy,_gameLoadDataService.SpawnerConfig);
+            waveSpawner.Init(spawnPositionEnemy, _gameLoadDataService.SpawnerConfig);
 
             _gameLoopService.AddGameListener(WavePresenter);
 
@@ -110,27 +109,28 @@ namespace _Project.Infrastructure.Services
 
         public void CreateStats()
         {
-            _statsBuilder = new StatsBuilder();
+            _statBuilder = new StatBuilder();
 
             foreach (StatsConfig current in _gameLoadDataService.TowerConfig.Stats)
             {
                 switch (current.Type)
                 {
-                    case StatsType.None:
+                    case StatType.None:
                         throw new Exception("Invalid Stats Type");
-                    case StatsType.Health:
+
+                    case StatType.PassiveHealing:
+                        PassiveHealthStat passiveHealthStat = CreateCurrentStats<PassiveHealthStat>(current);
+                        _statStorage.AddStatsList(passiveHealthStat);
                         break;
-                    case StatsType.PassiveHealing:
-                        PassiveHealthStats passiveHealthStats = CreateCurrentStats<PassiveHealthStats>(current);
-                        _statsStorage.AddStatsList(passiveHealthStats);
+
+                    case StatType.AmountTargets:
+                        AmountTargetsStat amountStat = CreateCurrentStats<AmountTargetsStat>(current);
+                        _statStorage.AddStatsList(amountStat);
                         break;
-                    case StatsType.AmountTargets:
-                        AmountTargetsStats amountStats = CreateCurrentStats<AmountTargetsStats>(current);
-                        _statsStorage.AddStatsList(amountStats);
-                        break;
-                    case StatsType.Damage:
-                        DamageStats damageStats = CreateCurrentStats<DamageStats>(current);
-                        _statsStorage.AddStatsList(damageStats);
+
+                    case StatType.Damage:
+                        DamageStat damageStat = CreateCurrentStats<DamageStat>(current);
+                        _statStorage.AddStatsList(damageStat);
                         break;
                 }
             }
@@ -138,14 +138,13 @@ namespace _Project.Infrastructure.Services
 
         public void CreateGameplayVolume()
         {
-            GameObject gameplayVolume =
-                UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.GameplayVolume),_gameParent);
+            UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.GameplayVolume), _gameParent);
         }
 
         public void CreateBackground()
         {
             GameObject backPrefab =
-                UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.BackgroundPath),_gameParent);
+                UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.BackgroundPath), _gameParent);
 
             backPrefab.transform.localScale = new Vector3(
                 _screenResolutionService.ScreenWidth + Padding,
@@ -156,9 +155,9 @@ namespace _Project.Infrastructure.Services
         public void CreateBackgroundEffect()
         {
             GameObject effectPrefab =
-                UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.BackgroundEffectPath),_gameParent);
+                UnityEngine.Object.Instantiate(_assetProvider.LoadAsset(AssetPath.BackgroundEffectPath), _gameParent);
 
-            ParticleSystem particleSystem = effectPrefab.GetComponent<ParticleSystem>();
+            var particleSystem = effectPrefab.GetComponent<ParticleSystem>();
 
             ParticleSystem.ShapeModule shapeModule = particleSystem.shape;
             shapeModule.scale = new Vector3(_screenResolutionService.ScreenWidth, _screenResolutionService.ScreenHeight,
@@ -167,32 +166,32 @@ namespace _Project.Infrastructure.Services
 
         public TowerFacade CreateTower()
         {
-            GameObject towerPrefab = _instantiator.InstantiatePrefab(_assetProvider.LoadAsset(AssetPath.TowerPath),_gameParent);
+            GameObject towerPrefab =
+                _instantiator.InstantiatePrefab(_assetProvider.LoadAsset(AssetPath.TowerPath), _gameParent);
 
-            TowerFacade towerFacade = towerPrefab.GetComponent<TowerFacade>();
-            TowerView view = towerFacade.GetComponent<TowerView>();
-            HealthView healthView = towerFacade.GetComponentInChildren<HealthView>();
-            WalletView walletView = towerFacade.GetComponentInChildren<WalletView>();
-            TimeScaleView timeScaleView = towerFacade.GetComponentInChildren<TimeScaleView>();
+            var towerFacade = towerPrefab.GetComponent<TowerFacade>();
+            var view = towerFacade.GetComponent<TowerView>();
+            var healthView = towerFacade.GetComponentInChildren<HealthView>();
+            var walletView = towerFacade.GetComponentInChildren<WalletView>();
+            var timeScaleView = towerFacade.GetComponentInChildren<TimeScaleView>();
+            var enemyObserver = towerPrefab.GetComponentInChildren<EnemyObserver>();
 
-            EnemyObserver enemyObserver = towerPrefab.GetComponentInChildren<EnemyObserver>();
+            var animation = new AnimationTower(view, _camera);
+            var callbacks = new TowerCallbacks(animation);
 
-            AnimationTower animation = new AnimationTower(view, _camera);
-            TowerCallbacks callbacks = new TowerCallbacks(animation);
+            var enemiesVault = new EnemiesInCircle(enemyObserver, _disposables);
+            var shootComponent = new TowerShoot(enemiesVault, view, _statStorage);
 
-            EnemiesVault enemiesVault = new EnemiesVault(enemyObserver, _disposables);
-            TowerShoot shootComponent = new TowerShoot(enemiesVault, view, _statsStorage);
+            var healthStat = new HealthStat(100);
+            var healthPresenter = new HealthPresenter(healthView, healthStat, _disposables);
+            var walletPresenter = new WalletPresenter(walletView, _wallet, _disposables);
+            var timeScalePresenter = new TimeScalePresenter(timeScaleView, _signalBus);
 
-            HealthStats healthStats = new HealthStats(100);
-            HealthPresenter healthPresenter = new HealthPresenter(healthView, healthStats, _disposables);
-            WalletPresenter walletPresenter = new WalletPresenter(walletView, _wallet, _disposables);
-            TimeScalePresenter timeScalePresenter = new TimeScalePresenter(timeScaleView, _signalBus);
+            var takeDamageComponent = new TakeDamageComponent(healthStat);
+            var passiveHealthComponent = new PassiveHealthComponent(healthStat, _statStorage);
+            var recoverComponent = new RecoverComponent(healthStat);
 
-            TakeDamageComponent takeDamageComponent = new TakeDamageComponent(healthStats);
-            PassiveHealthComponent passiveHealthComponent = new PassiveHealthComponent(healthStats, _statsStorage);
-            RecoverComponent recoverComponent = new RecoverComponent(healthStats);
-
-            SpawnBullet spawnBullet = new SpawnBullet(shootComponent, view, _instantiator);
+            var spawnBullet = new SpawnBullet(shootComponent, view, _instantiator);
 
             towerFacade.transform.position = _getTargetPosition.GetPosition();
             towerFacade.Init(takeDamageComponent, callbacks, recoverComponent);
@@ -228,7 +227,7 @@ namespace _Project.Infrastructure.Services
         {
             EnemyConfig config = _gameLoadDataService.GetEnemyConfig(type);
             EnemyFacade enemy = CreateConcreteEnemy(config);
-            
+
             enemy.transform.SetParent(_enemyPoolParent);
 
             return enemy;
@@ -238,23 +237,21 @@ namespace _Project.Infrastructure.Services
         {
             GameObject enemyPrefab = _instantiator.InstantiatePrefab(config.EnemyPrefab);
 
-            EnemyFacade facade = enemyPrefab.GetComponent<EnemyFacade>();
-            EnemyView view = enemyPrefab.GetComponent<EnemyView>();
+            var facade = enemyPrefab.GetComponent<EnemyFacade>();
+            var view = enemyPrefab.GetComponent<EnemyView>();
 
-            MoveSpeedStats moveSpeedStats = new MoveSpeedStats(config.GetRandomValueMoveSpeed());
-            CollisionDamageStats collisionDamageStats =
-                new CollisionDamageStats(config.GetRandomValueCollisionDamage());
-            RewardSpendStats rewardSpendStats =
-                new RewardSpendStats(config.GetRandomMoneyReward(), config.GetRandomMoneySpend());
-            HealthStats healthStats = new HealthStats(config.GetRandomValueHealth());
+            var moveSpeedStats = new MoveSpeedStat(config.GetRandomValueMoveSpeed());
+            var collisionDamageStats = new CollisionDamageStat(config.GetRandomValueCollisionDamage());
+            var rewardSpendStats = new RewardSpendStat(config.GetRandomMoneyReward(), config.GetRandomMoneySpend());
+            var healthStat = new HealthStat(config.GetRandomValueHealth());
 
-            RotationComponent rotationComponent = new RotationComponent(view, config.GetRandomRotationSpeed());
-            GiveDamageComponent giveDamageComponent = new GiveDamageComponent(collisionDamageStats);
-            TakeDamageComponent takeDamageComponent = new TakeDamageComponent(healthStats);
+            var rotationComponent = new RotationComponent(view, config.GetRandomRotationSpeed());
+            var giveDamageComponent = new GiveDamageComponent(collisionDamageStats);
+            var takeDamageComponent = new TakeDamageComponent(healthStat);
 
-            AnimationEnemy animation = new AnimationEnemy(view);
-            EnemyCallbacks enemyCallbacks = new EnemyCallbacks(animation, view, _wallet, rewardSpendStats);
-            EnemyMovement movement = new EnemyMovement(_getTargetPosition, facade.transform, moveSpeedStats);
+            var animation = new AnimationEnemy(view);
+            var enemyCallbacks = new EnemyCallbacks(animation, view, _wallet, rewardSpendStats);
+            var movement = new EnemyMovement(_getTargetPosition, facade.transform, moveSpeedStats);
 
             facade.Init(
                 takeDamageComponent,
@@ -268,9 +265,9 @@ namespace _Project.Infrastructure.Services
             return facade;
         }
 
-        private TStats CreateCurrentStats<TStats>(StatsConfig config) where TStats : Stats, new()
+        private TStats CreateCurrentStats<TStats>(StatsConfig config) where TStats : Stat, new()
         {
-            TStats currentStats = _statsBuilder
+            TStats currentStats = _statBuilder
                 .Reset()
                 .WithCurrentLevel(config.InitialLevel)
                 .WithMaxLevel(config.MaxLevel)
@@ -293,7 +290,7 @@ namespace _Project.Infrastructure.Services
                     position = Vector3.zero
                 }
             };
-            
+
             return parenGo.transform;
         }
     }

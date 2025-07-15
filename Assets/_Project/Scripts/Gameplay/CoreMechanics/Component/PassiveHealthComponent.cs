@@ -7,21 +7,21 @@ namespace _Project.Cor.Component
     public class PassiveHealthComponent : 
         ITickable
     {
-        private readonly StatsStorage _statsStorage;
-        private readonly HealthStats _healthStats;
+        private readonly StatStorage _statStorage;
+        private readonly HealthStat _healthStat;
 
         private float _accumulationHealth;
         
         public PassiveHealthComponent(
-            HealthStats healthStats,
-            StatsStorage statsStorage)
+            HealthStat healthStat,
+            StatStorage statStorage)
         {
-            _healthStats = healthStats;
-            _statsStorage = statsStorage;
+            _healthStat = healthStat;
+            _statStorage = statStorage;
         }
 
         private bool _isFullHealth => 
-            _healthStats.CurrentHealth.CurrentValue >= _healthStats.MaxHealth.CurrentValue;
+            _healthStat.CurrentHealth.CurrentValue >= _healthStat.MaxHealth.CurrentValue;
 
         void ITickable.Tick()
         {
@@ -33,12 +33,12 @@ namespace _Project.Cor.Component
 
         private void AccumulationPassiveHealth()
         {
-            _accumulationHealth += _statsStorage.GetStatsValue<PassiveHealthStats>();
+            _accumulationHealth += _statStorage.GetStatsValue<PassiveHealthStat>();
 
             if (!(_accumulationHealth >= 1)) 
                 return;
             
-            _healthStats.AddHealth((int)_accumulationHealth);
+            _healthStat.AddHealth((int)_accumulationHealth);
             _accumulationHealth = 0;
         }
     }

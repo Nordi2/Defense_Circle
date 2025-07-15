@@ -10,7 +10,7 @@ namespace _Project.Scripts.UI.Shop
     public class ShopPresenter :
         IDisposable
     {
-        private readonly StatsStorage _statsStorage;
+        private readonly StatStorage _statStorage;
         private readonly Wallet _wallet;
         private readonly ShopView _view;
         private readonly List<UpgradeCartPresenter> _upgradeCartPresenters;
@@ -19,15 +19,15 @@ namespace _Project.Scripts.UI.Shop
         public ShopPresenter(
             Wallet wallet,
             ShopView view,
-            StatsStorage statsStorage,
+            StatStorage statStorage,
             WavePresenter wavePresenter)
         {
             _wallet = wallet;
             _view = view;
-            _statsStorage = statsStorage;
+            _statStorage = statStorage;
             _wavePresenter = wavePresenter;
 
-            _upgradeCartPresenters = new List<UpgradeCartPresenter>(_statsStorage.StatsList.Count);
+            _upgradeCartPresenters = new List<UpgradeCartPresenter>(_statStorage.StatsList.Count);
         }
         
         void IDisposable.Dispose()
@@ -42,7 +42,7 @@ namespace _Project.Scripts.UI.Shop
         public void OpenShop()
         {
             for (int i = 0; i < _upgradeCartPresenters.Count; i++) 
-                _upgradeCartPresenters[i].UpdateViewCart(_statsStorage.StatsList[i]);
+                _upgradeCartPresenters[i].UpdateViewCart(_statStorage.StatsList[i]);
             
             _view.UpdateAmountMoney($"Money: {_wallet.CurrentMoney.CurrentValue}$");
             _view.OpenShop();
@@ -53,7 +53,7 @@ namespace _Project.Scripts.UI.Shop
 
         public void CreateUpgradeCarts()
         {
-            for (int i = 0; i < _statsStorage.StatsList.Count; i++)
+            for (int i = 0; i < _statStorage.StatsList.Count; i++)
             {
                 UpgradeCartView cartView = _view.SpawnCart();
                 UpgradeCartPresenter cartPresenter = new UpgradeCartPresenter(cartView, _wallet,_wavePresenter);

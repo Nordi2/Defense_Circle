@@ -13,6 +13,8 @@ namespace _Project.Infrastructure.EntryPoint
     public class EntryPoint :
         IInitializable
     {
+        private const int _targetFps = 70; 
+        
         private readonly SceneLoader _sceneLoader;
         private readonly Curtain _curtain;
         private readonly IGameLoadDataService _gameLoadDataService;
@@ -30,7 +32,7 @@ namespace _Project.Infrastructure.EntryPoint
         void IInitializable.Initialize()
         {
             Debug.unityLogger.logEnabled = Debug.isDebugBuild;
-            Application.targetFrameRate = 70;
+            Application.targetFrameRate = _targetFps;
             DOTween.Init();
             
             _curtain.Show();

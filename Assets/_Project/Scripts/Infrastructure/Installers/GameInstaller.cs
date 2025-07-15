@@ -20,7 +20,7 @@ namespace Infrastructure.Installers
             BindSignals();
             
             Container
-                .Bind<StatsStorage>()
+                .Bind<StatStorage>()
                 .AsSingle();
 
             Container
@@ -69,10 +69,6 @@ namespace Infrastructure.Installers
 #else
             Container
                 .BindInterfacesTo<GameFactory>()
-                .AsSingle();
-
-            Container
-                .BindInterfacesTo<InitializerEmptyCheatManager>()
                 .AsSingle();
 
             Container

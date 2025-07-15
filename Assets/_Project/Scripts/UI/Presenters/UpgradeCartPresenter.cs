@@ -10,7 +10,7 @@ namespace _Project.Scripts.UI.Shop
     {
         public event Action OnUpgrade;
         
-        private Stats _stats;
+        private Stat _stat;
         
         private readonly UpgradeCartView _view;
         private readonly Wallet _wallet;
@@ -26,13 +26,13 @@ namespace _Project.Scripts.UI.Shop
             _wavePresenter = wavePresenter;
         }
 
-        public void UpdateViewCart(Stats stats)
+        public void UpdateViewCart(Stat stat)
         {
-            _stats = stats;
-            _view.UpdatePrice($"Price {stats.Price}$");
-            _view.UpdateCurrentLevel($"Level<br>Current: {stats.CurrentLevel}<br>Max: {stats.MaxLevel}");
-            _view.UpdateNameStats(stats.StatsView.Name);
-            _view.UpdateIcon(stats.StatsView.Icon);
+            _stat = stat;
+            _view.UpdatePrice($"Price {stat.Price}$");
+            _view.UpdateCurrentLevel($"Level<br>Current: {stat.CurrentLevel}<br>Max: {stat.MaxLevel}");
+            _view.UpdateNameStats(stat.StatsView.Name);
+            _view.UpdateIcon(stat.StatsView.Icon);
         }
 
         public void Subscribe() =>
@@ -45,15 +45,15 @@ namespace _Project.Scripts.UI.Shop
         {
             _wavePresenter.StartWave();
             
-            if (!_wallet.IsHaveMoney(_stats.Price))
+            if (!_wallet.IsHaveMoney(_stat.Price))
             {
-                D.Log("Shop", $"Have no money. Have to: {_stats.Price}, has a: {_wallet.CurrentMoney}", DColor.YELLOW,
+                D.Log("Shop", $"Have no money. Have to: {_stat.Price}, has a: {_wallet.CurrentMoney}", DColor.YELLOW,
                     true);
                 return;
             }
 
-            _wallet.SpendMoney(_stats.Price);
-            _stats.UpgradeStats();
+            _wallet.SpendMoney(_stat.Price);
+            _stat.UpgradeStats();
             
             OnUpgrade?.Invoke();
         }

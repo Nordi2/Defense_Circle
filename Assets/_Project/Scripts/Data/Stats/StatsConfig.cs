@@ -11,7 +11,7 @@ namespace _Project.Data.Config.Stats
         [field: SerializeField, Min(3)] public int MaxLevel { get; private set; }
         [field: SerializeField] public int InitialLevel { get; private set; }
         [field: SerializeField] public StatsView View { get; private set; }
-        [field: SerializeField] public StatsType Type { get; private set; } = StatsType.None;
+        [field: SerializeField] public StatType Type { get; private set; } = StatType.None;
         [field: SerializeField] public PriceTables PriceTables {get; private set; }
         [field: SerializeField] public ValueTables ValueTables {get; private set; }
         
